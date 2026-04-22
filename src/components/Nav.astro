@@ -1,0 +1,114 @@
+---
+const links = [
+  { href: '#leistungen', label: 'Leistungen' },
+  { href: '#preise',     label: 'Preise' },
+  { href: '#prozess',    label: 'Prozess' },
+  { href: '#arbeiten',   label: 'Arbeiten' },
+  { href: '#faq',        label: 'FAQ' },
+];
+---
+<nav class="nav" id="nav">
+  <a href="#" class="logo">
+    <div class="logo-mark"></div>
+    <span class="logo-wordmark">ictira®</span>
+  </a>
+
+  <div class="desktop-links">
+    {links.map(({ href, label }) => <a href={href}>{label}</a>)}
+  </div>
+
+  <a href="#kontakt" class="cta">
+    <span class="cta-dot"></span>
+    3 Plätze frei · Q2/26
+  </a>
+
+  <button class="mobile-btn" id="navMobileBtn" aria-label="Menü öffnen">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mobile-menu" id="navMobileMenu">
+  {links.map(({ href, label }) => <a href={href}>{label}</a>)}
+  <a href="#kontakt" class="mobile-cta">Gespräch buchen →</a>
+</div>
+
+<style>
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 0 32px; height: 68px;
+    display: flex; align-items: center; justify-content: space-between;
+    transition: background .3s, border-color .3s;
+  }
+  .nav.scrolled {
+    background: #ECEAE4EE;
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(14,15,18,0.12);
+  }
+
+  .logo { display: flex; align-items: center; gap: 12px; }
+  .logo-mark {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: var(--accent); position: relative; flex-shrink: 0;
+  }
+  .logo-mark::after {
+    content: ''; position: absolute; inset: 8px;
+    border-radius: 50%; background: var(--hot);
+  }
+  .logo-wordmark { font-weight: 800; font-size: 22px; letter-spacing: -0.04em; color: var(--ink); }
+
+  .desktop-links {
+    display: flex; gap: 4px; padding: 4px;
+    background: var(--ink); border-radius: 999px;
+  }
+  .desktop-links a {
+    color: var(--paper); padding: 8px 16px; font-size: 13px;
+    font-weight: 500; border-radius: 999px; transition: background .2s;
+  }
+  .desktop-links a:hover { background: rgba(244,242,236,0.12); }
+
+  .cta {
+    background: var(--accent); color: #fff; padding: 12px 20px;
+    border-radius: 999px; font-size: 13px; font-weight: 600;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .cta-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--success); flex-shrink: 0; }
+
+  .mobile-btn {
+    display: none; background: none; border: none;
+    cursor: pointer; padding: 8px; flex-direction: column; gap: 5px;
+  }
+  .mobile-btn span { display: block; width: 22px; height: 2px; background: var(--ink); }
+
+  .mobile-menu {
+    display: none; position: fixed; top: 68px; left: 0; right: 0;
+    background: #ECEAE4EE; backdrop-filter: blur(10px);
+    padding: 16px 32px 24px;
+    border-bottom: 1px solid rgba(14,15,18,0.12);
+    flex-direction: column; gap: 4px; z-index: 99;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a {
+    color: var(--ink); padding: 12px 0; font-size: 18px; font-weight: 600;
+    border-bottom: 1px solid rgba(14,15,18,0.08);
+  }
+  .mobile-cta { color: var(--accent) !important; font-weight: 700 !important; }
+
+  @media (max-width: 768px) {
+    .desktop-links, .cta { display: none; }
+    .mobile-btn { display: flex; }
+  }
+</style>
+
+<script>
+  const nav = document.getElementById('nav')!;
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 20);
+  }, { passive: true });
+
+  const btn  = document.getElementById('navMobileBtn')!;
+  const menu = document.getElementById('navMobileMenu')!;
+  btn.addEventListener('click', () => menu.classList.toggle('open'));
+  menu.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => menu.classList.remove('open'));
+  });
+</script>

@@ -1,0 +1,182 @@
+---
+const packages = [
+  {
+    name: 'Onepager',
+    price: '790',
+    tag: 'Für Solopreneure, Events & Launch-Pages',
+    turnaround: 'ca. 2 Wochen',
+    popular: false,
+    includes: [
+      'Eine Seite, klar strukturiert',
+      'Individuelles Design',
+      'Mobile-first, 100 % responsive',
+      'Kontaktformular & Google-Maps',
+      'SEO-Basics & Performance-Tuning',
+      'Domain & Hosting-Setup',
+      'Zwei Revisions-Runden',
+    ],
+  },
+  {
+    name: 'Standard',
+    price: '1490',
+    tag: 'Für KMU, Vereine & kleine Teams',
+    turnaround: 'ca. 3 Wochen',
+    popular: true,
+    includes: [
+      'Bis zu 5 Seiten nach Mass',
+      'CMS zum selber pflegen',
+      'Mehrsprachigkeit (DE / FR / EN)',
+      'Blog oder News-Modul',
+      'SEO-Optimierung pro Seite',
+      'Datenschutz nach CH-DSG',
+      'Drei Revisions-Runden',
+    ],
+  },
+  {
+    name: 'Grösser',
+    price: '2990',
+    tag: 'Für wachsende Firmen mit grösserem Bedarf',
+    turnaround: 'ca. 4–6 Wochen',
+    popular: false,
+    includes: [
+      '6 bis 20 Seiten, modular aufgebaut',
+      'Custom Design-System',
+      'Erweitertes CMS & Rollen',
+      'E-Mail-Integration & Formulare',
+      'Analytics & Tracking-Setup',
+      'Persönliches Onboarding',
+      'Unbegrenzte Revisionen',
+    ],
+  },
+];
+---
+<section id="preise" class="pricing">
+  <div class="section-inner">
+    <div class="reveal header">
+      <div class="label">★ &nbsp;Transparente Preise&nbsp; ★</div>
+      <h2 class="heading">
+        Drei Pakete.<br />
+        <em>Null Bullshit.</em>
+      </h2>
+    </div>
+
+    <div class="grid">
+      {packages.map((pkg, i) => (
+        <div
+          class={`reveal card${pkg.popular ? ' popular' : ''}`}
+          data-delay={String(i * 80)}
+        >
+          {pkg.popular && <div class="badge">Most Popular</div>}
+
+          <div class="card-head">
+            <div class="name">{pkg.name}</div>
+            <div class="num">0{i + 1}/03</div>
+          </div>
+          <div class="tag">{pkg.tag}</div>
+
+          <div class="price-row">
+            <span class="chf">CHF</span>
+            <span class="amount">{pkg.price}</span>
+            <span class="suffix">.–</span>
+          </div>
+          <div class="sub">einmalig · exkl. MwSt</div>
+
+          <ul class="list">
+            {pkg.includes.map(item => (
+              <li class="item">
+                <span class="check">{'✓'}</span>
+                {item}
+              </li>
+            ))}
+          </ul>
+
+          <a href="#kontakt" class="cta">{pkg.name} wählen <span>→</span></a>
+          <div class="delivery">Lieferung: {pkg.turnaround}</div>
+        </div>
+      ))}
+    </div>
+
+    <div class="reveal footnote" data-delay="100">
+      Alle Preise exkl. MwSt. · Hosting &amp; Domain werden separat ausgewiesen ·
+      Bezahlung nach Projektstart 50% / nach Launch 50%
+    </div>
+  </div>
+</section>
+
+<style>
+  .pricing { padding: 96px 32px; }
+
+  .header { text-align: center; margin-bottom: 64px; }
+  .label {
+    font-family: var(--mono); font-size: 12px; color: var(--mute);
+    text-transform: uppercase; letter-spacing: .08em; margin-bottom: 20px;
+  }
+  .heading {
+    font-size: clamp(64px, 9vw, 128px); line-height: 0.9;
+    margin: 0; font-weight: 800; letter-spacing: -0.055em; color: var(--ink);
+  }
+  .heading em { font-style: italic; color: var(--accent); }
+
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; align-items: start; }
+
+  .card {
+    padding: 32px 28px; border-radius: 32px;
+    background: var(--paper); color: var(--ink);
+    border: 1px solid var(--line);
+    display: flex; flex-direction: column; position: relative;
+  }
+  .card.popular {
+    background: var(--ink); color: var(--paper);
+    border: none;
+    transform: scale(1.04);
+    box-shadow: 0 30px 80px rgba(58,43,255,0.2);
+  }
+
+  .badge {
+    position: absolute; top: -16px; left: 50%;
+    transform: translateX(-50%) rotate(-3deg);
+    background: var(--hot); color: #fff; padding: 8px 18px;
+    border-radius: 999px; font-size: 12px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: .05em; white-space: nowrap;
+  }
+
+  .card-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 4px; }
+  .name { font-size: 30px; font-weight: 700; letter-spacing: -0.03em; }
+  .num { font-family: var(--mono); font-size: 12px; opacity: .5; }
+  .tag { font-size: 14px; opacity: .7; margin-bottom: 32px; }
+
+  .price-row { display: flex; align-items: baseline; gap: 6px; margin-bottom: 6px; }
+  .chf, .suffix { font-size: 18px; opacity: .6; }
+  .amount { font-size: 96px; font-weight: 800; letter-spacing: -0.06em; line-height: 0.9; }
+  .sub { font-family: var(--mono); font-size: 12px; opacity: .5; margin-bottom: 24px; }
+
+  .list { flex: 1; }
+  .item { display: flex; gap: 10px; padding: 9px 0; font-size: 14px; align-items: flex-start; }
+  .check {
+    width: 18px; height: 18px; border-radius: 50%; color: #fff; flex-shrink: 0;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 11px; margin-top: 1px;
+    background: var(--ink);
+  }
+  .card.popular .check { background: var(--accent); }
+
+  .cta {
+    margin-top: 24px; padding: 16px 20px; border-radius: 999px;
+    background: var(--ink); color: #fff;
+    font-weight: 600; font-size: 15px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .card.popular .cta { background: var(--accent); }
+
+  .delivery { margin-top: 12px; font-family: var(--mono); font-size: 11px; opacity: .5; text-align: center; }
+
+  .footnote { text-align: center; margin-top: 40px; font-size: 14px; color: var(--mute); font-family: var(--mono); }
+
+  @media (max-width: 1024px) {
+    .grid { grid-template-columns: 1fr; max-width: 500px; margin: 0 auto; }
+    .card.popular { transform: none; }
+  }
+  @media (max-width: 480px) {
+    .pricing { padding-left: 16px; padding-right: 16px; }
+  }
+</style>

@@ -1,0 +1,107 @@
+---
+const faqs = [
+  {
+    q: 'Sind die Preise wirklich fix?',
+    a: 'Ja. Was im Angebot steht, steht im Angebot. Nur wenn du neue Seiten oder Funktionen willst, die nicht drin waren, sprechen wir über einen Zusatz — immer vorher, nie nachher.',
+  },
+  {
+    q: 'Was ist nicht im Preis enthalten?',
+    a: 'Domain-Gebühren (ca. CHF 15/Jahr), Hosting (ab CHF 15/Monat) und Drittanbieter-Lizenzen wie Premium-Plugins oder Bildrechte. Wir zeigen dir im Angebot genau, was extern anfällt.',
+  },
+  {
+    q: 'Wie läuft die Zusammenarbeit ab?',
+    a: 'Remote — per Call, Mail und einem gemeinsamen Projekt-Board. Falls du in der Nordwestschweiz sitzt, kommen wir gerne auch persönlich vorbei.',
+  },
+  {
+    q: 'Wer schreibt die Texte?',
+    a: 'Du schreibst, wir strukturieren und lektorieren. Wenn du keine Lust darauf hast, vermitteln wir dir eine Texterin aus unserem Netzwerk.',
+  },
+  {
+    q: 'Könnt ihr unser bestehendes CMS übernehmen?',
+    a: 'In der Regel bauen wir auf WordPress, Webflow oder Astro — je nachdem, was zu dir passt. Migrationen aus anderen Systemen sind möglich, wir klären das im ersten Gespräch.',
+  },
+  {
+    q: 'Was kostet eine Anpassung nach dem Launch?',
+    a: 'Kleine Sachen (Textänderungen, neue Bilder) im Stundensatz von CHF 120. Grössere Erweiterungen wieder zum Fixpreis.',
+  },
+];
+---
+<section id="faq" class="faq">
+  <div class="inner">
+    <div class="reveal header">
+      <div class="label">? FAQ ?</div>
+      <h2 class="heading">
+        Oft gefragt,<br />
+        <em>klar beantwortet.</em>
+      </h2>
+    </div>
+
+    <div id="faqList">
+      {faqs.map((f, i) => (
+        <div class={`item ${i === 0 ? 'open' : 'closed'}`}>
+          <div class="row">
+            <div class="question">{f.q}</div>
+            <button class="toggle" aria-label="Antwort ein-/ausblenden">+</button>
+          </div>
+          <div class="answer">{f.a}</div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq { padding: 96px 32px; }
+  .inner { max-width: 1040px; margin: 0 auto; }
+
+  .header { text-align: center; margin-bottom: 64px; }
+  .label {
+    font-family: var(--mono); font-size: 12px; color: var(--mute);
+    text-transform: uppercase; letter-spacing: .08em; margin-bottom: 20px;
+  }
+  .heading {
+    font-size: clamp(56px, 8vw, 96px); line-height: 0.95;
+    margin: 0; font-weight: 800; letter-spacing: -0.05em; color: var(--ink);
+  }
+  .heading em { font-style: italic; color: var(--accent); }
+
+  .item {
+    margin-bottom: 12px; padding: 24px 28px; border-radius: 24px; cursor: pointer;
+    transition: background .25s, color .25s;
+  }
+  .item.closed { background: var(--paper); color: var(--ink); border: 1px solid var(--line); }
+  .item.open   { background: var(--ink);   color: var(--paper); border: 1px solid transparent; }
+
+  .row { display: flex; justify-content: space-between; align-items: center; gap: 24px; }
+  .question { font-size: clamp(17px, 1.4vw, 22px); font-weight: 600; letter-spacing: -0.02em; }
+
+  .toggle {
+    width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; color: #fff; transition: all .25s; border: none; cursor: pointer;
+  }
+  .item.closed .toggle { background: var(--ink);   transform: rotate(0deg); }
+  .item.open   .toggle { background: var(--accent); transform: rotate(45deg); }
+
+  .answer {
+    overflow: hidden; font-size: 16px; line-height: 1.55;
+    transition: max-height .35s, opacity .3s, margin-top .25s;
+  }
+  .item.closed .answer { max-height: 0; opacity: 0; margin-top: 0; }
+  .item.open   .answer { max-height: 200px; opacity: .85; margin-top: 14px; }
+
+  @media (max-width: 480px) {
+    .faq { padding-left: 16px; padding-right: 16px; }
+  }
+</style>
+
+<script>
+  const items = document.querySelectorAll('#faqList .item');
+  items.forEach(item => {
+    item.addEventListener('click', () => {
+      const wasOpen = item.classList.contains('open');
+      items.forEach(i => { i.classList.remove('open'); i.classList.add('closed'); });
+      if (!wasOpen) { item.classList.add('open'); item.classList.remove('closed'); }
+    });
+  });
+</script>
