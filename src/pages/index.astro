@@ -1,0 +1,1009 @@
+---
+---
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ictira GmbH — Webdesign zum Fixpreis</title>
+  <meta name="description" content="Schnelle, eigenständige Websites zum Fixpreis. Kein Agentur-Overhead. CHF 790 / 1490 / 2990." />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,500;1,700;1,800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: #ECEAE4;
+      font-family: 'Inter Tight', system-ui, sans-serif;
+      color: #0E0F12;
+      overflow-x: hidden;
+    }
+    a { text-decoration: none; }
+    ul, ol { list-style: none; padding: 0; margin: 0; }
+    input, textarea, button { font-family: inherit; }
+
+    /* ── Nav ── */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 0 32px; height: 68px;
+      display: flex; align-items: center; justify-content: space-between;
+      transition: background .3s, border-color .3s;
+    }
+    .nav.scrolled {
+      background: #ECEAE4EE;
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(14,15,18,0.12);
+    }
+    .nav-logo { display: flex; align-items: center; gap: 12px; }
+    .nav-logo-mark {
+      width: 32px; height: 32px; border-radius: 50%;
+      background: #3A2BFF; position: relative; flex-shrink: 0;
+    }
+    .nav-logo-mark::after {
+      content: ''; position: absolute; inset: 8px;
+      border-radius: 50%; background: #FF4D2E;
+    }
+    .nav-wordmark { font-weight: 800; font-size: 22px; letter-spacing: -0.04em; color: #0E0F12; }
+    .nav-links {
+      display: flex; gap: 4px; padding: 4px;
+      background: #0E0F12; border-radius: 999px;
+    }
+    .nav-links a {
+      color: #F4F2EC; padding: 8px 16px; font-size: 13px;
+      font-weight: 500; border-radius: 999px;
+      transition: background .2s;
+    }
+    .nav-links a:hover { background: rgba(244,242,236,0.12); }
+    .nav-cta {
+      background: #3A2BFF; color: #fff; padding: 12px 20px;
+      border-radius: 999px; font-size: 13px; font-weight: 600;
+      display: inline-flex; align-items: center; gap: 8px;
+    }
+    .nav-cta-dot { width: 8px; height: 8px; border-radius: 50%; background: #8DFE4C; flex-shrink: 0; }
+    .nav-mobile-btn {
+      display: none; background: none; border: none;
+      cursor: pointer; padding: 8px; flex-direction: column; gap: 5px;
+    }
+    .nav-mobile-btn span { display: block; width: 22px; height: 2px; background: #0E0F12; }
+    .nav-mobile-menu {
+      display: none; position: fixed; top: 68px; left: 0; right: 0;
+      background: #ECEAE4EE; backdrop-filter: blur(10px);
+      padding: 16px 32px 24px; border-bottom: 1px solid rgba(14,15,18,0.12);
+      flex-direction: column; gap: 4px; z-index: 99;
+    }
+    .nav-mobile-menu.open { display: flex; }
+    .nav-mobile-menu a {
+      color: #0E0F12; padding: 12px 0; font-size: 18px; font-weight: 600;
+      border-bottom: 1px solid rgba(14,15,18,0.08);
+    }
+
+    /* ── Reveal ── */
+    .reveal {
+      opacity: 0; transform: translateY(40px);
+      transition: opacity .8s ease, transform .9s cubic-bezier(.16,.8,.2,1);
+    }
+    .reveal.in { opacity: 1; transform: none; }
+    .reveal[data-delay="60"]  { transition-delay: 60ms; }
+    .reveal[data-delay="80"]  { transition-delay: 80ms; }
+    .reveal[data-delay="100"] { transition-delay: 100ms; }
+    .reveal[data-delay="120"] { transition-delay: 120ms; }
+    .reveal[data-delay="160"] { transition-delay: 160ms; }
+    .reveal[data-delay="180"] { transition-delay: 180ms; }
+    .reveal[data-delay="200"] { transition-delay: 200ms; }
+    .reveal[data-delay="240"] { transition-delay: 240ms; }
+    .reveal[data-delay="300"] { transition-delay: 300ms; }
+
+    /* ── Hero ── */
+    .hero { padding: 96px 32px 0; }
+    .hero-card {
+      position: relative; padding: 72px 56px 64px;
+      background: #0E0F12; color: #F4F2EC;
+      border-radius: 48px; overflow: hidden;
+    }
+    .hero-orb {
+      position: absolute; width: 380px; height: 380px; border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #3A2BFF, #0a0780 75%);
+      filter: blur(2px); box-shadow: 0 0 200px #3A2BFF44;
+      pointer-events: none; top: 10%; right: 5%;
+      animation: orbFloat 6s ease-in-out infinite;
+    }
+    @keyframes orbFloat {
+      0%,100% { transform: translateY(0) translateX(0); }
+      33%      { transform: translateY(-20px) translateX(12px); }
+      66%      { transform: translateY(10px) translateX(-8px); }
+    }
+    .hero-blob {
+      position: absolute; top: 58%; right: 20%;
+      width: 110px; height: 110px; border-radius: 50%;
+      background: #FF4D2E; pointer-events: none;
+      animation: blobFloat 5s ease-in-out infinite;
+    }
+    @keyframes blobFloat {
+      0%,100% { transform: translateY(0); }
+      50%      { transform: translateY(-16px); }
+    }
+    .hero-meta {
+      display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+      font-family: 'JetBrains Mono', monospace; font-size: 12px; opacity: .6;
+      text-transform: uppercase; letter-spacing: .08em; margin-bottom: 56px;
+    }
+    .hero-h1 {
+      font-size: clamp(80px, 14vw, 210px); line-height: 0.87;
+      margin: 0; font-weight: 900; letter-spacing: -0.06em; position: relative; z-index: 2;
+    }
+    .hero-h1-gradient {
+      background: linear-gradient(100deg, #3A2BFF, #FF4D2E);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text; font-style: italic; font-weight: 800;
+    }
+    .hero-sub {
+      display: grid; grid-template-columns: 1fr auto; gap: 48px;
+      margin-top: 72px; align-items: end; position: relative; z-index: 2;
+    }
+    .hero-body { font-size: clamp(17px,1.5vw,24px); line-height: 1.35; margin: 0; font-weight: 500; max-width: 600px; }
+    .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; justify-content: flex-end; }
+    .btn-pill-light {
+      padding: 18px 26px; background: #F4F2EC; color: #0E0F12;
+      font-weight: 600; font-size: 16px; border-radius: 999px;
+      display: inline-flex; align-items: center; gap: 10px;
+    }
+    .btn-pill-ghost {
+      padding: 18px 26px; background: transparent; color: #F4F2EC;
+      border: 1.5px solid rgba(244,242,236,0.3);
+      font-weight: 600; font-size: 16px; border-radius: 999px;
+    }
+
+    /* ── Marquee ── */
+    .marquee-wrap { overflow: hidden; white-space: nowrap; }
+    .marquee-track { display: inline-flex; will-change: transform; }
+    .marquee-strip-1 {
+      margin: -28px 0 0; position: relative; z-index: 2;
+      transform: rotate(-2deg); background: #3A2BFF; color: #fff;
+      padding: 18px 0; border-radius: 8px;
+    }
+    .marquee-strip-2 {
+      margin: -14px 0 64px;
+      transform: rotate(1.2deg); background: #0E0F12; color: #F4F2EC;
+      padding: 14px 0; border-radius: 8px;
+    }
+    .marquee-inner-1 {
+      display: inline-flex; gap: 48px; padding-right: 48px;
+      font-size: clamp(22px,2.5vw,36px); font-weight: 700; letter-spacing: -0.02em;
+    }
+    .marquee-inner-2 {
+      display: inline-flex; gap: 48px; padding-right: 48px; font-size: 20px;
+      font-weight: 500; font-family: 'JetBrains Mono', monospace;
+      text-transform: uppercase; letter-spacing: .06em;
+    }
+
+    /* ── Services ── */
+    .services { padding: 96px 32px; }
+    .section-inner { max-width: 1360px; margin: 0 auto; }
+    .section-label {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: 'JetBrains Mono', monospace; font-size: 12px;
+      color: #6A6D73; text-transform: uppercase; letter-spacing: .08em; margin-bottom: 16px;
+    }
+    .section-label-dot { width: 8px; height: 8px; border-radius: 50%; background: #3A2BFF; flex-shrink: 0; }
+    .services-head {
+      display: flex; justify-content: space-between; align-items: flex-end;
+      margin-bottom: 56px; flex-wrap: wrap; gap: 32px;
+    }
+    .services-h2 { font-size: clamp(56px,7vw,96px); line-height: 0.95; margin: 0; font-weight: 700; letter-spacing: -0.05em; color: #0E0F12; }
+    .services-desc { max-width: 380px; font-size: 18px; line-height: 1.45; color: #6A6D73; margin: 0; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
+    .card-service {
+      padding: 32px 28px; border-radius: 28px; min-height: 280px;
+      display: flex; flex-direction: column; justify-content: space-between;
+      transition: transform .25s;
+    }
+    .card-service:hover { transform: translateY(-4px); }
+    .card-service-idx { font-family: 'JetBrains Mono', monospace; font-size: 14px; opacity: .7; }
+    .card-service-title { font-size: 36px; font-weight: 700; letter-spacing: -0.03em; margin-bottom: 12px; }
+    .card-service-desc { font-size: 15px; line-height: 1.5; opacity: .85; }
+
+    /* ── Pricing ── */
+    .pricing { padding: 96px 32px; }
+    .pricing-label {
+      font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #6A6D73;
+      text-transform: uppercase; letter-spacing: .08em; margin-bottom: 20px;
+    }
+    .pricing-h2 { font-size: clamp(64px,9vw,128px); line-height: 0.9; margin: 0; font-weight: 800; letter-spacing: -0.055em; color: #0E0F12; }
+    .pricing-h2 em { font-style: italic; color: #3A2BFF; }
+    .pricing-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; align-items: start; }
+    .card-pricing { padding: 32px 28px; border-radius: 32px; display: flex; flex-direction: column; position: relative; }
+    .card-pricing-badge {
+      position: absolute; top: -16px; left: 50%;
+      transform: translateX(-50%) rotate(-3deg);
+      background: #FF4D2E; color: #fff; padding: 8px 18px; border-radius: 999px;
+      font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; white-space: nowrap;
+    }
+    .card-pricing-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 4px; }
+    .card-pricing-name { font-size: 30px; font-weight: 700; letter-spacing: -0.03em; }
+    .card-pricing-num { font-family: 'JetBrains Mono', monospace; font-size: 12px; opacity: .5; }
+    .card-pricing-tag { font-size: 14px; opacity: .7; margin-bottom: 32px; }
+    .card-pricing-price { display: flex; align-items: baseline; gap: 6px; margin-bottom: 6px; }
+    .card-pricing-chf { font-size: 18px; opacity: .6; }
+    .card-pricing-amount { font-size: 96px; font-weight: 800; letter-spacing: -0.06em; line-height: 0.9; }
+    .card-pricing-suffix { font-size: 18px; opacity: .6; }
+    .card-pricing-sub { font-family: 'JetBrains Mono', monospace; font-size: 12px; opacity: .5; margin-bottom: 24px; }
+    .card-pricing-list { flex: 1; }
+    .card-pricing-item { display: flex; gap: 10px; padding: 9px 0; font-size: 14px; align-items: flex-start; }
+    .check-circle {
+      width: 18px; height: 18px; border-radius: 50%; color: #fff;
+      display: inline-flex; align-items: center; justify-content: center;
+      font-size: 11px; flex-shrink: 0; margin-top: 1px;
+    }
+    .card-pricing-cta {
+      margin-top: 24px; padding: 16px 20px; border-radius: 999px; color: #fff;
+      font-weight: 600; font-size: 15px; display: flex; justify-content: space-between; align-items: center;
+    }
+    .card-pricing-delivery { margin-top: 12px; font-family: 'JetBrains Mono', monospace; font-size: 11px; opacity: .5; text-align: center; }
+    .pricing-footnote { text-align: center; margin-top: 40px; font-size: 14px; color: #6A6D73; font-family: 'JetBrains Mono', monospace; }
+
+    /* ── Process ── */
+    .process { padding: 0 32px 96px; }
+    .process-card {
+      max-width: 1360px; margin: 0 auto; padding: 72px 56px;
+      background: #3A2BFF; color: #fff; border-radius: 48px;
+      position: relative; overflow: hidden;
+    }
+    .process-deco {
+      position: absolute; top: -80px; right: -80px; width: 320px; height: 320px;
+      border-radius: 50%; background: #FF4D2E; opacity: .85; pointer-events: none;
+    }
+    .process-label { font-family: 'JetBrains Mono', monospace; font-size: 12px; opacity: .8; text-transform: uppercase; letter-spacing: .08em; margin-bottom: 20px; }
+    .process-h2 { font-size: clamp(52px,7vw,100px); line-height: 0.95; margin: 0; font-weight: 800; letter-spacing: -0.05em; max-width: 860px; }
+    .process-h2 em { font-style: italic; color: #FEF08A; }
+    .process-steps { margin-top: 80px; display: grid; grid-template-columns: repeat(5,1fr); gap: 20px; position: relative; }
+    .process-line { position: absolute; top: 14px; left: 5%; right: 5%; height: 2px; background: rgba(255,255,255,0.25); pointer-events: none; }
+    .process-step { position: relative; z-index: 2; }
+    .process-step-num {
+      width: 30px; height: 30px; border-radius: 50%;
+      background: #fff; color: #3A2BFF;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px; font-weight: 700; margin-bottom: 24px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .process-step-title { font-size: 26px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 10px; }
+    .process-step-desc { font-size: 14px; line-height: 1.5; opacity: .85; }
+
+    /* ── Portfolio ── */
+    .portfolio { padding: 0 32px 96px; }
+    .portfolio-head { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 48px; flex-wrap: wrap; gap: 24px; }
+    .portfolio-h2 { font-size: clamp(56px,7vw,96px); line-height: 0.95; margin: 0; font-weight: 700; letter-spacing: -0.05em; color: #0E0F12; }
+    .portfolio-all { color: #0E0F12; font-size: 16px; font-weight: 500; border-bottom: 2px solid #0E0F12; padding-bottom: 4px; }
+    .portfolio-item { cursor: pointer; }
+    .portfolio-thumb-wrap { overflow: hidden; border-radius: 20px; height: 280px; margin-bottom: 16px; }
+    .portfolio-thumb { width: 100%; height: 100%; transition: transform .6s cubic-bezier(.2,.8,.2,1); }
+    .portfolio-item:hover .portfolio-thumb { transform: scale(1.05); }
+    .portfolio-meta { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
+    .portfolio-name { font-size: 22px; font-weight: 600; letter-spacing: -0.02em; color: #0E0F12; }
+    .portfolio-cat { font-size: 13px; color: #6A6D73; margin-top: 4px; }
+    .portfolio-year { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #6A6D73; flex-shrink: 0; }
+
+    /* ── FAQ ── */
+    .faq { padding: 96px 32px; }
+    .faq-inner { max-width: 1040px; margin: 0 auto; }
+    .faq-label { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #6A6D73; text-transform: uppercase; letter-spacing: .08em; margin-bottom: 20px; }
+    .faq-h2 { font-size: clamp(56px,8vw,96px); line-height: 0.95; margin: 0; font-weight: 800; letter-spacing: -0.05em; color: #0E0F12; }
+    .faq-h2 em { font-style: italic; color: #3A2BFF; }
+    .faq-item {
+      margin-bottom: 12px; padding: 24px 28px; border-radius: 24px; cursor: pointer;
+      transition: background .25s, color .25s;
+    }
+    .faq-item.closed { background: #F4F2EC; color: #0E0F12; border: 1px solid rgba(14,15,18,0.12); }
+    .faq-item.open   { background: #0E0F12; color: #F4F2EC; border: 1px solid transparent; }
+    .faq-row { display: flex; justify-content: space-between; align-items: center; gap: 24px; }
+    .faq-q { font-size: clamp(17px,1.4vw,22px); font-weight: 600; letter-spacing: -0.02em; }
+    .faq-toggle {
+      width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; color: #fff; transition: all .25s; border: none; cursor: pointer;
+    }
+    .faq-item.closed .faq-toggle { background: #0E0F12; transform: rotate(0deg); }
+    .faq-item.open   .faq-toggle { background: #3A2BFF; transform: rotate(45deg); }
+    .faq-answer { overflow: hidden; font-size: 16px; line-height: 1.55; transition: max-height .35s, opacity .3s, margin-top .25s; }
+    .faq-item.closed .faq-answer { max-height: 0; opacity: 0; margin-top: 0; }
+    .faq-item.open   .faq-answer { max-height: 200px; opacity: .85; margin-top: 14px; }
+
+    /* ── Contact ── */
+    .contact { padding: 0 32px 96px; }
+    .contact-card {
+      max-width: 1360px; margin: 0 auto; padding: 72px 56px 64px;
+      background: #0E0F12; color: #F4F2EC; border-radius: 48px;
+      display: grid; grid-template-columns: 1.1fr 1fr; gap: 64px;
+      position: relative; overflow: hidden;
+    }
+    .contact-glow {
+      position: absolute; bottom: -140px; left: -80px; width: 380px; height: 380px;
+      border-radius: 50%; background: #3A2BFF; opacity: .2; filter: blur(50px); pointer-events: none;
+    }
+    .contact-label { font-family: 'JetBrains Mono', monospace; font-size: 12px; opacity: .6; text-transform: uppercase; letter-spacing: .08em; margin-bottom: 20px; }
+    .contact-h2 { font-size: clamp(52px,6vw,100px); line-height: 0.9; margin: 0; font-weight: 800; letter-spacing: -0.055em; }
+    .contact-h2 em { color: #3A2BFF; font-style: italic; }
+    .contact-details { margin-top: 48px; display: grid; gap: 24px; }
+    .contact-detail-label { font-size: 11px; opacity: .5; margin-bottom: 4px; font-family: 'JetBrains Mono', monospace; text-transform: uppercase; letter-spacing: .08em; }
+    .contact-detail-val { font-size: 20px; font-weight: 500; }
+    .contact-detail-val a { color: #F4F2EC; }
+    .contact-detail-val.small { font-size: 15px; opacity: .7; }
+    .contact-form { display: grid; gap: 14px; position: relative; }
+    .form-input, .form-textarea {
+      padding: 18px 22px; border-radius: 999px;
+      border: 1.5px solid rgba(255,255,255,0.15);
+      background: rgba(255,255,255,0.05); color: #F4F2EC;
+      outline: none; font-size: 15px; width: 100%;
+    }
+    .form-input::placeholder, .form-textarea::placeholder { color: rgba(244,242,236,0.4); }
+    .form-textarea { border-radius: 24px; resize: none; }
+    .form-radios { display: flex; gap: 8px; flex-wrap: wrap; }
+    .form-radio-label {
+      padding: 10px 16px; border-radius: 999px;
+      border: 1.5px solid rgba(255,255,255,0.18);
+      font-size: 13px; cursor: pointer; color: #F4F2EC;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .form-submit {
+      padding: 20px 28px; border-radius: 999px; background: #3A2BFF; color: #fff;
+      border: none; font-size: 16px; font-weight: 700; cursor: pointer;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .contact-success {
+      display: none; flex-direction: column; justify-content: center;
+      align-items: center; height: 100%; gap: 20px; text-align: center;
+    }
+    .contact-success.show { display: flex; }
+    .contact-success-icon { width: 64px; height: 64px; border-radius: 50%; background: #8DFE4C; display: flex; align-items: center; justify-content: center; font-size: 28px; color: #0E0F12; }
+    .contact-success h3 { font-size: 32px; font-weight: 700; margin: 0; letter-spacing: -0.03em; }
+    .contact-success p { opacity: .7; margin: 0; font-size: 16px; }
+
+    /* ── Footer ── */
+    .footer { padding: 48px 32px 32px; border-top: 1px solid rgba(14,15,18,0.12); }
+    .footer-inner { max-width: 1360px; margin: 0 auto; }
+    .footer-top { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 24px; padding-bottom: 32px; border-bottom: 1px solid rgba(14,15,18,0.12); }
+    .footer-logo { display: flex; align-items: center; gap: 12px; }
+    .footer-logo-mark { width: 28px; height: 28px; border-radius: 50%; background: #3A2BFF; position: relative; flex-shrink: 0; }
+    .footer-logo-mark::after { content: ''; position: absolute; inset: 7px; border-radius: 50%; background: #FF4D2E; }
+    .footer-wordmark { font-weight: 800; font-size: 20px; letter-spacing: -0.04em; color: #0E0F12; }
+    .footer-nav { display: flex; gap: 24px; flex-wrap: wrap; }
+    .footer-nav a { color: #0E0F12; font-size: 14px; }
+    .footer-nav a:hover { opacity: .6; }
+    .footer-bottom { margin-top: 24px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; color: #6A6D73; font-size: 12px; font-family: 'JetBrains Mono', monospace; text-transform: uppercase; letter-spacing: .06em; }
+    .footer-utils { display: flex; gap: 16px; flex-wrap: wrap; }
+    .footer-utils a { color: #0E0F12; }
+    .footer-utils a:hover { opacity: .6; }
+
+    /* ── Responsive ── */
+    @media (max-width: 1024px) {
+      .grid-3 { grid-template-columns: repeat(2,1fr); }
+      .pricing-grid { grid-template-columns: 1fr; max-width: 500px; margin: 0 auto; }
+      .card-pricing[data-popular] { transform: none; }
+      .process-steps { grid-template-columns: repeat(3,1fr); }
+      .contact-card { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 768px) {
+      .hero-card { padding: 48px 28px 40px; }
+      .hero-sub { grid-template-columns: 1fr; gap: 32px; }
+      .hero-btns { justify-content: flex-start; }
+      .hero-orb { width: 240px; height: 240px; }
+      .hero-blob { display: none; }
+      .grid-3 { grid-template-columns: 1fr; }
+      .process-steps { grid-template-columns: 1fr 1fr; gap: 32px; }
+      .process-line { display: none; }
+      .process-card { padding: 48px 32px; }
+      .contact-card { padding: 48px 28px; gap: 40px; }
+      .nav-links { display: none; }
+      .nav-cta  { display: none; }
+      .nav-mobile-btn { display: flex; }
+      .services-head { flex-direction: column; align-items: flex-start; }
+      .portfolio-head { flex-direction: column; align-items: flex-start; }
+      .footer-nav { display: none; }
+    }
+    @media (max-width: 480px) {
+      .hero, .services, .pricing, .faq { padding-left: 16px; padding-right: 16px; }
+      .process, .portfolio, .contact { padding-left: 16px; padding-right: 16px; }
+      .footer { padding-left: 16px; padding-right: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <a href="#" class="nav-logo">
+    <div class="nav-logo-mark"></div>
+    <span class="nav-wordmark">ictira®</span>
+  </a>
+  <div class="nav-links">
+    <a href="#leistungen">Leistungen</a>
+    <a href="#preise">Preise</a>
+    <a href="#prozess">Prozess</a>
+    <a href="#arbeiten">Arbeiten</a>
+    <a href="#faq">FAQ</a>
+  </div>
+  <a href="#kontakt" class="nav-cta">
+    <span class="nav-cta-dot"></span>
+    3 Plätze frei · Q2/26
+  </a>
+  <button class="nav-mobile-btn" id="navMobileBtn" aria-label="Menü öffnen">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="nav-mobile-menu" id="navMobileMenu">
+  <a href="#leistungen">Leistungen</a>
+  <a href="#preise">Preise</a>
+  <a href="#prozess">Prozess</a>
+  <a href="#arbeiten">Arbeiten</a>
+  <a href="#faq">FAQ</a>
+  <a href="#kontakt" style="color:#3A2BFF;font-weight:700;">Gespräch buchen →</a>
+</div>
+
+<main>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-card">
+    <div class="hero-orb"></div>
+    <div class="hero-blob"></div>
+    <div class="hero-meta">
+      <span>→ Webdesign-Studio aus Basel</span>
+      <span>Stand: April 2026</span>
+    </div>
+    <div class="reveal">
+      <h1 class="hero-h1">
+        Deine<br/>
+        Website,<br/>
+        <span class="hero-h1-gradient">fertig.</span>
+      </h1>
+    </div>
+    <div class="hero-sub">
+      <div class="reveal" data-delay="100">
+        <p class="hero-body">
+          Wir bauen schnelle, eigenständige Websites zum Fixpreis. Keine Agentur-Rechnung, die nach drei Monaten explodiert. Du weisst ab Tag eins, was du bekommst — und was es kostet.
+        </p>
+      </div>
+      <div class="reveal hero-btns" data-delay="200">
+        <a href="#preise" class="btn-pill-light">Pakete ansehen →</a>
+        <a href="#kontakt" class="btn-pill-ghost">Gespräch buchen</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="marquee-strip-1">
+    <div class="marquee-wrap">
+      <div class="marquee-track" id="marquee1">
+        <div class="marquee-inner-1">
+          <span>CHF 790 · Onepager</span><span>✦</span>
+          <span>CHF 1490 · Bis 5 Seiten</span><span>✦</span>
+          <span>CHF 2990 · Grössere Sites</span><span>✦</span>
+          <span>Fixpreis, garantiert</span><span>✦</span>
+        </div>
+        <div class="marquee-inner-1" aria-hidden="true">
+          <span>CHF 790 · Onepager</span><span>✦</span>
+          <span>CHF 1490 · Bis 5 Seiten</span><span>✦</span>
+          <span>CHF 2990 · Grössere Sites</span><span>✦</span>
+          <span>Fixpreis, garantiert</span><span>✦</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="marquee-strip-2">
+    <div class="marquee-wrap">
+      <div class="marquee-track" id="marquee2">
+        <div class="marquee-inner-2">
+          <span>Basel</span><span>·</span><span>Aarau</span><span>·</span>
+          <span>Solothurn</span><span>·</span><span>Liestal</span><span>·</span>
+          <span>Olten</span><span>·</span><span>Baden</span><span>·</span>
+        </div>
+        <div class="marquee-inner-2" aria-hidden="true">
+          <span>Basel</span><span>·</span><span>Aarau</span><span>·</span>
+          <span>Solothurn</span><span>·</span><span>Liestal</span><span>·</span>
+          <span>Olten</span><span>·</span><span>Baden</span><span>·</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="leistungen" class="services">
+  <div class="section-inner">
+    <div class="services-head">
+      <div>
+        <div class="section-label">
+          <span class="section-label-dot"></span>
+          Was wir können
+        </div>
+        <div class="reveal">
+          <h2 class="services-h2">Full-Stack<br/>Webdesign.</h2>
+        </div>
+      </div>
+      <p class="services-desc">
+        Ein kleines Team mit grossem Anspruch. Von der Strategie bis zum Betrieb — alles aus einer Hand, kein Jonglieren mit Freelancern.
+      </p>
+    </div>
+    <div class="grid-3">
+      <div class="reveal card-service" data-delay="0" style="background:#0E0F12;color:#F4F2EC;">
+        <div class="card-service-idx">01 / 06</div>
+        <div>
+          <div class="card-service-title">Strategie</div>
+          <div class="card-service-desc">Wir klären Zielgruppe, Botschaft und Struktur — bevor eine einzige Linie gezogen wird.</div>
+        </div>
+      </div>
+      <div class="reveal card-service" data-delay="60" style="background:#3A2BFF;color:#fff;">
+        <div class="card-service-idx">02 / 06</div>
+        <div>
+          <div class="card-service-title">Design</div>
+          <div class="card-service-desc">Individuelles Design, kein Template-Kit. Typografie, Farbe und Bild im Einklang.</div>
+        </div>
+      </div>
+      <div class="reveal card-service" data-delay="120" style="background:#F4F2EC;color:#0E0F12;border:1px solid rgba(14,15,18,0.12);">
+        <div class="card-service-idx">03 / 06</div>
+        <div>
+          <div class="card-service-title">Entwicklung</div>
+          <div class="card-service-desc">Sauberer Code, schnelle Ladezeiten, zugängliche Strukturen. Nach CH-DSG gehostet.</div>
+        </div>
+      </div>
+      <div class="reveal card-service" data-delay="80" style="background:#FF4D2E;color:#fff;">
+        <div class="card-service-idx">04 / 06</div>
+        <div>
+          <div class="card-service-title">Content</div>
+          <div class="card-service-desc">Texte, Bildauswahl und Struktur — wir begleiten dich vom Briefing bis zum Golive.</div>
+        </div>
+      </div>
+      <div class="reveal card-service" data-delay="160" style="background:#F4F2EC;color:#0E0F12;border:1px solid rgba(14,15,18,0.12);">
+        <div class="card-service-idx">05 / 06</div>
+        <div>
+          <div class="card-service-title">SEO</div>
+          <div class="card-service-desc">Technisches SEO, saubere Metadaten und Core Web Vitals im grünen Bereich.</div>
+        </div>
+      </div>
+      <div class="reveal card-service" data-delay="240" style="background:#0E0F12;color:#F4F2EC;">
+        <div class="card-service-idx">06 / 06</div>
+        <div>
+          <div class="card-service-title">Betrieb</div>
+          <div class="card-service-desc">Hosting, Updates und kleine Anpassungen über Retainer — transparent abgerechnet.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="preise" class="pricing">
+  <div class="section-inner">
+    <div class="reveal" style="text-align:center;margin-bottom:64px;">
+      <div class="pricing-label">★ &nbsp;Transparente Preise&nbsp; ★</div>
+      <h2 class="pricing-h2">
+        Drei Pakete.<br/>
+        <em>Null Bullshit.</em>
+      </h2>
+    </div>
+    <div class="pricing-grid">
+      <!-- Onepager -->
+      <div class="reveal card-pricing" data-delay="0" style="background:#F4F2EC;color:#0E0F12;border:1px solid rgba(14,15,18,0.12);">
+        <div class="card-pricing-head">
+          <div class="card-pricing-name">Onepager</div>
+          <div class="card-pricing-num">01/03</div>
+        </div>
+        <div class="card-pricing-tag">Für Solopreneure, Events &amp; Launch-Pages</div>
+        <div class="card-pricing-price">
+          <div class="card-pricing-chf">CHF</div>
+          <div class="card-pricing-amount">790</div>
+          <div class="card-pricing-suffix">.–</div>
+        </div>
+        <div class="card-pricing-sub">einmalig · exkl. MwSt</div>
+        <ul class="card-pricing-list">
+          <li class="card-pricing-item"><span class="check-circle" style="background:#0E0F12;">✓</span>Eine Seite, klar strukturiert</li>
+          <li class="card-pricing-item"><span class="check-circle" style="background:#0E0F12;">✓</span>Individuelles Design</li>
+          <li class="card-pricing-item"><span class="check-circle" style="background:#0E0F12;">✓</span>Mobile-first, 100 % responsive</li>
+          <li class="card-pricing-item"><span class="check-circle" style="background:#0E0F12;">✓</span>Kontaktformular &amp; Google-Maps</li>
+          <li class="card-pricing-item"><span class="check-circle" style="background:#0E0F12;">✓</span>SEO-Basics &amp; Performance-Tuning</li>
+          <li class="card-pricing-item"><span class="check-circle" style="background:#0E0F12;">✓</span>Domain &amp; Hosting-Setup</li>
+          <li class="card-pricing-item"><span class="check-circle" style="background:#0E0F12;">✓</span>Zwei Revisions-Runden</li>
+        </ul>
+        <a href="#kontakt" class="card-pricing-cta" style="background:#0E0F12;">
+          <span>Onepager wählen</span><span>→</span>
+        </a>
+        <div class="card-pricing-delivery">Lieferung: ca. 2 Wochen</div>
+      </div>
+
+      <!-- Standard (popular) -->
+      <div class="reveal card-pricing" data-delay="80" data-popular style="background:#0E0F12;color:#F4F2EC;transform:scale(1.04);box-shadow:0 30px 80px rgba(58,43,255,0.2);">
+        <div class="card-pricing-badge">Most Popular</div>
+        <div class="card-pricing-head">
+          <div class="card-pricing-name">Standard</div>
+          <div class="card-pricing-num">02/03</div>
+        </div>
+        <div class="card-pricing-tag">Für KMU, Vereine &amp; kleine Teams</div>
+        <div class="card-pricing-price">
+          <div class="card-pricing-chf">CHF</div>
+          <div class="card-pricing-amount">1490</div>
+          <div class="card-pricing-suffix">.–</div>
+        </div>
+        <div class="card-pricing-sub">einmalig · exkl. MwSt</div>
+        <ul class="card-pricing-list">
+          <li class="card-pricing-item"><span class="check-circle" style="background:#3A2BFF;">✓</span>Bis zu 5 Seiten nach Mass</li>
+          <li class="card-pricing-item"><span class="check-circle" style="background:#3A2BFF;">✓</span>CMS zum selber pflegen</li>
+          <li class="card-pricing-item"><span class="check-circle" style="background:#3A2BFF;">✓</span>Mehrsprachigkeit (DE / FR / EN)</li>
+          <li class="card-pricing-item"><span class="check-circle" style="background:#3A2BFF;">✓</span>Blog oder News-Modul</li>
+          <li class="card-pricing-item"><span class="check-circle" style="background:#3A2BFF;">✓</span>SEO-Optimierung pro Seite</li>
+          <li class="card-pricing-item"><span class="check-circle" style="background:#3A2BFF;">✓</span>Datenschutz nach CH-DSG</li>
+          <li class="card-pricing-item"><span class="check-circle" style="background:#3A2BFF;">✓</span>Drei Revisions-Runden</li>
+        </ul>
+        <a href="#kontakt" class="card-pricing-cta" style="background:#3A2BFF;">
+          <span>Standard wählen</span><span>→</span>
+        </a>
+        <div class="card-pricing-delivery">Lieferung: ca. 3 Wochen</div>
+      </div>
+
+      <!-- Grösser -->
+      <div class="reveal card-pricing" data-delay="160" style="background:#F4F2EC;color:#0E0F12;border:1px solid rgba(14,15,18,0.12);">
+        <div class="card-pricing-head">
+          <div class="card-pricing-name">Grösser</div>
+          <div class="card-pricing-num">03/03</div>
+        </div>
+        <div class="card-pricing-tag">Für wachsende Firmen mit grösserem Bedarf</div>
+        <div class="card-pricing-price">
+          <div class="card-pricing-chf">CHF</div>
+          <div class="card-pricing-amount">2990</div>
+          <div class="card-pricing-suffix">.–</div>
+        </div>
+        <div class="card-pricing-sub">einmalig · exkl. MwSt</div>
+        <ul class="card-pricing-list">
+          <li class="card-pricing-item"><span class="check-circle" style="background:#0E0F12;">✓</span>6 bis 20 Seiten, modular aufgebaut</li>
+          <li class="card-pricing-item"><span class="check-circle" style="background:#0E0F12;">✓</span>Custom Design-System</li>
+          <li class="card-pricing-item"><span class="check-circle" style="background:#0E0F12;">✓</span>Erweitertes CMS &amp; Rollen</li>
+          <li class="card-pricing-item"><span class="check-circle" style="background:#0E0F12;">✓</span>E-Mail-Integration &amp; Formulare</li>
+          <li class="card-pricing-item"><span class="check-circle" style="background:#0E0F12;">✓</span>Analytics &amp; Tracking-Setup</li>
+          <li class="card-pricing-item"><span class="check-circle" style="background:#0E0F12;">✓</span>Persönliches Onboarding</li>
+          <li class="card-pricing-item"><span class="check-circle" style="background:#0E0F12;">✓</span>Unbegrenzte Revisionen</li>
+        </ul>
+        <a href="#kontakt" class="card-pricing-cta" style="background:#0E0F12;">
+          <span>Grösser wählen</span><span>→</span>
+        </a>
+        <div class="card-pricing-delivery">Lieferung: ca. 4–6 Wochen</div>
+      </div>
+    </div>
+
+    <div class="reveal pricing-footnote" data-delay="100">
+      Alle Preise exkl. MwSt. · Hosting &amp; Domain werden separat ausgewiesen · Bezahlung nach Projektstart 50% / nach Launch 50%
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="prozess" class="process">
+  <div class="process-card">
+    <div class="process-deco"></div>
+    <div style="position:relative;z-index:2;">
+      <div class="process-label">◊ Ablauf</div>
+      <div class="reveal">
+        <h2 class="process-h2">
+          Von Hallo bis Live in <em>wenigen Wochen.</em>
+        </h2>
+      </div>
+      <div class="process-steps">
+        <div class="process-line"></div>
+        <div class="reveal process-step" data-delay="0">
+          <div class="process-step-num">01</div>
+          <div class="process-step-title">Gespräch</div>
+          <div class="process-step-desc">30 Minuten kostenlos. Wir hören zu und finden raus, was du wirklich brauchst.</div>
+        </div>
+        <div class="reveal process-step" data-delay="60">
+          <div class="process-step-num">02</div>
+          <div class="process-step-title">Angebot</div>
+          <div class="process-step-desc">Fixpreis auf Papier. Du weisst vor dem Start, was es kostet — keine Überraschungen.</div>
+        </div>
+        <div class="reveal process-step" data-delay="120">
+          <div class="process-step-num">03</div>
+          <div class="process-step-title">Design</div>
+          <div class="process-step-desc">Zwei Entwürfe, ein Gewinner. Wir iterieren gemeinsam bis es sitzt.</div>
+        </div>
+        <div class="reveal process-step" data-delay="180">
+          <div class="process-step-num">04</div>
+          <div class="process-step-title">Build</div>
+          <div class="process-step-desc">Wir bauen, testen, optimieren. Du bekommst Zwischenstände zum Feedback.</div>
+        </div>
+        <div class="reveal process-step" data-delay="240">
+          <div class="process-step-num">05</div>
+          <div class="process-step-title">Launch</div>
+          <div class="process-step-desc">Golive, Einschulung und Übergabe. Dann bist du selbständig — oder wir bleiben dran.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section id="arbeiten" class="portfolio">
+  <div class="section-inner">
+    <div class="portfolio-head">
+      <div class="reveal">
+        <h2 class="portfolio-h2">Frisch<br/>gelauncht.</h2>
+      </div>
+      <a href="#" class="portfolio-all">Alle 24 Projekte →</a>
+    </div>
+    <div class="grid-3">
+      <div class="reveal portfolio-item" data-delay="0">
+        <div class="portfolio-thumb-wrap">
+          <div class="portfolio-thumb" style="background:repeating-linear-gradient(45deg,#0E0F12 0 2px,transparent 2px 14px);"></div>
+        </div>
+        <div class="portfolio-meta">
+          <div>
+            <div class="portfolio-name">Metzgerei Brunner</div>
+            <div class="portfolio-cat">Handwerk · Basel</div>
+          </div>
+          <div class="portfolio-year">2025</div>
+        </div>
+      </div>
+      <div class="reveal portfolio-item" data-delay="60">
+        <div class="portfolio-thumb-wrap">
+          <div class="portfolio-thumb" style="background:radial-gradient(circle at 30% 30%,#3A2BFF,#0E0F12);"></div>
+        </div>
+        <div class="portfolio-meta">
+          <div>
+            <div class="portfolio-name">Atelier Widmer</div>
+            <div class="portfolio-cat">Architektur · Aarau</div>
+          </div>
+          <div class="portfolio-year">2025</div>
+        </div>
+      </div>
+      <div class="reveal portfolio-item" data-delay="120">
+        <div class="portfolio-thumb-wrap">
+          <div class="portfolio-thumb" style="background:linear-gradient(135deg,#FF4D2E,#FFC107);"></div>
+        </div>
+        <div class="portfolio-meta">
+          <div>
+            <div class="portfolio-name">Praxis Dr. Meier</div>
+            <div class="portfolio-cat">Medizin · Solothurn</div>
+          </div>
+          <div class="portfolio-year">2024</div>
+        </div>
+      </div>
+      <div class="reveal portfolio-item" data-delay="80">
+        <div class="portfolio-thumb-wrap">
+          <div class="portfolio-thumb" style="background:repeating-linear-gradient(0deg,#0E0F12 0 2px,#F4F2EC 2px 16px);"></div>
+        </div>
+        <div class="portfolio-meta">
+          <div>
+            <div class="portfolio-name">Flux Coffee Roasters</div>
+            <div class="portfolio-cat">Gastro · Liestal</div>
+          </div>
+          <div class="portfolio-year">2024</div>
+        </div>
+      </div>
+      <div class="reveal portfolio-item" data-delay="160">
+        <div class="portfolio-thumb-wrap">
+          <div class="portfolio-thumb" style="background:conic-gradient(from 0deg at 50% 50%,#3A2BFF,#FF4D2E,#3A2BFF);"></div>
+        </div>
+        <div class="portfolio-meta">
+          <div>
+            <div class="portfolio-name">Alpin Consulting AG</div>
+            <div class="portfolio-cat">Beratung · Olten</div>
+          </div>
+          <div class="portfolio-year">2024</div>
+        </div>
+      </div>
+      <div class="reveal portfolio-item" data-delay="240">
+        <div class="portfolio-thumb-wrap">
+          <div class="portfolio-thumb" style="background:linear-gradient(135deg,#0E0F12,#3A2BFF);"></div>
+        </div>
+        <div class="portfolio-meta">
+          <div>
+            <div class="portfolio-name">Verein KunstRaum</div>
+            <div class="portfolio-cat">Kultur · Baden</div>
+          </div>
+          <div class="portfolio-year">2023</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" class="faq">
+  <div class="faq-inner">
+    <div class="reveal" style="text-align:center;margin-bottom:64px;">
+      <div class="faq-label">? FAQ ?</div>
+      <h2 class="faq-h2">
+        Oft gefragt,<br/>
+        <em>klar beantwortet.</em>
+      </h2>
+    </div>
+    <div id="faqList">
+      <div class="faq-item open">
+        <div class="faq-row">
+          <div class="faq-q">Sind die Preise wirklich fix?</div>
+          <button class="faq-toggle" aria-label="Antwort ein-/ausblenden">+</button>
+        </div>
+        <div class="faq-answer">Ja. Was im Angebot steht, steht im Angebot. Nur wenn du neue Seiten oder Funktionen willst, die nicht drin waren, sprechen wir über einen Zusatz — immer vorher, nie nachher.</div>
+      </div>
+      <div class="faq-item closed">
+        <div class="faq-row">
+          <div class="faq-q">Was ist nicht im Preis enthalten?</div>
+          <button class="faq-toggle" aria-label="Antwort ein-/ausblenden">+</button>
+        </div>
+        <div class="faq-answer">Domain-Gebühren (ca. CHF 15/Jahr), Hosting (ab CHF 15/Monat) und Drittanbieter-Lizenzen wie Premium-Plugins oder Bildrechte. Wir zeigen dir im Angebot genau, was extern anfällt.</div>
+      </div>
+      <div class="faq-item closed">
+        <div class="faq-row">
+          <div class="faq-q">Wie läuft die Zusammenarbeit ab?</div>
+          <button class="faq-toggle" aria-label="Antwort ein-/ausblenden">+</button>
+        </div>
+        <div class="faq-answer">Remote — per Call, Mail und einem gemeinsamen Projekt-Board. Falls du in der Nordwestschweiz sitzt, kommen wir gerne auch persönlich vorbei.</div>
+      </div>
+      <div class="faq-item closed">
+        <div class="faq-row">
+          <div class="faq-q">Wer schreibt die Texte?</div>
+          <button class="faq-toggle" aria-label="Antwort ein-/ausblenden">+</button>
+        </div>
+        <div class="faq-answer">Du schreibst, wir strukturieren und lektorieren. Wenn du keine Lust darauf hast, vermitteln wir dir eine Texterin aus unserem Netzwerk.</div>
+      </div>
+      <div class="faq-item closed">
+        <div class="faq-row">
+          <div class="faq-q">Könnt ihr unser bestehendes CMS übernehmen?</div>
+          <button class="faq-toggle" aria-label="Antwort ein-/ausblenden">+</button>
+        </div>
+        <div class="faq-answer">In der Regel bauen wir auf WordPress, Webflow oder Astro — je nachdem, was zu dir passt. Migrationen aus anderen Systemen sind möglich, wir klären das im ersten Gespräch.</div>
+      </div>
+      <div class="faq-item closed">
+        <div class="faq-row">
+          <div class="faq-q">Was kostet eine Anpassung nach dem Launch?</div>
+          <button class="faq-toggle" aria-label="Antwort ein-/ausblenden">+</button>
+        </div>
+        <div class="faq-answer">Kleine Sachen (Textänderungen, neue Bilder) im Stundensatz von CHF 120. Grössere Erweiterungen wieder zum Fixpreis.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="kontakt" class="contact">
+  <div class="contact-card">
+    <div class="contact-glow"></div>
+    <div style="position:relative;">
+      <div class="contact-label">→ Let's go</div>
+      <div class="reveal">
+        <h2 class="contact-h2">
+          Starten<br/>wir was <em>Cooles?</em>
+        </h2>
+      </div>
+      <div class="contact-details">
+        <div>
+          <div class="contact-detail-label">Email</div>
+          <div class="contact-detail-val"><a href="mailto:hallo@ictira.ch">hallo@ictira.ch</a></div>
+        </div>
+        <div>
+          <div class="contact-detail-label">Telefon</div>
+          <div class="contact-detail-val">+41 61 000 00 00</div>
+        </div>
+        <div>
+          <div class="contact-detail-label">Sitz</div>
+          <div class="contact-detail-val small">ictira GmbH · Freie Strasse 1 · 4001 Basel</div>
+        </div>
+      </div>
+    </div>
+    <div style="position:relative;">
+      <div id="contactSuccess" class="contact-success">
+        <div class="contact-success-icon">✓</div>
+        <h3>Danke! Wir melden uns bald.</h3>
+        <p>Meist innerhalb von 24 Stunden.</p>
+      </div>
+      <form id="contactForm" class="contact-form">
+        <input class="form-input" type="text" name="name" placeholder="Wie heisst du?" required />
+        <input class="form-input" type="email" name="email" placeholder="Deine Email" required />
+        <input class="form-input" type="text" name="firm" placeholder="Firma (optional)" />
+        <div class="form-radios">
+          <label class="form-radio-label"><input type="radio" name="pack" value="Onepager" />&nbsp;Onepager</label>
+          <label class="form-radio-label"><input type="radio" name="pack" value="Standard" />&nbsp;Standard</label>
+          <label class="form-radio-label"><input type="radio" name="pack" value="Grösser" />&nbsp;Grösser</label>
+          <label class="form-radio-label"><input type="radio" name="pack" value="Unsicher" />&nbsp;Unsicher</label>
+        </div>
+        <textarea class="form-textarea" name="message" placeholder="Erzähl uns kurz, was du vorhast…" rows="4"></textarea>
+        <button type="submit" class="form-submit">
+          <span>Anfrage abschicken</span><span>→</span>
+        </button>
+      </form>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <a href="#" class="footer-logo">
+        <div class="footer-logo-mark"></div>
+        <span class="footer-wordmark">ictira®</span>
+      </a>
+      <nav class="footer-nav">
+        <a href="#leistungen">Leistungen</a>
+        <a href="#preise">Preise</a>
+        <a href="#prozess">Prozess</a>
+        <a href="#arbeiten">Arbeiten</a>
+        <a href="#faq">FAQ</a>
+        <a href="#kontakt">Kontakt</a>
+      </nav>
+    </div>
+    <div class="footer-bottom">
+      <span>© ictira GmbH · 2026 · Nordwestschweiz · CHE-123.456.789 MWST</span>
+      <div class="footer-utils">
+        <a href="#">Impressum</a>
+        <a href="#">Datenschutz</a>
+        <a href="#">Instagram</a>
+        <a href="#">LinkedIn</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Nav scroll state
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 20);
+  }, { passive: true });
+
+  // Mobile nav toggle
+  const mobileBtn = document.getElementById('navMobileBtn');
+  const mobileMenu = document.getElementById('navMobileMenu');
+  mobileBtn.addEventListener('click', () => mobileMenu.classList.toggle('open'));
+  mobileMenu.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => mobileMenu.classList.remove('open'));
+  });
+
+  // Marquee animation
+  function setupMarquee(id, speed, reverse) {
+    const track = document.getElementById(id);
+    if (!track) return;
+    let x = 0;
+    const tick = () => {
+      const w = track.firstElementChild?.offsetWidth || 1200;
+      x -= speed * (reverse ? -1 : 1);
+      if (x < -w) x = 0;
+      if (x > 0) x = -w;
+      track.style.transform = `translateX(${x}px)`;
+      requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  }
+  setupMarquee('marquee1', 0.8, false);
+  setupMarquee('marquee2', 0.45, true);
+
+  // Reveal on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('in'); observer.unobserve(e.target); }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // FAQ accordion
+  const faqItems = document.querySelectorAll('.faq-item');
+  faqItems.forEach(item => {
+    item.addEventListener('click', () => {
+      const wasOpen = item.classList.contains('open');
+      faqItems.forEach(i => { i.classList.remove('open'); i.classList.add('closed'); });
+      if (!wasOpen) { item.classList.add('open'); item.classList.remove('closed'); }
+    });
+  });
+
+  // Contact form success state
+  const form = document.getElementById('contactForm');
+  const success = document.getElementById('contactSuccess');
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    form.style.display = 'none';
+    success.classList.add('show');
+  });
+</script>
+
+</body>
+</html>
