@@ -2,15 +2,15 @@
 const packages = [
   {
     name: 'Onepager',
-    price: '790',
+    price: '990',
     tag: 'Für Solopreneure, Events & Launch-Pages',
-    turnaround: 'ca. 2 Wochen',
+    turnaround: '7 Tage',
     popular: false,
     includes: [
       'Eine Seite, klar strukturiert',
-      'Individuelles Design',
+      'Einfaches Design',
       'Mobile-first, 100 % responsive',
-      'Kontaktformular & Google-Maps',
+      'Kontaktformular',
       'SEO-Basics & Performance-Tuning',
       'Domain & Hosting-Setup',
       'Zwei Revisions-Runden',
@@ -20,15 +20,15 @@ const packages = [
     name: 'Standard',
     price: '1490',
     tag: 'Für KMU, Vereine & kleine Teams',
-    turnaround: 'ca. 3 Wochen',
+    turnaround: '14 Tage',
     popular: true,
     includes: [
       'Bis zu 5 Seiten nach Mass',
-      'CMS zum selber pflegen',
-      'Mehrsprachigkeit (DE / FR / EN)',
-      'Blog oder News-Modul',
+      'Individuelles Design',
+      'Mobile-first, 100 % responsive',
+      'Kontaktformular & Google-Maps',
       'SEO-Optimierung pro Seite',
-      'Datenschutz nach CH-DSG',
+      'Domain & Hosting-Setup',
       'Drei Revisions-Runden',
     ],
   },
@@ -36,13 +36,13 @@ const packages = [
     name: 'Grösser',
     price: '2990',
     tag: 'Für wachsende Firmen mit grösserem Bedarf',
-    turnaround: 'ca. 4–6 Wochen',
+    turnaround: 'ca. 3-4 Wochen',
     popular: false,
     includes: [
-      '6 bis 20 Seiten, modular aufgebaut',
+      '6 bis 10 Seiten',
       'Custom Design-System',
-      'Erweitertes CMS & Rollen',
-      'E-Mail-Integration & Formulare',
+      'Mobile-first, 100 % responsive',
+      'Kontaktformular & Google-Maps',
       'Analytics & Tracking-Setup',
       'Persönliches Onboarding',
       'Unbegrenzte Revisionen',
@@ -79,7 +79,7 @@ const packages = [
             <span class="amount">{pkg.price}</span>
             <span class="suffix">.–</span>
           </div>
-          <div class="sub">einmalig · exkl. MwSt</div>
+          <div class="sub">einmalig · inkl. MwSt</div>
 
           <ul class="list">
             {pkg.includes.map(item => (
@@ -97,7 +97,7 @@ const packages = [
     </div>
 
     <div class="reveal footnote" data-delay="100">
-      Alle Preise exkl. MwSt. · Hosting &amp; Domain werden separat ausgewiesen ·
+      Alle Preise inkl. MwSt. · Hosting (CHF 9.90/Monat) &amp; Domain (CHF 19.90/Jahr) werden separat ausgewiesen ·
       Bezahlung nach Projektstart 50% / nach Launch 50%
     </div>
   </div>
