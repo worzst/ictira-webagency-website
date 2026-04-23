@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 40">
+  <!-- mark -->
+  <circle cx="20" cy="20" r="20" fill="#3A2BFF"/>
+  <circle cx="20" cy="20" r="10" fill="#FF4D2E"/>
+  <!-- wordmark -->
+  <text
+    x="50"
+    y="28"
+    font-family="'Inter Tight', system-ui, sans-serif"
+    font-weight="800"
+    font-size="27"
+    letter-spacing="-1.1"
+    fill="#0E0F12"
+  >ictira</text>
+</svg>

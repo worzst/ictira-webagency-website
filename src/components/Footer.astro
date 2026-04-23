@@ -16,8 +16,8 @@ const utilLinks = [
   <div class="inner section-inner">
     <div class="top">
       <a href="#" class="logo">
-        <div class="logo-mark"></div>
-        <span class="logo-wordmark">ictira®</span>
+        <img src="/logo-mark.svg" width="28" height="28" alt="" aria-hidden="true" />
+        <span class="logo-wordmark">ictira</span>
       </a>
       <nav class="nav">
         {navLinks.map(({ href, label }) => <a href={href}>{label}</a>)}
@@ -41,14 +41,6 @@ const utilLinks = [
     border-bottom: 1px solid var(--line);
   }
   .logo { display: flex; align-items: center; gap: 12px; }
-  .logo-mark {
-    width: 28px; height: 28px; border-radius: 50%;
-    background: var(--accent); position: relative; flex-shrink: 0;
-  }
-  .logo-mark::after {
-    content: ''; position: absolute; inset: 7px;
-    border-radius: 50%; background: var(--hot);
-  }
   .logo-wordmark { font-weight: 800; font-size: 20px; letter-spacing: -0.04em; color: var(--ink); }
 
   .nav { display: flex; gap: 24px; flex-wrap: wrap; }
