@@ -1,0 +1,98 @@
+---
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>{title} — ictira GmbH</title>
+  <meta name="robots" content="noindex" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,500;1,700;1,800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <Nav />
+  <main class="legal-page">
+    <div class="legal-inner section-inner">
+      <a href="/" class="back">← Zurück</a>
+      <h1>{title}</h1>
+      <div class="legal-content">
+        <slot />
+      </div>
+    </div>
+  </main>
+  <Footer />
+</body>
+</html>
+
+<style>
+  .legal-page {
+    padding: 80px 32px 96px;
+    min-height: 60vh;
+  }
+
+  .legal-inner {
+    max-width: 720px;
+  }
+
+  .back {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    color: var(--mute);
+    margin-bottom: 40px;
+  }
+  .back:hover { color: var(--ink); }
+
+  h1 {
+    font-size: clamp(28px, 5vw, 48px);
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    margin: 0 0 48px;
+  }
+
+  .legal-content :global(h2) {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin: 40px 0 12px;
+  }
+
+  .legal-content :global(h3) {
+    font-size: 15px;
+    font-weight: 600;
+    margin: 28px 0 8px;
+  }
+
+  .legal-content :global(p) {
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--mute);
+    margin: 0 0 16px;
+  }
+
+  .legal-content :global(a) {
+    color: var(--ink);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .legal-content :global(a:hover) { opacity: .6; }
+
+  @media (max-width: 480px) {
+    .legal-page { padding-left: 16px; padding-right: 16px; }
+  }
+</style>
