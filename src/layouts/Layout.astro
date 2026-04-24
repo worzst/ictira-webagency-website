@@ -27,12 +27,23 @@ const gtmId = import.meta.env.PUBLIC_GTM_ID ?? '';
   <script is:inline>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
+    // EEA + UK + CH: consent required by law
     gtag('consent', 'default', {
-      ad_storage:          'denied',
-      ad_user_data:        'denied',
-      ad_personalization:  'denied',
-      analytics_storage:   'denied',
-      wait_for_update:     500,
+      ad_storage:         'denied',
+      ad_user_data:       'denied',
+      ad_personalization: 'denied',
+      analytics_storage:  'denied',
+      wait_for_update:    500,
+      region: ['AT','BE','BG','CH','CY','CZ','DE','DK','EE','ES',
+               'FI','FR','GB','GR','HR','HU','IE','IS','IT','LI',
+               'LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'],
+    });
+    // All other regions: grant by default
+    gtag('consent', 'default', {
+      ad_storage:         'granted',
+      ad_user_data:       'granted',
+      ad_personalization: 'granted',
+      analytics_storage:  'granted',
     });
   </script>
 
