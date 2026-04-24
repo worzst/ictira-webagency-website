@@ -119,6 +119,11 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
     border: 1.5px solid rgba(255,255,255,0.18);
     font-size: 13px; cursor: pointer; color: var(--paper);
     display: flex; align-items: center; gap: 4px;
+    transition: border-color .2s, background .2s;
+  }
+  .radio-label:has(input:checked) {
+    background: rgba(255,255,255,0.12);
+    border-color: rgba(255,255,255,0.6);
   }
 
   .submit {

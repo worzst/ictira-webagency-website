@@ -90,7 +90,7 @@ const packages = [
             ))}
           </ul>
 
-          <a href="#kontakt" class="cta">{pkg.name} wählen <span>→</span></a>
+          <a href="#kontakt" class="cta" data-pack={pkg.name}>{pkg.name} wählen <span>→</span></a>
           <div class="delivery">Lieferung: {pkg.turnaround}</div>
         </div>
       ))}
@@ -180,3 +180,13 @@ const packages = [
     .pricing { padding-left: 16px; padding-right: 16px; }
   }
 </style>
+
+<script>
+  document.querySelectorAll('a[data-pack]').forEach(link => {
+    link.addEventListener('click', () => {
+      const pack = link.getAttribute('data-pack');
+      const radio = document.querySelector<HTMLInputElement>(`input[name="pack"][value="${pack}"]`);
+      if (radio) radio.checked = true;
+    });
+  });
+</script>
