@@ -45,6 +45,7 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
         <input class="field" type="text"  name="name"    placeholder="Wie heisst du?"    required />
         <input class="field" type="email" name="email"   placeholder="Deine Email"       required />
         <input class="field" type="text"  name="firm"    placeholder="Firma (optional)"          />
+        <input class="field" type="tel"   name="phone"   placeholder="Telefon (optional)"         />
 
         <div class="radios">
           {packages.map(pkg => (
