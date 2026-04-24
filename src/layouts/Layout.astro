@@ -1,14 +1,17 @@
 ---
 import CookieBanner from '../components/CookieBanner.astro';
+import '../styles/global.css';
 
 interface Props {
   title?: string;
   description?: string;
+  noindex?: boolean;
 }
 
 const {
   title = 'ictira GmbH — Webdesign zum Fixpreis',
   description = 'Schnelle, eigenständige Websites zum Fixpreis. Kein Agentur-Overhead. CHF 1490 / 1990 / 2990.',
+  noindex = false,
 } = Astro.props;
 
 const gtmId = import.meta.env.PUBLIC_GTM_ID ?? '';
@@ -21,6 +24,7 @@ const gtmId = import.meta.env.PUBLIC_GTM_ID ?? '';
   <title>{title}</title>
   <meta name="description" content={description} />
   <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site).href} />
+  {noindex && <meta name="robots" content="noindex" />}
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
   <!-- Consent Mode v2 defaults — must run before GTM -->

@@ -173,5 +173,5 @@ Local dev: `.env` for build vars, `.dev.vars` for runtime vars (both gitignored)
 1. **Portfolio** — unhide `Portfolio.astro` in `index.astro` + restore nav link when real screenshots ready (6 planned: Metzgerei Brunner, Atelier Widmer, Praxis Dr. Meier, Flux Coffee Roasters, Alpin Consulting AG, Verein KunstRaum)
 2. **Company phone** — uncomment Telefon block in `Contact.astro` left column once number is active
 3. **Resend domain** — verify sending domain in Resend dashboard
-4. **Google Ads** — create account + conversion action → get Conversion ID + Label → add Google Ads tag in GTM
+4. **Google Ads conversion tag in GTM** — create conversion action in Google Ads (Goals → Conversions → New → Website → "Submit lead form") → get Conversion ID (`AW-XXXXXXXXX`) + Conversion Label → in GTM add a "Google Ads Conversion Tracking" tag triggered by Custom Event `form_submit_success`. Do NOT use "Google tag found on your website" in campaign setup — it fails with permission denied because the tag belongs to the GA4 property, not the Ads account.
 5. **Logo SVG** — convert wordmark text to paths in `logo.svg` for print/Figma use
