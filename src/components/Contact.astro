@@ -187,6 +187,7 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
       if (res.ok) {
         form.style.display = 'none';
         success.classList.add('show');
+        (window as any).dataLayer?.push({ event: 'form_submit_success' });
       } else {
         throw new Error('server');
       }
