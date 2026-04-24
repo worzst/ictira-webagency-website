@@ -1,4 +1,6 @@
 ---
+import CookieBanner from '../components/CookieBanner.astro';
+
 interface Props {
   title?: string;
   description?: string;
@@ -6,8 +8,10 @@ interface Props {
 
 const {
   title = 'ictira GmbH — Webdesign zum Fixpreis',
-  description = 'Schnelle, eigenständige Websites zum Fixpreis. Kein Agentur-Overhead. CHF 790 / 1490 / 2990.',
+  description = 'Schnelle, eigenständige Websites zum Fixpreis. Kein Agentur-Overhead. CHF 1490 / 1990 / 2990.',
 } = Astro.props;
+
+const gtmId = import.meta.env.PUBLIC_GTM_ID ?? '';
 ---
 <!doctype html>
 <html lang="de">
@@ -18,17 +22,45 @@ const {
   <meta name="description" content={description} />
   <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site).href} />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+  <!-- Consent Mode v2 defaults — must run before GTM -->
+  <script is:inline>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('consent', 'default', {
+      ad_storage:          'denied',
+      ad_user_data:        'denied',
+      ad_personalization:  'denied',
+      analytics_storage:   'denied',
+      wait_for_update:     500,
+    });
+  </script>
+
+  <!-- Google Tag Manager -->
+  {gtmId && <script is:inline define:vars={{ gtmId }}>
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;
+    f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer',gtmId);
+  </script>}
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,500;1,700;1,800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
 </head>
 <body>
+  <!-- GTM noscript fallback -->
+  {gtmId && <noscript><iframe src={`https://www.googletagmanager.com/ns.html?id=${gtmId}`}
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>}
+
   <slot />
+  <CookieBanner />
 </body>
 </html>
 
 <script>
-  // Reveal on scroll — runs once, picks up all .reveal elements across every component
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(e => {
       if (e.isIntersecting) {

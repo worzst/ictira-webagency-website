@@ -1,0 +1,89 @@
+---
+---
+<div id="cookieBanner" class="banner" style="display:none" role="dialog" aria-label="Cookie-Einstellungen">
+  <p class="text">
+    Wir nutzen Cookies und andere Technologien zur optimierung unserer Webseite.
+    <a href="/datenschutz">Mehr erfahren</a>
+  </p>
+  <div class="actions">
+    <button id="cookieDecline" class="btn-decline">Ablehnen</button>
+    <button id="cookieAccept" class="btn-accept">Akzeptieren</button>
+  </div>
+</div>
+
+<style>
+  .banner {
+    position: fixed; bottom: 0; left: 0; right: 0; z-index: 200;
+    background: var(--paper); border-top: 1px solid var(--line);
+    padding: 16px 32px;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 24px; flex-wrap: wrap;
+  }
+
+  .text {
+    margin: 0; font-size: 13px; color: var(--mute); line-height: 1.5;
+  }
+  .text a {
+    color: var(--ink); text-decoration: underline; text-underline-offset: 3px;
+  }
+  .text a:hover { opacity: .6; }
+
+  .actions { display: flex; gap: 10px; flex-shrink: 0; }
+
+  .btn-decline {
+    padding: 10px 20px; border-radius: 999px; font-size: 13px; font-weight: 600;
+    background: transparent; color: var(--mute);
+    border: 1.5px solid var(--line); cursor: pointer;
+  }
+  .btn-decline:hover { border-color: var(--ink); color: var(--ink); }
+
+  .btn-accept {
+    padding: 10px 20px; border-radius: 999px; font-size: 13px; font-weight: 600;
+    background: var(--accent); color: #fff; border: none; cursor: pointer;
+  }
+  .btn-accept:hover { opacity: .85; }
+
+  @media (max-width: 480px) {
+    .banner { padding: 16px; }
+    .text { font-size: 12px; }
+  }
+</style>
+
+<script>
+  const CONSENT_KEY = 'ictira_consent';
+  const banner = document.getElementById('cookieBanner') as HTMLElement;
+
+  function updateConsent(granted: boolean) {
+    const val = granted ? 'granted' : 'denied';
+    // @ts-ignore
+    if (typeof gtag !== 'undefined') {
+      // @ts-ignore
+      gtag('consent', 'update', {
+        ad_storage: val,
+        ad_user_data: val,
+        ad_personalization: val,
+        analytics_storage: val,
+      });
+    }
+  }
+
+  const stored = localStorage.getItem(CONSENT_KEY);
+
+  if (stored === 'granted') {
+    updateConsent(true);
+  } else if (!stored) {
+    banner.style.display = 'flex';
+  }
+
+  document.getElementById('cookieAccept')!.addEventListener('click', () => {
+    localStorage.setItem(CONSENT_KEY, 'granted');
+    updateConsent(true);
+    banner.style.display = 'none';
+  });
+
+  document.getElementById('cookieDecline')!.addEventListener('click', () => {
+    localStorage.setItem(CONSENT_KEY, 'denied');
+    updateConsent(false);
+    banner.style.display = 'none';
+  });
+</script>
