@@ -143,9 +143,29 @@ Use `LegalLayout.astro` (noindex). Both pages have real company data filled in.
 
 ---
 
+## Form backend
+`functions/contact.ts` — Cloudflare Pages Function, POST to `/contact`, sends via Resend API.
+
+**Env vars** (set in Cloudflare Pages dashboard → Settings → Environment variables):
+| Variable | Where | Example |
+|---|---|---|
+| `RESEND_API_KEY` | Runtime | `re_abc123…` |
+| `CONTACT_TO` | Runtime | `hallo@ictira.com` |
+| `CONTACT_FROM` | Runtime | `kontakt@ictira.com` ← verified Resend domain |
+| `TURNSTILE_SECRET` | Runtime | from CF dashboard → Turnstile |
+| `PUBLIC_TURNSTILE_SITE_KEY` | Build | from CF dashboard → Turnstile |
+
+Spam protection: honeypot field (`_hp`) + Cloudflare Turnstile (token verified server-side).
+
+For local dev: create `.dev.vars` at project root with runtime keys, `.env` for `PUBLIC_TURNSTILE_SITE_KEY` (gitignore both).
+
+This function is the reusable template for all future client sites — copy `functions/contact.ts`, set env vars per site.
+
+---
+
 ## TODO
-1. **Contact form backend** — wire to Netlify Forms or Formspree; no backend needed
-2. **Portfolio section** — unhide when real project screenshots are available (6 projects listed above)
-3. **Phone number** — unhide Telefon block in `Contact.astro` once number is active
-4. **Deploy** — Netlify or Infomaniak (CH-DSG compliant); configure domain
+1. **Portfolio section** — unhide when real project screenshots are available (6 projects listed above)
+2. **Phone number** — unhide Telefon block in `Contact.astro` once number is active
+3. **Deploy** — Cloudflare Pages; configure domain, set env vars
+4. **Resend domain** — verify `ictira.com` as sending domain in Resend dashboard
 5. **Logo SVG paths** — convert wordmark text to paths in `logo.svg` for print/external use

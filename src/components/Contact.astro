@@ -1,5 +1,6 @@
 ---
 const packages = ['Onepager', 'Standard', 'Grösser', 'Unsicher'];
+const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
 ---
 <section id="kontakt" class="contact">
   <div class="card section-inner">
@@ -40,6 +41,7 @@ const packages = ['Onepager', 'Standard', 'Grösser', 'Unsicher'];
       </div>
 
       <form id="contactForm" class="form">
+        <input class="hp" type="text" name="_hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
         <input class="field" type="text"  name="name"    placeholder="Wie heisst du?"    required />
         <input class="field" type="email" name="email"   placeholder="Deine Email"       required />
         <input class="field" type="text"  name="firm"    placeholder="Firma (optional)"          />
@@ -54,9 +56,14 @@ const packages = ['Onepager', 'Standard', 'Grösser', 'Unsicher'];
 
         <textarea class="field textarea" name="message" placeholder="Erzähl uns kurz, was du vorhast…" rows="4"></textarea>
 
+        <div class="cf-turnstile" data-sitekey={turnstileSiteKey} data-theme="dark"></div>
+
         <button type="submit" class="submit">
-          <span>Anfrage abschicken</span><span>→</span>
+          <span id="submitLabel">Anfrage abschicken</span><span>→</span>
         </button>
+        <p id="contactError" class="error-msg" style="display:none">
+          Etwas ist schiefgelaufen. Bitte versuche es erneut oder schreib uns direkt an <a href="mailto:hallo@ictira.com">hallo@ictira.com</a>.
+        </p>
       </form>
     </div>
   </div>
@@ -133,6 +140,11 @@ const packages = ['Onepager', 'Standard', 'Grösser', 'Unsicher'];
   .success h3 { font-size: 32px; font-weight: 700; margin: 0; letter-spacing: -0.03em; }
   .success p  { opacity: .7; margin: 0; font-size: 16px; }
 
+  .error-msg { font-size: 13px; color: var(--hot); margin: 4px 0 0; line-height: 1.5; }
+  .error-msg a { color: var(--hot); text-decoration: underline; }
+
+  .hp { position: absolute; left: -9999px; opacity: 0; pointer-events: none; }
+
   @media (max-width: 1024px) {
     .card { grid-template-columns: 1fr; }
   }
@@ -145,12 +157,40 @@ const packages = ['Onepager', 'Standard', 'Grösser', 'Unsicher'];
 </style>
 
 <script>
-  const form    = document.getElementById('contactForm')!;
+  const form    = document.getElementById('contactForm') as HTMLFormElement;
   const success = document.getElementById('contactSuccess')!;
+  const errorEl = document.getElementById('contactError') as HTMLElement;
+  const label   = document.getElementById('submitLabel')!;
+  const btn     = form.querySelector('.submit') as HTMLButtonElement;
 
-  form.addEventListener('submit', e => {
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
-    (form as HTMLFormElement).style.display = 'none';
-    success.classList.add('show');
+
+    btn.disabled = true;
+    label.textContent = 'Wird gesendet…';
+    errorEl.style.display = 'none';
+
+    const data = Object.fromEntries(new FormData(form).entries());
+
+    try {
+      const res = await fetch('/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+
+      if (res.ok) {
+        form.style.display = 'none';
+        success.classList.add('show');
+      } else {
+        throw new Error('server');
+      }
+    } catch {
+      btn.disabled = false;
+      label.textContent = 'Anfrage abschicken';
+      errorEl.style.display = 'block';
+    }
   });
 </script>
+
+<script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
