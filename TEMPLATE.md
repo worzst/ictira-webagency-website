@@ -12,7 +12,7 @@ This repo is the canonical template for all ictira client websites. Every new cl
 | `src/layouts/Layout.astro` | GTM snippet, Consent Mode v2, CookieBanner import — all env-driven |
 | `src/layouts/LegalLayout.astro` | Generic structure, just update content pages |
 | `src/components/CookieBanner.astro` | Only `ictira_consent` key needs renaming (see below) |
-| `src/components/Nav.astro` | Structure + JS reusable; update logo, links, CTA copy |
+| `src/components/Nav.astro` | Structure + JS reusable; update logo, links, CTA copy. Nav link prefixing and logo scroll behaviour transfer automatically — see note below |
 | `src/components/Process.astro` | Structure reusable; update step labels if needed |
 | `src/components/Faq.astro` | Accordion logic reusable; swap Q&A content |
 | `src/components/Footer.astro` | Structure reusable; update logo + links |
@@ -32,6 +32,13 @@ Swap `--accent`, `--hot`, `--success`, `--yellow` for client brand colors. Font 
 ### 2. Logo assets (`public/`)
 Replace `favicon.svg`, `favicon.ico`, `logo-mark.svg`, `logo.svg` with client logo.
 Keep the same filenames or update all references in `Nav.astro`, `Footer.astro`, `Layout.astro`.
+
+### Nav link behaviour (built-in, no changes needed)
+`Nav.astro` automatically handles links correctly across all page types:
+- **Logo** — always `href="/"`. On the homepage, a JS listener intercepts the click and smooth-scrolls to top instead of reloading. On subpages it navigates normally.
+- **Section links + CTA** — prefix is computed from `Astro.url.pathname`: empty on `/` (smooth anchor scroll), `/` prefix on all subpages (navigates home then jumps to section).
+
+This works for any new page added to the site without touching `Nav.astro`. Just make sure any new page is rendered via `LegalLayout.astro` (or another layout that uses `<Nav />`).
 
 ### 3. Copy + content
 All German copy in components is ictira-specific. Every component's text content needs to be replaced. Key places:

@@ -83,6 +83,11 @@ Stagger: `data-delay="60|80|100|120|160|180|200|240|300"` (ms).
 ### Nav
 CSS Grid `1fr auto 1fr` — logo `justify-self:start`, CTA `justify-self:end`. Mobile: hamburger `grid-column:3; justify-self:end`. Adds `.scrolled` (blur bg) at scroll > 20px. CTA copy: "3 Plätze frei · Q2/26".
 
+**Link behaviour — always verify when adding pages:**
+- Logo: `href="/"` always. JS intercepts on homepage to smooth-scroll to top instead of reloading.
+- Nav section links + CTA: prefix is computed from `Astro.url.pathname` — empty string on `/`, leading `/` on all subpages. This means `#leistungen` on the homepage, `/#leistungen` on legal pages. Any new page using `Nav.astro` gets this automatically.
+- Mobile menu links follow the same prefix logic.
+
 ### Hero
 Marquee prices: `CHF 1490 · Onepager`, `CHF 1990 · Bis 5 Seiten`, `CHF 2990 · Grössere Sites`. RAF loop at 0.8px/frame (strip 1) and 0.45px/frame (strip 2, reversed).
 

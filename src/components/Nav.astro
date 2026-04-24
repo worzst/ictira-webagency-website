@@ -1,13 +1,15 @@
 ---
+const p = Astro.url.pathname === '/' ? '' : '/';
+
 const links = [
-  { href: '#leistungen', label: 'Leistungen' },
-  { href: '#preise',     label: 'Preise' },
-  { href: '#prozess',    label: 'Prozess' },
-  { href: '#faq',        label: 'FAQ' },
+  { href: `${p}#leistungen`, label: 'Leistungen' },
+  { href: `${p}#preise`,     label: 'Preise' },
+  { href: `${p}#prozess`,    label: 'Prozess' },
+  { href: `${p}#faq`,        label: 'FAQ' },
 ];
 ---
 <nav class="nav" id="nav">
-  <a href="#" class="logo">
+  <a href="/" class="logo">
     <img src="/logo-mark.svg" width="32" height="32" alt="" aria-hidden="true" />
     <span class="logo-wordmark">ictira</span>
   </a>
@@ -16,7 +18,7 @@ const links = [
     {links.map(({ href, label }) => <a href={href}>{label}</a>)}
   </div>
 
-  <a href="#kontakt" class="cta">
+  <a href={`${p}#kontakt`} class="cta">
     <span class="cta-dot"></span>
     3 Plätze frei · Q2/26
   </a>
@@ -28,7 +30,7 @@ const links = [
 
 <div class="mobile-menu" id="navMobileMenu">
   {links.map(({ href, label }) => <a href={href}>{label}</a>)}
-  <a href="#kontakt" class="mobile-cta">Gespräch buchen →</a>
+  <a href={`${p}#kontakt`} class="mobile-cta">Gespräch buchen →</a>
 </div>
 
 <style>
@@ -96,6 +98,13 @@ const links = [
   window.addEventListener('scroll', () => {
     nav.classList.toggle('scrolled', window.scrollY > 20);
   }, { passive: true });
+
+  document.querySelector('.logo')!.addEventListener('click', (e) => {
+    if (window.location.pathname === '/') {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  });
 
   const btn  = document.getElementById('navMobileBtn')!;
   const menu = document.getElementById('navMobileMenu')!;
