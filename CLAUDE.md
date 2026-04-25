@@ -72,6 +72,15 @@ Card radii: 28px (services), 32px (pricing), 48px (hero/process/contact), 24px (
 
 ---
 
+## Astro conventions — hard-won rules
+
+- **`global.css` lives in `Layout.astro`**, not in page files. Moving it elsewhere breaks styles on any page that doesn't import it separately. Learned when `LegalLayout` was refactored to extend `Layout`.
+- **`LegalLayout.astro` wraps `Layout.astro`** — never give it its own `<html>` shell. All head content (GTM, fonts, consent, canonical) flows through `Layout`. Adding a new legal-style page: use `LegalLayout`, everything else is automatic.
+- **TypeScript global declarations live in `src/env.d.ts`**. Extend `Window` there for any third-party globals (`dataLayer`, `turnstile`, `gtag`, etc.). No `(window as any)`, no `@ts-ignore`.
+- **Run `npm run build` after any layout, CSS, or config change** before considering the task done. Most regressions (broken imports, type errors, missing styles) surface immediately at build time.
+
+---
+
 ## Scroll reveal
 `.reveal` → fade in + slide up 40px, IntersectionObserver threshold 0.12, wired in `Layout.astro`.
 Stagger: `data-delay="60|80|100|120|160|180|200|240|300"` (ms).
