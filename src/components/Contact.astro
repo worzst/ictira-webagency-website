@@ -188,7 +188,7 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
       if (res.ok) {
         form.style.display = 'none';
         success.classList.add('show');
-        (window as any).dataLayer?.push({ event: 'form_submit_success' });
+        window.dataLayer?.push({ event: 'form_submit_success' });
       } else {
         throw new Error('server');
       }
@@ -196,7 +196,7 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
       btn.disabled = false;
       label.textContent = 'Anfrage abschicken';
       errorEl.style.display = 'block';
-      (window as any).turnstile?.reset();
+      window.turnstile?.reset();
     }
   });
 </script>

@@ -55,9 +55,7 @@
 
   function updateConsent(granted: boolean) {
     const val = granted ? 'granted' : 'denied';
-    // @ts-ignore
     if (typeof gtag !== 'undefined') {
-      // @ts-ignore
       gtag('consent', 'update', {
         ad_storage: val,
         ad_user_data: val,
