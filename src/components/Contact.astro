@@ -196,6 +196,7 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
       btn.disabled = false;
       label.textContent = 'Anfrage abschicken';
       errorEl.style.display = 'block';
+      (window as any).turnstile?.reset();
     }
   });
 </script>
