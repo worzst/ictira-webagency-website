@@ -38,7 +38,7 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
     return Response.json({ ok: false }, { status: 400 });
   }
 
-  const { name, email, firm, pack, message } = data;
+  const { name, email, firm, phone, pack, message } = data;
 
   if (!name?.trim() || !email?.trim() || !message?.trim()) {
     return Response.json({ ok: false }, { status: 400 });
@@ -48,6 +48,7 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
     <p><strong>Name:</strong> ${escape(name)}</p>
     <p><strong>Email:</strong> <a href="mailto:${escape(email)}">${escape(email)}</a></p>
     ${firm ? `<p><strong>Firma:</strong> ${escape(firm)}</p>` : ''}
+    ${phone ? `<p><strong>Telefon:</strong> ${escape(phone)}</p>` : ''}
     ${pack ? `<p><strong>Paket:</strong> ${escape(pack)}</p>` : ''}
     <p><strong>Nachricht:</strong><br>${escape(message).replace(/\n/g, '<br>')}</p>
   `;
