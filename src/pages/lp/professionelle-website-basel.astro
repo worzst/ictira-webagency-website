@@ -2,9 +2,43 @@
 import Layout from '../../layouts/Layout.astro';
 import { Icon } from 'astro-icon/components';
 import { getImage } from 'astro:assets';
+import Faq from '../../components/Faq.astro';
+import Pricing from '../../components/Pricing.astro';
+import SectionHeading from '../../components/SectionHeading.astro';
 import stefanPhoto from '../../assets/picture/StefanWorzallaSquareSmall.jpg';
 const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
 const stefan = await getImage({ src: stefanPhoto, width: 360, format: 'webp' });
+
+const lpFaqs = [
+  {
+    q: 'Wie lange dauert das wirklich?',
+    a: 'Nach Ihrer Freigabe des Angebots und Übermittlung Ihrer Inhalte (Logo, Texte, Bilder) ist Ihr OnePager in 7 Tagen live, eine Standard-Website in 7-10 Tagen. Selbstverständlich kann ich das Logo, die Texte und Bilder ebenfalls entwerfen und bereitstellen. Das ist kein Marketing-Versprechen – das ist mein Prozess.',
+  },
+  {
+    q: 'Muss ich Texte und Bilder selbst liefern?',
+    a: 'Nein. Ich schreibe die Texte auf Basis eines kurzen Fragebogens, den ich Ihnen schicke. Wenn Sie Fotos haben: super. Wenn nicht: Ich nutze hochwertige Stockbilder passend zu Ihrer Branche.',
+  },
+  {
+    q: 'Was ist, wenn mir das Design nicht gefällt?',
+    a: 'Dann arbeite ich nach. Ich liefere Revisionen bis Sie zufrieden sind. Und wenn es nach 30 Tagen wirklich nicht passt: volle Rückerstattung.',
+  },
+  {
+    q: 'Was ist nach dem Launch mit Wartung und Updates?',
+    a: 'Kleinere Textänderungen sind im ersten Monat gratis. Danach biete ich ein optionales Wartungs-Paket an, kleine Anpassungen mache ich auch später schnell und kulant.',
+  },
+  {
+    q: 'Wie läuft die Bezahlung?',
+    a: '50% bei Projektstart, 50% nach dem Go-Live. Keine Vorauszahlung des vollen Betrags.',
+  },
+  {
+    q: 'Ich bin nicht in Basel – arbeiten Sie auch mit Kunden aus anderen Regionen?',
+    a: 'Ja. Mein Fokus liegt auf der Region Basel, BL, AG & SO, aber die gesamte Zusammenarbeit läuft online. Wo Sie sitzen, spielt keine Rolle.',
+  },
+  {
+    q: 'Was kostet das Hosting danach?',
+    a: 'Hosting CHF 9.90/Monat und Domain CHF 19.90/Jahr.',
+  },
+];
 ---
 <Layout
   title="Professionelle Website erstellen lassen - Fixpreis, fertig in 7 Tagen | ictira"
@@ -90,10 +124,7 @@ const stefan = await getImage({ src: stefanPhoto, width: 360, format: 'webp' });
   <!-- ── 2. Für wen ── -->
   <section class="fuer-wen">
     <div class="section-inner fw-inner">
-      <div class="reveal fw-label">Für wen ich Websites baue</div>
-      <h2 class="reveal fw-heading" data-delay="60">
-        Sie erkennen sich<br /><em>hier wieder?</em>
-      </h2>
+      <SectionHeading label="Für wen ich Websites baue" heading="Sie erkennen sich" headingEm="hier wieder?" align="left" />
       <div class="fw-grid">
         {[
           { icon: 'tabler:browser-x',    text: 'Sie haben noch gar keine richtige Firmenwebsite. Oder eine, für die Sie sich schämen, wenn Kunden danach suchen.' },
@@ -113,10 +144,7 @@ const stefan = await getImage({ src: stefanPhoto, width: 360, format: 'webp' });
   <!-- ── 3. Was ist inklusive ── -->
   <section class="inkl">
     <div class="section-inner inkl-inner">
-      <div class="reveal inkl-label">Was Sie konkret bekommen</div>
-      <h2 class="reveal inkl-heading" data-delay="60">
-        Alles aus einer Hand –<br /><em>ohne Überraschungen.</em>
-      </h2>
+      <SectionHeading label="Was Sie konkret bekommen" heading="Alles aus einer Hand" headingEm="ohne Überraschungen." align="left" />
       <div class="inkl-cols">
         <div class="reveal inkl-col" data-delay="80">
           <div class="inkl-col-title">Was ich für Sie übernehme</div>
@@ -143,81 +171,19 @@ const stefan = await getImage({ src: stefanPhoto, width: 360, format: 'webp' });
   </section>
 
   <!-- ── 4. Pakete & Preise ── -->
-  <section class="pakete">
-    <div class="section-inner">
-      <div class="reveal pakete-label">Transparente Preise</div>
-      <h2 class="reveal pakete-heading" data-delay="60">
-        Fixpreis-Pakete –<br /><em>klar und fair.</em>
-      </h2>
-      <div class="pakete-grid">
-        {[
-          {
-            name: 'Onepager',
-            sub: 'Perfekt für Einzelunternehmer, Solopreneure und schnelle Launches.',
-            price: '1\'490',
-            time: 'Fertig in 7 Tagen',
-            popular: false,
-            items: [
-              'Ihr Angebot auf einer Seite – klar, überzeugend, modern',
-              'Individuelles Design, kein Baukasten-Template',
-              'Mobile-optimiert, SSL & Basis-SEO inklusive',
-              'Kontaktformular & Domain-Setup inklusive',
-            ],
-          },
-          {
-            name: 'Standard',
-            sub: 'Perfekt für klassische KMU mit mehreren Leistungsbereichen.',
-            price: '1\'990',
-            time: 'Fertig in 7–10 Tagen',
-            popular: true,
-            items: [
-              '5 Seiten: Start, Leistungen, Über uns, Referenzen, Kontakt',
-              'Individuelles Design in Ihrem Branding',
-              'Texte auf Basis Ihrer Infos – Sie schreiben nichts',
-              'Mobile-optimiert, SSL, SEO pro Seite & Google Maps',
-              'Domain & Hosting-Setup inklusive',
-            ],
-          },
-          {
-            name: 'Grösser',
-            sub: 'Perfekt für wachsende Firmen mit komplexerem Bedarf.',
-            price: '2\'990',
-            time: 'Fertig in 14 Tagen',
-            popular: false,
-            items: [
-              'Bis zu 10 Seiten mit individuellem Design-System',
-              'Analytics & Tracking-Setup von Anfang an',
-              'Persönliches Onboarding – Sie wissen danach, wie alles läuft',
-              'Unbegrenzte Revisionen bis Go-Live',
-            ],
-          },
-        ].map((pkg, i) => (
-          <div class={`reveal pakete-card${pkg.popular ? ' popular' : ''}`} data-delay={String(i * 80)}>
-            {pkg.popular && <div class="pakete-badge">Meistgewählt</div>}
-            <div class="pakete-name">{pkg.name}</div>
-            <div class="pakete-sub">{pkg.sub}</div>
-            <div class="pakete-price">
-              <span class="p-chf">CHF</span>
-              <span class="p-amount">{pkg.price}</span>
-              <span class="p-suffix">.–</span>
-            </div>
-            <div class="pakete-time">{pkg.time}</div>
-            <ul class="pakete-list">
-              {pkg.items.map(item => (
-                <li><span class="p-check">✓</span>{item}</li>
-              ))}
-            </ul>
-            <a href="#anfrage" class="pakete-cta">Paket anfragen <span>→</span></a>
-          </div>
-        ))}
-      </div>
-      <div class="reveal pakete-note" data-delay="100">
-        Hosting CHF 9.90/Monat &amp; Domain CHF 19.90/Jahr werden separat ausgewiesen ·
-        Bezahlung 50% bei Projektstart, 50% nach Launch ·
-        Unsicher, welches Paket passt? Im kostenlosen Gespräch finden wir das gemeinsam heraus.
-      </div>
-    </div>
-  </section>
+  <Pricing
+    label="Transparente Preise"
+    heading="Fixpreis-Pakete"
+    headingEm="klar und fair."
+    footnote="Hosting CHF 9.90/Monat & Domain CHF 19.90/Jahr werden separat ausgewiesen · Bezahlung 50% bei Projektstart, 50% nach Launch · Unsicher, welches Paket passt? Im kostenlosen Gespräch finden wir das gemeinsam heraus."
+    ctaHref="#anfrage"
+    ctaLabel="Paket anfragen"
+    bulletSet="lpItems"
+    showNumbers={false}
+    tagField="sub"
+    padTop={false}
+    align="left"
+  />
 
   <!-- ── 5. Wie läuft die Zusammenarbeit ab ── -->
   <section class="prozess">
@@ -288,10 +254,7 @@ const stefan = await getImage({ src: stefanPhoto, width: 360, format: 'webp' });
         <img src={stefan.src} alt="Stefan Worzalla, ictira GmbH" class="stefan-photo" width="180" height="220" loading="lazy" decoding="async" />
       </div>
       <div class="ueber-content">
-        <div class="reveal ueber-label">Wer hinter ictira steckt</div>
-        <h2 class="reveal ueber-heading" data-delay="60">
-          Hallo, ich bin<br /><em>Stefan Worzalla.</em>
-        </h2>
+        <SectionHeading label="Wer hinter ictira steckt" heading="Hallo, ich bin" headingEm="Stefan Worzalla." align="left" size="sm" mb={28} />
         <div class="reveal ueber-text" data-delay="100">
           <p>
             Ich bin seit über 15 Jahren in der Informatik und habe ictira gegründet,
@@ -310,56 +273,13 @@ const stefan = await getImage({ src: stefanPhoto, width: 360, format: 'webp' });
   </section>
 
   <!-- ── 8. FAQ ── -->
-  <section class="faq-lp">
-    <div class="section-inner">
-      <div class="reveal faq-label">Häufige Fragen</div>
-      <h2 class="reveal faq-heading" data-delay="60">
-        Ihre Fragen –<br /><em>meine Antworten.</em>
-      </h2>
-      <div class="faq-list">
-        {[
-          {
-            q: 'Wie lange dauert das wirklich?',
-            a: 'Nach Ihrer Freigabe des Angebots und Übermittlung Ihrer Inhalte (Logo, Texte, Bilder) ist Ihr OnePager in 7 Tagen live, eine Standard-Website in 7-10 Tagen. Selbstverständlich kann ich das Logo, die Texte und Bilder ebenfalls entwerfen und bereitstellen. Das ist kein Marketing-Versprechen – das ist mein Prozess.',
-          },
-          {
-            q: 'Muss ich Texte und Bilder selbst liefern?',
-            a: 'Nein. Ich schreibe die Texte auf Basis eines kurzen Fragebogens, den ich Ihnen schicke. Wenn Sie Fotos haben: super. Wenn nicht: Ich nutze hochwertige Stockbilder passend zu Ihrer Branche.',
-          },
-          {
-            q: 'Was ist, wenn mir das Design nicht gefällt?',
-            a: 'Dann arbeite ich nach. Ich liefere Revisionen bis Sie zufrieden sind. Und wenn es nach 30 Tagen wirklich nicht passt: volle Rückerstattung.',
-          },
-          {
-            q: 'Was ist nach dem Launch mit Wartung und Updates?',
-            a: 'Kleinere Textänderungen sind im ersten Monat gratis. Danach biete ich ein optionales Wartungs-Paket an, kleine Anpassungen mache ich auch später schnell und kulant.',
-          },
-          {
-            q: 'Wie läuft die Bezahlung?',
-            a: '50% bei Projektstart, 50% nach dem Go-Live. Keine Vorauszahlung des vollen Betrags.',
-          },
-          {
-            q: 'Ich bin nicht in Basel – arbeiten Sie auch mit Kunden aus anderen Regionen?',
-            a: 'Ja. Mein Fokus liegt auf der Region Basel, BL, AG & SO, aber die gesamte Zusammenarbeit läuft online. Wo Sie sitzen, spielt keine Rolle.',
-          },
-          {
-            q: 'Was kostet das Hosting danach?',
-            a: 'Hosting CHF 9.90/Monat und Domain CHF 19.90/Jahr.',
-          },
-        ].map((item, i) => (
-          <div class="reveal faq-item" data-delay={String(Math.min(i * 40, 200))}>
-            <button class="faq-q" aria-expanded="false">
-              <span>{item.q}</span>
-              <span class="faq-icon">+</span>
-            </button>
-            <div class="faq-a" hidden>
-              <p>{item.a}</p>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
+  <Faq
+    questions={lpFaqs}
+    label="Häufige Fragen"
+    heading="Ihre Fragen"
+    headingEm="meine Antworten."
+    align="left"
+  />
 
   <!-- ── 9. Abschluss-CTA ── -->
   <section class="abschluss">
@@ -589,15 +509,6 @@ const stefan = await getImage({ src: stefanPhoto, width: 360, format: 'webp' });
   /* ── Für wen ── */
   .fuer-wen { padding: 96px 32px; }
   .fw-inner { }
-  .fw-label {
-    font-family: var(--mono); font-size: 12px; color: var(--mute);
-    text-transform: uppercase; letter-spacing: .08em; margin-bottom: 20px;
-  }
-  .fw-heading {
-    font-size: clamp(48px, 7vw, 96px); font-weight: 800;
-    line-height: 0.95; letter-spacing: -0.05em; margin: 0 0 56px;
-  }
-  .fw-heading em { color: var(--accent); font-style: italic; }
   .fw-grid {
     display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
   }
@@ -620,15 +531,6 @@ const stefan = await getImage({ src: stefanPhoto, width: 360, format: 'webp' });
   /* ── Was inkl. ── */
   .inkl { padding: 0 32px 96px; }
   .inkl-inner { }
-  .inkl-label {
-    font-family: var(--mono); font-size: 12px; color: var(--mute);
-    text-transform: uppercase; letter-spacing: .08em; margin-bottom: 20px;
-  }
-  .inkl-heading {
-    font-size: clamp(48px, 7vw, 96px); font-weight: 800;
-    line-height: 0.95; letter-spacing: -0.05em; margin: 0 0 56px;
-  }
-  .inkl-heading em { color: var(--accent); font-style: italic; }
   .inkl-cols {
     display: grid; grid-template-columns: 1fr 1fr; gap: 32px;
   }
@@ -655,81 +557,6 @@ const stefan = await getImage({ src: stefanPhoto, width: 360, format: 'webp' });
 
   @media (max-width: 900px) { .inkl-cols { grid-template-columns: 1fr; } }
   @media (max-width: 480px) { .inkl { padding-left: 16px; padding-right: 16px; } }
-
-  /* ── Pakete ── */
-  .pakete { padding: 0 32px 96px; }
-  .pakete-label {
-    font-family: var(--mono); font-size: 12px; color: var(--mute);
-    text-transform: uppercase; letter-spacing: .08em; margin-bottom: 20px;
-  }
-  .pakete-heading {
-    font-size: clamp(48px, 7vw, 96px); font-weight: 800;
-    line-height: 0.95; letter-spacing: -0.05em; margin: 0 0 56px;
-  }
-  .pakete-heading em { color: var(--accent); font-style: italic; }
-  .pakete-grid {
-    display: grid; grid-template-columns: repeat(3, 1fr);
-    gap: 20px; align-items: start;
-  }
-  .pakete-card {
-    background: var(--paper); border-radius: 32px;
-    padding: 32px 28px; border: 1px solid var(--line);
-    display: flex; flex-direction: column;
-    position: relative;
-  }
-  .pakete-card.popular {
-    background: var(--ink); color: var(--paper);
-    border: none; transform: scale(1.04);
-    box-shadow: 0 30px 80px rgba(58,43,255,0.2);
-  }
-  .pakete-badge {
-    position: absolute; top: -14px; left: 50%;
-    transform: translateX(-50%) rotate(-2deg);
-    background: var(--hot); color: #fff;
-    padding: 6px 16px; border-radius: 999px;
-    font-size: 11px; font-weight: 700;
-    text-transform: uppercase; letter-spacing: .06em; white-space: nowrap;
-  }
-  .pakete-name { font-size: 26px; font-weight: 700; letter-spacing: -0.03em; margin-bottom: 6px; }
-  .pakete-sub { font-size: 13px; opacity: .65; margin-bottom: 28px; line-height: 1.4; }
-  .pakete-price {
-    display: flex; align-items: baseline; gap: 4px; margin-bottom: 6px;
-  }
-  .p-chf, .p-suffix { font-size: 16px; opacity: .6; }
-  .p-amount { font-size: 72px; font-weight: 800; letter-spacing: -0.06em; line-height: 0.9; }
-  .pakete-time {
-    font-family: var(--mono); font-size: 11px;
-    opacity: .5; margin-bottom: 28px;
-  }
-  .pakete-list { flex: 1; display: grid; gap: 10px; margin-bottom: 24px; }
-  .pakete-list li {
-    display: flex; align-items: flex-start; gap: 10px;
-    font-size: 14px; line-height: 1.4;
-  }
-  .p-check {
-    width: 18px; height: 18px; border-radius: 50%;
-    background: var(--ink); color: #fff;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 10px; font-weight: 700; flex-shrink: 0; margin-top: 1px;
-  }
-  .pakete-card.popular .p-check { background: var(--accent); }
-  .pakete-cta {
-    padding: 16px 20px; border-radius: 999px;
-    background: var(--ink); color: #fff;
-    font-weight: 600; font-size: 14px;
-    display: flex; justify-content: space-between; align-items: center;
-  }
-  .pakete-card.popular .pakete-cta { background: var(--accent); }
-  .pakete-note {
-    margin-top: 36px; font-size: 13px; color: var(--mute);
-    font-family: var(--mono); text-align: center; line-height: 1.6;
-  }
-
-  @media (max-width: 1024px) {
-    .pakete-grid { grid-template-columns: 1fr; max-width: 500px; margin: 0 auto; }
-    .pakete-card.popular { transform: none; }
-  }
-  @media (max-width: 480px) { .pakete { padding-left: 16px; padding-right: 16px; } }
 
   /* ── Prozess ── */
   .prozess { padding: 0 32px 96px; }
@@ -814,15 +641,6 @@ const stefan = await getImage({ src: stefanPhoto, width: 360, format: 'webp' });
     width: 180px; height: 220px; border-radius: 32px;
     object-fit: cover; object-position: center top; display: block;
   }
-  .ueber-label {
-    font-family: var(--mono); font-size: 12px; color: var(--mute);
-    text-transform: uppercase; letter-spacing: .08em; margin-bottom: 20px;
-  }
-  .ueber-heading {
-    font-size: clamp(40px, 5vw, 72px); font-weight: 800;
-    line-height: 1.0; letter-spacing: -0.04em; margin: 0 0 28px;
-  }
-  .ueber-heading em { color: var(--accent); font-style: italic; }
   .ueber-text p {
     font-size: 16px; line-height: 1.65; color: var(--ink);
     opacity: .85; margin: 0 0 16px; max-width: 600px;
@@ -841,39 +659,6 @@ const stefan = await getImage({ src: stefanPhoto, width: 360, format: 'webp' });
     .stefan-photo { width: 100px; height: 120px; border-radius: 20px; }
   }
   @media (max-width: 480px) { .ueber { padding-left: 16px; padding-right: 16px; } }
-
-  /* ── FAQ ── */
-  .faq-lp { padding: 0 32px 96px; }
-  .faq-label {
-    font-family: var(--mono); font-size: 12px; color: var(--mute);
-    text-transform: uppercase; letter-spacing: .08em; margin-bottom: 20px;
-  }
-  .faq-heading {
-    font-size: clamp(48px, 7vw, 96px); font-weight: 800;
-    line-height: 0.95; letter-spacing: -0.05em; margin: 0 0 56px;
-  }
-  .faq-heading em { color: var(--accent); font-style: italic; }
-  .faq-list { max-width: 860px; display: grid; gap: 8px; }
-  .faq-item {
-    background: var(--paper); border-radius: 24px;
-    border: 1px solid var(--line); overflow: hidden;
-  }
-  .faq-q {
-    width: 100%; padding: 24px 28px;
-    display: flex; align-items: center; justify-content: space-between; gap: 16px;
-    background: none; border: none; cursor: pointer;
-    font-size: 16px; font-weight: 600; text-align: left; color: var(--ink);
-  }
-  .faq-icon { font-size: 22px; flex-shrink: 0; transition: transform .3s; color: var(--mute); }
-  .faq-q[aria-expanded="true"] .faq-icon { transform: rotate(45deg); color: var(--accent); }
-  .faq-a { padding: 0 28px 24px; }
-  .faq-a p { font-size: 15px; line-height: 1.65; color: var(--ink); opacity: .8; margin: 0; }
-
-  @media (max-width: 480px) {
-    .faq-lp { padding-left: 16px; padding-right: 16px; }
-    .faq-q { padding: 20px 20px; font-size: 15px; }
-    .faq-a { padding: 0 20px 20px; }
-  }
 
   /* ── Abschluss ── */
   .abschluss { padding: 0 32px 96px; }
@@ -951,69 +736,9 @@ const stefan = await getImage({ src: stefanPhoto, width: 360, format: 'webp' });
 </style>
 
 <script>
-  /* ── Form: hero ── */
-  function wireForm(
-    formId: string,
-    successId: string,
-    errorId: string,
-    labelId: string,
-  ) {
-    const form    = document.getElementById(formId) as HTMLFormElement | null;
-    const success = document.getElementById(successId)!;
-    const errorEl = document.getElementById(errorId) as HTMLElement;
-    const label   = document.getElementById(labelId)!;
-    if (!form) return;
-    const btn = form.querySelector('button[type="submit"]') as HTMLButtonElement;
-
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      btn.disabled = true;
-      label.textContent = 'Wird gesendet…';
-      errorEl.style.display = 'none';
-
-      const data = Object.fromEntries(new FormData(form).entries());
-      try {
-        const res = await fetch('/contact', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data),
-        });
-        if (res.ok) {
-          form.style.display = 'none';
-          success.classList.add('show');
-          window.dataLayer?.push({ event: 'form_submit_success' });
-        } else {
-          throw new Error('server');
-        }
-      } catch {
-        btn.disabled = false;
-        label.textContent = 'Gespräch sichern';
-        errorEl.style.display = 'block';
-        window.turnstile?.reset();
-      }
-    });
-  }
-
-  wireForm('lpForm',  'lpSuccess',  'lpError',  'lpSubmitLabel');
-  wireForm('lpForm2', 'lpSuccess2', 'lpError2', 'lpSubmitLabel2');
-
-  /* ── FAQ accordion ── */
-  document.querySelectorAll<HTMLButtonElement>('.faq-q').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const expanded = btn.getAttribute('aria-expanded') === 'true';
-      const answer   = btn.nextElementSibling as HTMLElement;
-
-      document.querySelectorAll<HTMLButtonElement>('.faq-q').forEach(other => {
-        other.setAttribute('aria-expanded', 'false');
-        (other.nextElementSibling as HTMLElement).hidden = true;
-      });
-
-      if (!expanded) {
-        btn.setAttribute('aria-expanded', 'true');
-        answer.hidden = false;
-      }
-    });
-  });
+  import { wireForm } from '../../scripts/formSubmit';
+  wireForm('lpForm',  'lpSuccess',  'lpError',  'lpSubmitLabel',  'Gespräch sichern');
+  wireForm('lpForm2', 'lpSuccess2', 'lpError2', 'lpSubmitLabel2', 'Gespräch sichern');
 </script>
 
 <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>

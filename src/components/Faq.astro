@@ -1,5 +1,16 @@
 ---
-const faqs = [
+import SectionHeading from './SectionHeading.astro';
+
+interface Question { q: string; a: string; }
+interface Props {
+  questions?: Question[];
+  label?: string;
+  heading?: string;
+  headingEm?: string;
+  align?: 'left' | 'center';
+}
+
+const defaultQuestions: Question[] = [
   {
     q: 'Sind die Preise wirklich fix?',
     a: 'Ja. Was im Angebot steht, steht im Angebot. Nur wenn du neue Seiten oder Funktionen willst, die nicht drin waren, sprechen wir über einen Zusatz. Immer vorher, nie nachher.',
@@ -25,19 +36,21 @@ const faqs = [
     a: 'Kleine Sachen (Textänderungen, neue Bilder) im Stundensatz von CHF 150. Grössere Erweiterungen wieder zum Fixpreis.',
   },
 ];
+
+const {
+  questions = defaultQuestions,
+  label = '? FAQ ?',
+  heading = 'Oft gefragt,',
+  headingEm = 'klar beantwortet.',
+  align = 'center',
+} = Astro.props;
 ---
 <section id="faq" class="faq">
   <div class="inner">
-    <div class="reveal header">
-      <div class="label">? FAQ ?</div>
-      <h2 class="heading">
-        Oft gefragt,<br />
-        <em>klar beantwortet.</em>
-      </h2>
-    </div>
+    <SectionHeading label={label} heading={heading} headingEm={headingEm} size="lg" mb={64} align={align} />
 
     <div id="faqList">
-      {faqs.map((f, i) => (
+      {questions.map((f, i) => (
         <div class={`item ${i === 0 ? 'open' : 'closed'}`}>
           <div class="row">
             <div class="question">{f.q}</div>
@@ -53,17 +66,6 @@ const faqs = [
 <style>
   .faq { padding: 96px 32px; }
   .inner { max-width: 1040px; margin: 0 auto; }
-
-  .header { text-align: center; margin-bottom: 64px; }
-  .label {
-    font-family: var(--mono); font-size: 12px; color: var(--mute);
-    text-transform: uppercase; letter-spacing: .08em; margin-bottom: 20px;
-  }
-  .heading {
-    font-size: clamp(56px, 8vw, 96px); line-height: 0.95;
-    margin: 0; font-weight: 800; letter-spacing: -0.05em; color: var(--ink);
-  }
-  .heading em { font-style: italic; color: var(--accent); }
 
   .item {
     margin-bottom: 12px; padding: 24px 28px; border-radius: 24px; cursor: pointer;

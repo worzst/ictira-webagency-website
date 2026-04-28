@@ -164,42 +164,8 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
 </style>
 
 <script>
-  const form    = document.getElementById('contactForm') as HTMLFormElement;
-  const success = document.getElementById('contactSuccess')!;
-  const errorEl = document.getElementById('contactError') as HTMLElement;
-  const label   = document.getElementById('submitLabel')!;
-  const btn     = form.querySelector('.submit') as HTMLButtonElement;
-
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-
-    btn.disabled = true;
-    label.textContent = 'Wird gesendet…';
-    errorEl.style.display = 'none';
-
-    const data = Object.fromEntries(new FormData(form).entries());
-
-    try {
-      const res = await fetch('/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
-      });
-
-      if (res.ok) {
-        form.style.display = 'none';
-        success.classList.add('show');
-        window.dataLayer?.push({ event: 'form_submit_success' });
-      } else {
-        throw new Error('server');
-      }
-    } catch {
-      btn.disabled = false;
-      label.textContent = 'Anfrage abschicken';
-      errorEl.style.display = 'block';
-      window.turnstile?.reset();
-    }
-  });
+  import { wireForm } from '../scripts/formSubmit';
+  wireForm('contactForm', 'contactSuccess', 'contactError', 'submitLabel', 'Anfrage abschicken');
 </script>
 
 <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
