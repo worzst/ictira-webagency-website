@@ -1,5 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import { Icon } from 'astro-icon/components';
 const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
 ---
 <Layout
@@ -90,13 +91,13 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
       </h2>
       <div class="fw-grid">
         {[
-          { icon: '🏗', text: 'Sie haben noch gar keine richtige Firmenwebsite, oder eine, bei der Sie sich selbst schämen, wenn Kunden danach suchen.' },
-          { icon: '📱', text: 'Ihre Website wirkt veraltet und passt nicht mehr zu Ihrem Unternehmen.' },
-          { icon: '⏱', text: 'Sie haben keine Zeit und keine Lust, sich mit Technik, Texten und Baukasten-Tools herumzuschlagen.' },
-          { icon: '📈', text: 'Sie wollen mehr Anfragen über Google aber ohne teure Agentur und unklare Kosten.' },
+          { icon: 'tabler:browser-x',    text: 'Sie haben noch gar keine richtige Firmenwebsite, oder eine, bei der Sie sich selbst schämen, wenn Kunden danach suchen.' },
+          { icon: 'tabler:refresh-alert', text: 'Ihre Website wirkt veraltet und passt nicht mehr zu Ihrem Unternehmen.' },
+          { icon: 'tabler:clock-off',    text: 'Sie haben keine Zeit und keine Lust, sich mit Technik, Texten und Baukasten-Tools herumzuschlagen.' },
+          { icon: 'tabler:trending-up',  text: 'Sie wollen mehr Anfragen über Google aber ohne teure Agentur und unklare Kosten.' },
         ].map((item, i) => (
           <div class="reveal fw-card" data-delay={String(i * 60)}>
-            <div class="fw-icon">{item.icon}</div>
+            <div class="fw-icon"><Icon name={item.icon} /></div>
             <p class="fw-text">{item.text}</p>
           </div>
         ))}
@@ -598,7 +599,12 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
     background: var(--paper); border-radius: 28px;
     padding: 32px 28px; border: 1px solid var(--line);
   }
-  .fw-icon { font-size: 32px; margin-bottom: 16px; }
+  .fw-icon {
+    width: 44px; height: 44px; border-radius: 12px;
+    background: var(--accent); display: flex; align-items: center; justify-content: center;
+    margin-bottom: 20px; flex-shrink: 0;
+  }
+  .fw-icon svg { width: 24px; height: 24px; color: #fff; }
   .fw-text { font-size: 15px; line-height: 1.55; margin: 0; color: var(--ink); }
 
   @media (max-width: 1024px) { .fw-grid { grid-template-columns: repeat(2, 1fr); } }
