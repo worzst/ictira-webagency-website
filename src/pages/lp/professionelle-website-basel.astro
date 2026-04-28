@@ -3,8 +3,8 @@ import Layout from '../../layouts/Layout.astro';
 const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
 ---
 <Layout
-  title="Neue Firmenwebsite für KMU in Basel – Fixpreis, fertig in 7 Tagen | ictira"
-  description="Professionelle Website zum Fixpreis ab CHF 1'490. Individuelles Design, fertig in 7 Tagen. Speziell für KMU in Basel, BL, AG & SO."
+  title="Professionelle Website erstellen lassen - Fixpreis, fertig in 7 Tagen | ictira"
+  description="Website erstellen lassen zum Fixpreis ab CHF 1'490. Individuelles Design, fertig in 7 Tagen. Speziell für Selbstständige und KMU in Basel, BL, AG & SO."
 >
 
   <!-- ── Sticky LP Header ── -->
@@ -23,14 +23,14 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
       <div class="hero-left">
         <div class="hero-eyebrow">Webdesign für KMU · Basel &amp; Region</div>
         <h1 class="hero-h1">
-          Neue Firmenwebsite<br />
-          für KMU in Basel –<br />
+          Professionelle Website<br />
+          erstellen lassen<br />
           <em>Fixpreis, fertig<br />in 7 Tagen.</em>
         </h1>
         <p class="hero-sub">
-          Ich erstelle Ihre moderne Website zum Fixpreis ab CHF&nbsp;1'490 –
+          Ich erstelle Ihre professionelle Website zum Fixpreis ab CHF&nbsp;1'490 –
           inkl. Design, Text, Technik &amp; Hosting-Setup.
-          Speziell für lokale KMU in Basel, BL, AG &amp; SO.
+          Speziell für Selbstständige und KMU in Basel, BL, AG &amp; SO.
         </p>
         <ul class="hero-bullets">
           <li><span class="bullet-check">✓</span> Individuelles Design, keine Baukasten-Templates</li>
@@ -55,12 +55,11 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
 
           <form id="lpForm" class="lp-form">
             <input class="hp" type="text" name="_hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
-            <input class="lp-field" type="text"  name="name"    placeholder="Ihr Name"           required />
-            <input class="lp-field" type="tel"   name="phone"   placeholder="Ihre Telefonnummer"  required />
-            <input class="lp-field" type="email" name="email"   placeholder="Ihre E-Mail-Adresse" required />
-            <input class="lp-field" type="text"  name="firm"    placeholder="Firma (optional)"            />
-            <textarea class="lp-field lp-textarea" name="message" rows="3"
-              placeholder="Was möchten Sie besprechen? (optional)"></textarea>
+            <input class="lp-field" type="text"  name="name"    placeholder="Ihr Name"                    required />
+            <input class="lp-field" type="text"  name="firm"    placeholder="Firma (optional)"                     />
+            <input class="lp-field" type="email" name="email"   placeholder="Ihre E-Mail-Adresse"          required />
+            <input class="lp-field" type="tel"   name="phone"   placeholder="Ihre Telefonnummer"           required />
+            <input class="lp-field" type="text"  name="message" placeholder="Wann passt es Ihnen? (optional)"      />
 
             <div class="cf-turnstile" data-sitekey={turnstileSiteKey} data-theme="light"></div>
 
@@ -68,6 +67,10 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
               <span id="lpSubmitLabel">Gespräch sichern</span>
               <span>→</span>
             </button>
+            <div class="form-trust">
+              <span>✓ Antwort innerhalb von 24 Stunden</span>
+              <span>✓ 15+ Jahre IT-Erfahrung</span>
+            </div>
             <p id="lpError" class="lp-error" style="display:none">
               Etwas ist schiefgelaufen. Bitte schreib uns direkt an
               <a href="mailto:hallo@ictira.com">hallo@ictira.com</a>.
@@ -87,10 +90,10 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
       </h2>
       <div class="fw-grid">
         {[
-          { icon: '🚫', text: 'Sie haben noch gar keine eigene Website – oder eine, die aus den 2000ern stammt.' },
-          { icon: '📱', text: 'Ihre bestehende Seite sieht auf dem Smartphone schrecklich aus.' },
-          { icon: '⏱', text: 'Sie haben keine Zeit und keine Lust, sich mit Technik und Texten rumzuschlagen.' },
-          { icon: '📞', text: 'Sie möchten mehr Anfragen über Google und eine Website, die Vertrauen schafft.' },
+          { icon: '🏗', text: 'Sie haben noch gar keine richtige Firmenwebsite, oder eine, bei der Sie sich selbst schämen, wenn Kunden danach suchen.' },
+          { icon: '📱', text: 'Ihre Website wirkt veraltet und passt nicht mehr zu Ihrem Unternehmen.' },
+          { icon: '⏱', text: 'Sie haben keine Zeit und keine Lust, sich mit Technik, Texten und Baukasten-Tools herumzuschlagen.' },
+          { icon: '📈', text: 'Sie wollen mehr Anfragen über Google aber ohne teure Agentur und unklare Kosten.' },
         ].map((item, i) => (
           <div class="reveal fw-card" data-delay={String(i * 60)}>
             <div class="fw-icon">{item.icon}</div>
@@ -110,25 +113,23 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
       </h2>
       <div class="inkl-cols">
         <div class="reveal inkl-col" data-delay="80">
-          <div class="inkl-col-title">Was das für Sie bedeutet</div>
+          <div class="inkl-col-title">Was ich für Sie übernehme</div>
           <ul class="inkl-list benefit-list">
-            <li><span class="inkl-check accent">✓</span> Mehr Vertrauen bei neuen Kunden durch einen professionellen Auftritt</li>
-            <li><span class="inkl-check accent">✓</span> Besser auffindbar bei Google durch saubere Technik &amp; Struktur</li>
-            <li><span class="inkl-check accent">✓</span> Kein Technik-Stress: Ich kümmere mich um alles</li>
-            <li><span class="inkl-check accent">✓</span> Fixpreis – Sie wissen von Anfang an, was es kostet</li>
-            <li><span class="inkl-check accent">✓</span> Fertig in 7 Tagen – nicht in 3 Monaten</li>
+            <li><span class="inkl-check accent">✓</span> Konzept &amp; Design: Von Grund auf nach Ihrem Briefing</li>
+            <li><span class="inkl-check accent">✓</span> Texte schreiben auf Basis Ihrer Informationen</li>
+            <li><span class="inkl-check accent">✓</span> Technische Umsetzung, Hosting &amp; Domain-Einrichtung</li>
+            <li><span class="inkl-check accent">✓</span> SEO-Grundlagen, damit Google Sie findet</li>
+            <li><span class="inkl-check accent">✓</span> Revisions-Runden bis alles stimmt</li>
           </ul>
         </div>
         <div class="reveal inkl-col" data-delay="120">
-          <div class="inkl-col-title">Was konkret enthalten ist</div>
+          <div class="inkl-col-title">Was Sie nicht mehr machen müssen</div>
           <ul class="inkl-list feature-list">
-            <li><span class="inkl-check">✓</span> Individuelles Design in Ihrem Branding</li>
-            <li><span class="inkl-check">✓</span> Mobile-optimierte Umsetzung (Smartphone &amp; Tablet)</li>
-            <li><span class="inkl-check">✓</span> Basis-SEO: strukturierte Seiten, sprechende URLs, schnelle Ladezeiten</li>
-            <li><span class="inkl-check">✓</span> Kontaktformular mit Spam-Schutz</li>
-            <li><span class="inkl-check">✓</span> Einrichtung auf Ihrer Domain &amp; Hosting-Setup</li>
-            <li><span class="inkl-check">✓</span> Texte auf Basis Ihrer Informationen</li>
-            <li><span class="inkl-check">✓</span> Revisions-Runden bis Sie zufrieden sind</li>
+            <li><span class="inkl-check">✓</span> Kein Baukasten-Gefrickel durch endlose Optionen</li>
+            <li><span class="inkl-check">✓</span> Keine Technik-Probleme lösen (Domains, SSL, Hosting)</li>
+            <li><span class="inkl-check">✓</span> Keine Texte schreiben oder selber redigieren</li>
+            <li><span class="inkl-check">✓</span> Kein Hin-und-her mit mehreren Dienstleistern</li>
+            <li><span class="inkl-check">✓</span> Keine bösen Überraschungen bei der Rechnung</li>
           </ul>
         </div>
       </div>
@@ -146,48 +147,42 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
         {[
           {
             name: 'Onepager',
-            sub: 'Ideal für Solopreneure, Events & schnelle Launches',
+            sub: 'Perfekt für Einzelunternehmer, Solopreneure und schnelle Launches.',
             price: '1\'490',
             time: 'Fertig in 7 Tagen',
             popular: false,
             items: [
-              'Eine Seite, klar und überzeugend aufgebaut',
-              'Ihr Angebot auf den Punkt gebracht',
-              'Individuelles Design',
-              'Mobile-optimiert, schnell, SEO-ready',
-              'Kontaktformular inklusive',
-              'Domain & Hosting-Setup',
+              'Ihr Angebot auf einer Seite – klar, überzeugend, modern',
+              'Individuelles Design, kein Baukasten-Template',
+              'Mobile-optimiert, SSL & Basis-SEO inklusive',
+              'Kontaktformular & Domain-Setup inklusive',
             ],
           },
           {
             name: 'Standard',
-            sub: 'Ideal für klassische KMU-Websites',
+            sub: 'Perfekt für klassische KMU mit mehreren Leistungsbereichen.',
             price: '1\'990',
-            time: 'Fertig in 7–14 Tagen',
+            time: 'Fertig in 7–10 Tagen',
             popular: true,
             items: [
-              'Bis zu 5 Seiten: Start, Leistungen, Über uns, Referenzen, Kontakt',
-              'Individuelles Design in Ihrem Look',
-              'Texte auf Basis Ihrer Informationen',
-              'Mobile-optimiert, schnell, SEO pro Seite',
-              'Kontaktformular & Google Maps',
-              'Domain & Hosting-Setup',
-              'Drei Revisions-Runden',
+              '5 Seiten: Start, Leistungen, Über uns, Referenzen, Kontakt',
+              'Individuelles Design in Ihrem Branding',
+              'Texte auf Basis Ihrer Infos – Sie schreiben nichts',
+              'Mobile-optimiert, SSL, SEO pro Seite & Google Maps',
+              'Domain & Hosting-Setup inklusive',
             ],
           },
           {
             name: 'Grösser',
-            sub: 'Für wachsende Firmen mit grösserem Bedarf',
+            sub: 'Perfekt für wachsende Firmen mit komplexerem Bedarf.',
             price: '2\'990',
-            time: 'Ca. 3–4 Wochen',
+            time: 'Fertig in 14 Tagen',
             popular: false,
             items: [
-              '6 bis 10 Seiten nach Mass',
-              'Custom Design-System',
-              'Analytics & Tracking-Setup',
-              'Persönliches Onboarding per Video',
-              'Unbegrenzte Revisions-Runden',
-              'Domain & Hosting-Setup',
+              'Bis zu 10 Seiten mit individuellem Design-System',
+              'Analytics & Tracking-Setup von Anfang an',
+              'Persönliches Onboarding – Sie wissen danach, wie alles läuft',
+              'Unbegrenzte Revisionen bis Go-Live',
             ],
           },
         ].map((pkg, i) => (
@@ -230,17 +225,17 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
           {
             n: '01',
             title: 'Kurzes Gespräch (15 Min.)',
-            text: 'Wir klären Ihre Ziele, welche Inhalte Sie haben, und ich zeige Ihnen Beispiele. Am Ende wissen Sie genau, was Sie bekommen und was es kostet.',
+            text: 'In 15 Minuten klären wir, was Sie brauchen. Am Ende wissen Sie genau, was Sie bekommen und was es kostet.',
           },
           {
             n: '02',
             title: 'Entwurf & Abstimmung',
-            text: 'Ich erstelle einen ersten Entwurf auf Basis unseres Gesprächs. Sie geben Feedback – ich arbeite nach, bis alles stimmt. Keine Überraschungen.',
+            text: 'Sie sehen einen ersten Entwurf und geben Feedback. Ich erledige den Rest, bis alles stimmt. Nichts liegt bei Ihnen.',
           },
           {
             n: '03',
             title: 'Go-Live in 7 Tagen',
-            text: 'Ich richte alles technisch ein, schalte Ihre Website live und erkläre Ihnen per Video, wie Sie Inhalte selbst anpassen können.',
+            text: 'Innerhalb von 7 Tagen ist Ihre Website live inkl. technischer Einrichtung auf Ihrer Domain und einer kurzen Video-Erklärung.',
           },
         ].map((step, i) => (
           <div class="reveal prozess-step" data-delay={String(i * 80)}>
@@ -253,8 +248,8 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
     </div>
   </section>
 
-  <!-- ── 6. Referenzen ── -->
-  <section class="referenzen">
+  <!-- ── 6. Referenzen — HIDDEN until real screenshots are ready ── -->
+  <!-- <section class="referenzen">
     <div class="section-inner">
       <div class="reveal ref-label">Beispiele &amp; Referenzen</div>
       <h2 class="reveal ref-heading" data-delay="60">
@@ -278,7 +273,7 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
         ))}
       </div>
     </div>
-  </section>
+  </section> -->
 
   <!-- ── 7. Über Stefan ── -->
   <section class="ueber">
@@ -293,14 +288,14 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
         </h2>
         <div class="reveal ueber-text" data-delay="100">
           <p>
-            Ich bin Informatiker seit über 15 Jahren und in Zunzgen BL zu Hause.
-            Ich habe gesehen, wie viele gute KMU in Basel und der Region mit veralteten
-            oder selbstgebastelten Websites unterwegs sind – und genau das ändere ich.
+            Ich bin seit über 15 Jahren in der Informatik und habe ictira gegründet,
+            um Selbstständige und KMU in der Nordwestschweiz schnell zu einer professionellen
+            Website zu bringen. Und das ohne Agentur-Blabla.
           </p>
           <p>
-            Ich übersetze Ihre Leistung in eine klar verständliche, moderne Website,
-            die Vertrauen schafft und neue Anfragen bringt. Kein Agentur-Overhead,
-            keine unnötigen Meetings – direkte Zusammenarbeit, klare Preise.
+            Direkte Zusammenarbeit, klare Preise, kein Overhead.
+            Sie bekommen mehr als bei jeder Agentur für einen Bruchteil des Preises.
+            Und ich bin persönlich erreichbar, nicht ein wechselndes Projektteam.
           </p>
         </div>
         <a href="#anfrage" class="reveal ueber-cta" data-delay="140">Gespräch buchen →</a>
@@ -319,7 +314,7 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
         {[
           {
             q: 'Wie lange dauert das wirklich?',
-            a: 'Nach Ihrer Freigabe des Angebots und Übermittlung Ihrer Inhalte (Logo, Texte, Bilder) ist Ihr OnePager in 7 Tagen live, eine Standard-Website in 7–14 Tagen. Das ist kein Marketing-Versprechen – das ist mein Prozess.',
+            a: 'Nach Ihrer Freigabe des Angebots und Übermittlung Ihrer Inhalte (Logo, Texte, Bilder) ist Ihr OnePager in 7 Tagen live, eine Standard-Website in 7-10 Tagen. Selbstverständlich kann ich das Logo, die Texte und Bilder ebenfalls entwerfen und bereitstellen. Das ist kein Marketing-Versprechen – das ist mein Prozess.',
           },
           {
             q: 'Muss ich Texte und Bilder selbst liefern?',
@@ -327,15 +322,15 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
           },
           {
             q: 'Was ist, wenn mir das Design nicht gefällt?',
-            a: 'Dann arbeite ich nach. Ich liefere Revisionen bis Sie zufrieden sind – im Onepager-Paket zwei Runden, im Standard drei, im Grösser-Paket unbegrenzt. Und wenn es nach 30 Tagen wirklich nicht passt: volle Rückerstattung.',
+            a: 'Dann arbeite ich nach. Ich liefere Revisionen bis Sie zufrieden sind. Und wenn es nach 30 Tagen wirklich nicht passt: volle Rückerstattung.',
           },
           {
             q: 'Was ist nach dem Launch mit Wartung und Updates?',
-            a: 'Kleinere Textänderungen sind im ersten Monat gratis. Danach biete ich ein optionales Wartungs-Paket an oder erkläre Ihnen, wie Sie Inhalte selbst anpassen. Es gibt keinen Vendor-Lock-in.',
+            a: 'Kleinere Textänderungen sind im ersten Monat gratis. Danach biete ich ein optionales Wartungs-Paket an, kleine Anpassungen mache ich auch später schnell und kulant.',
           },
           {
             q: 'Wie läuft die Bezahlung?',
-            a: '50% bei Projektstart, 50% nach dem Go-Live. Keine Vorauszahlung des vollen Betrags. Rechnung auf ictira GmbH, MwSt-konform.',
+            a: '50% bei Projektstart, 50% nach dem Go-Live. Keine Vorauszahlung des vollen Betrags.',
           },
           {
             q: 'Ich bin nicht in Basel – arbeiten Sie auch mit Kunden aus anderen Regionen?',
@@ -343,7 +338,7 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
           },
           {
             q: 'Was kostet das Hosting danach?',
-            a: 'Hosting CHF 9.90/Monat und Domain CHF 19.90/Jahr – direkt bei Ihrem Provider, ohne Aufpreis durch mich. Transparente Drittkosten, keine versteckte Marge.',
+            a: 'Hosting CHF 9.90/Monat und Domain CHF 19.90/Jahr.',
           },
         ].map((item, i) => (
           <div class="reveal faq-item" data-delay={String(Math.min(i * 40, 200))}>
@@ -367,7 +362,9 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
       <div class="abschluss-left">
         <div class="reveal abschluss-label">Bereit?</div>
         <h2 class="reveal abschluss-heading" data-delay="60">
-          Ihre Website,<br /><em>fertig in 7 Tagen.</em>
+          Professionelle Website<br />
+          erstellen lassen<br />
+          <em>Fixpreis, fertig<br />in 7 Tagen.</em>
         </h2>
         <p class="reveal abschluss-text" data-delay="100">
           Buchen Sie jetzt Ihr kostenloses 15-Minuten-Gespräch.
@@ -382,6 +379,10 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
           <div class="abschluss-detail">
             <span class="ad-label">Standort</span>
             <span class="ad-val">Zunzgen BL · Region Basel</span>
+          </div>
+          <div class="abschluss-trust">
+            <span>✓ Antwort innerhalb von 24 Stunden</span>
+            <span>✓ 15+ Jahre IT-Erfahrung</span>
           </div>
         </div>
       </div>
@@ -400,9 +401,8 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
           <input class="lp-field dark" type="text"  name="name"    placeholder="Ihr Name"            required />
           <input class="lp-field dark" type="tel"   name="phone"   placeholder="Ihre Telefonnummer"   required />
           <input class="lp-field dark" type="email" name="email"   placeholder="Ihre E-Mail-Adresse"  required />
-          <input class="lp-field dark" type="text"  name="firm"    placeholder="Firma (optional)"             />
-          <textarea class="lp-field dark lp-textarea" name="message" rows="3"
-            placeholder="Was möchten Sie besprechen? (optional)"></textarea>
+          <input class="lp-field dark" type="text"  name="firm"    placeholder="Firma (optional)"                      />
+          <input class="lp-field dark" type="text"  name="message" placeholder="Wann passt es Ihnen? (optional)"           />
 
           <div class="cf-turnstile" data-sitekey={turnstileSiteKey} data-theme="dark"></div>
 
@@ -510,6 +510,10 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
     letter-spacing: -0.02em; margin-bottom: 6px;
   }
   .form-sub { font-size: 13px; color: var(--mute); margin-bottom: 24px; }
+  .form-trust {
+    display: flex; flex-direction: column; gap: 4px; margin-top: 4px;
+    font-size: 12px; color: var(--mute); font-family: var(--mono);
+  }
 
   @media (max-width: 1024px) {
     .hero-inner { grid-template-columns: 1fr; }
@@ -897,6 +901,11 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
   }
   .ad-val { font-size: 17px; font-weight: 500; color: var(--paper); }
   a.ad-val { }
+
+  .abschluss-trust {
+    display: flex; flex-direction: column; gap: 4px; margin-top: 20px;
+    font-size: 12px; opacity: .55; font-family: var(--mono);
+  }
 
   .abschluss-form-head {
     font-size: 18px; font-weight: 700; margin-bottom: 6px; letter-spacing: -0.02em;
