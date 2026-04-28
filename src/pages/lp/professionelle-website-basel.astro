@@ -1,7 +1,10 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import { Icon } from 'astro-icon/components';
+import { getImage } from 'astro:assets';
+import stefanPhoto from '../../assets/picture/StefanWorzallaSquareSmall.jpg';
 const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
+const stefan = await getImage({ src: stefanPhoto, width: 360, format: 'webp' });
 ---
 <Layout
   title="Professionelle Website erstellen lassen - Fixpreis, fertig in 7 Tagen | ictira"
@@ -280,7 +283,7 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
   <section class="ueber">
     <div class="section-inner ueber-inner">
       <div class="reveal ueber-photo">
-        <div class="photo-placeholder">SW</div>
+        <img src={stefan.src} alt="Stefan Worzalla, ictira GmbH" class="stefan-photo" width="180" height="220" loading="lazy" decoding="async" />
       </div>
       <div class="ueber-content">
         <div class="reveal ueber-label">Wer hinter ictira steckt</div>
@@ -804,12 +807,9 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
     gap: 64px; align-items: start;
   }
   .ueber-photo { }
-  .photo-placeholder {
+  .stefan-photo {
     width: 180px; height: 220px; border-radius: 32px;
-    background: var(--paper); border: 1px solid var(--line);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 32px; font-weight: 700; color: var(--mute);
-    letter-spacing: -0.02em;
+    object-fit: cover; object-position: center top; display: block;
   }
   .ueber-label {
     font-family: var(--mono); font-size: 12px; color: var(--mute);
@@ -832,8 +832,10 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
   }
 
   @media (max-width: 768px) {
-    .ueber-inner { grid-template-columns: 1fr; }
-    .photo-placeholder { width: 120px; height: 150px; }
+    .ueber-inner { display: block; }
+    .ueber-inner::after { content: ''; display: block; clear: both; }
+    .ueber-photo { float: right; margin: 0 0 16px 24px; }
+    .stefan-photo { width: 100px; height: 120px; border-radius: 20px; }
   }
   @media (max-width: 480px) { .ueber { padding-left: 16px; padding-right: 16px; } }
 
