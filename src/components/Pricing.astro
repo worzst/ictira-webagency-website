@@ -1,88 +1,64 @@
 ---
-const packages = [
-  {
-    name: 'Onepager',
-    price: '1490',
-    tag: 'Für Solopreneure, Events & Launch-Pages',
-    turnaround: '7 Tage',
-    popular: false,
-    includes: [
-      'Eine Seite, klar strukturiert',
-      'Einfaches, individuelles Design',
-      'Mobile-first, 100 % responsive',
-      'Kontaktformular',
-      'SEO-Basics & Performance-Tuning',
-      'Domain & Hosting-Setup',
-      'Zwei Revisions-Runden',
-    ],
-  },
-  {
-    name: 'Standard',
-    price: '1990',
-    tag: 'Für KMU, Vereine & kleine Teams',
-    turnaround: '7-10 Tage',
-    popular: true,
-    includes: [
-      'Bis zu 5 Seiten nach Mass',
-      'Individuelles Design',
-      'Mobile-first, 100 % responsive',
-      'Kontaktformular & Google-Maps',
-      'SEO-Optimierung pro Seite',
-      'Domain & Hosting-Setup',
-      'Drei Revisions-Runden',
-    ],
-  },
-  {
-    name: 'Grösser',
-    price: '2990',
-    tag: 'Für wachsende Firmen mit grösserem Bedarf',
-    turnaround: '14 Tage',
-    popular: false,
-    includes: [
-      '6 bis 10 Seiten',
-      'Custom Design-System',
-      'Mobile-first, 100 % responsive',
-      'Kontaktformular & Google-Maps',
-      'Analytics & Tracking-Setup',
-      'Persönliches Onboarding',
-      'Unbegrenzte Revisionen',
-    ],
-  },
-];
+import { packages } from '../data/packages';
+import SectionHeading from './SectionHeading.astro';
+
+interface Props {
+  label?: string;
+  heading?: string;
+  headingEm?: string;
+  footnote?: string;
+  ctaHref?: string;
+  ctaLabel?: string;
+  bulletSet?: 'includes' | 'lpItems';
+  showNumbers?: boolean;
+  tagField?: 'tag' | 'sub';
+  padTop?: boolean;
+  align?: 'left' | 'center';
+}
+
+const {
+  label = '★  Transparente Preise  ★',
+  heading = 'Drei Pakete.',
+  headingEm = 'Null Bullshit.',
+  footnote = 'Alle Preise inkl. MwSt. · Hosting (CHF 9.90/Monat) & Domain (CHF 19.90/Jahr) werden separat ausgewiesen · Bezahlung nach Projektstart 50% / nach Launch 50%',
+  ctaHref = '#kontakt',
+  ctaLabel,
+  bulletSet = 'includes',
+  showNumbers = true,
+  tagField = 'tag',
+  padTop = true,
+  align = 'center',
+} = Astro.props;
+
+const fmtPrice = (p: string) => p.replace(/\B(?=(\d{3})+(?!\d))/g, "'");
 ---
-<section id="preise" class="pricing">
+<section id="preise" class:list={['pricing', { 'no-pad-top': !padTop }]}>
   <div class="section-inner">
-    <div class="reveal header">
-      <div class="label">★ &nbsp;Transparente Preise&nbsp; ★</div>
-      <h2 class="heading">
-        Drei Pakete.<br />
-        <em>Null Bullshit.</em>
-      </h2>
-    </div>
+    <SectionHeading label={label} heading={heading} headingEm={headingEm} align={align} />
 
     <div class="grid">
       {packages.map((pkg, i) => (
         <div
-          class={`reveal card${pkg.popular ? ' popular' : ''}`}
+          class:list={['reveal card', { popular: pkg.popular }]}
           data-delay={String(i * 80)}
         >
-          {pkg.popular && <div class="badge">Most Popular</div>}
+          {pkg.popular && <div class="badge">Meistgewählt</div>}
 
           <div class="card-head">
             <div class="name">{pkg.name}</div>
-            <div class="num">0{i + 1}/03</div>
+            {showNumbers && <div class="num">0{i + 1}/03</div>}
           </div>
-          <div class="tag">{pkg.tag}</div>
+          <div class="tag">{tagField === 'sub' ? pkg.sub : pkg.tag}</div>
 
           <div class="price-row">
             <span class="chf">CHF</span>
-            <span class="amount">{pkg.price}</span>
+            <span class="amount">{fmtPrice(pkg.price)}</span>
             <span class="suffix">.–</span>
           </div>
-          <div class="sub">einmalig · inkl. MwSt</div>
+          <div class="sub">Fertig in {pkg.turnaround} Tagen</div>
 
           <ul class="list">
-            {pkg.includes.map(item => (
+            {(bulletSet === 'lpItems' ? pkg.lpItems : pkg.includes).map(item => (
               <li class="item">
                 <span class="check">{'✓'}</span>
                 {item}
@@ -90,32 +66,22 @@ const packages = [
             ))}
           </ul>
 
-          <a href="#kontakt" class="cta" data-pack={pkg.name}>{pkg.name} wählen <span>→</span></a>
-          <div class="delivery">Lieferung: {pkg.turnaround}</div>
+          <a href={ctaHref} class="cta" data-pack={pkg.name}>
+            {ctaLabel ?? `${pkg.name} wählen`} <span>→</span>
+          </a>
         </div>
       ))}
     </div>
 
     <div class="reveal footnote" data-delay="100">
-      Alle Preise inkl. MwSt. · Hosting (CHF 9.90/Monat) &amp; Domain (CHF 19.90/Jahr) werden separat ausgewiesen ·
-      Bezahlung nach Projektstart 50% / nach Launch 50%
+      {footnote}
     </div>
   </div>
 </section>
 
 <style>
   .pricing { padding: 96px 32px; }
-
-  .header { text-align: center; margin-bottom: 64px; }
-  .label {
-    font-family: var(--mono); font-size: 12px; color: var(--mute);
-    text-transform: uppercase; letter-spacing: .08em; margin-bottom: 20px;
-  }
-  .heading {
-    font-size: clamp(64px, 9vw, 128px); line-height: 0.9;
-    margin: 0; font-weight: 800; letter-spacing: -0.055em; color: var(--ink);
-  }
-  .heading em { font-style: italic; color: var(--accent); }
+  .pricing.no-pad-top { padding-top: 0; }
 
   .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; align-items: start; }
 
@@ -133,44 +99,42 @@ const packages = [
   }
 
   .badge {
-    position: absolute; top: -16px; left: 50%;
-    transform: translateX(-50%) rotate(-3deg);
-    background: var(--hot); color: #fff; padding: 8px 18px;
-    border-radius: 999px; font-size: 12px; font-weight: 700;
-    text-transform: uppercase; letter-spacing: .05em; white-space: nowrap;
+    position: absolute; top: -14px; left: 50%;
+    transform: translateX(-50%) rotate(-2deg);
+    background: var(--hot); color: #fff; padding: 6px 16px;
+    border-radius: 999px; font-size: 11px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: .06em; white-space: nowrap;
   }
 
   .card-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 4px; }
-  .name { font-size: 30px; font-weight: 700; letter-spacing: -0.03em; }
+  .name { font-size: 26px; font-weight: 700; letter-spacing: -0.03em; }
   .num { font-family: var(--mono); font-size: 12px; opacity: .5; }
-  .tag { font-size: 14px; opacity: .7; margin-bottom: 32px; }
+  .tag { font-size: 13px; opacity: .65; margin-bottom: 28px; line-height: 1.4; }
 
-  .price-row { display: flex; align-items: baseline; gap: 6px; margin-bottom: 6px; }
-  .chf, .suffix { font-size: 18px; opacity: .6; }
-  .amount { font-size: 96px; font-weight: 800; letter-spacing: -0.06em; line-height: 0.9; }
-  .sub { font-family: var(--mono); font-size: 12px; opacity: .5; margin-bottom: 24px; }
+  .price-row { display: flex; align-items: baseline; gap: 4px; margin-bottom: 6px; }
+  .chf, .suffix { font-size: 16px; opacity: .6; }
+  .amount { font-size: 72px; font-weight: 800; letter-spacing: -0.06em; line-height: 0.9; }
+  .sub { font-family: var(--mono); font-size: 11px; opacity: .5; margin-bottom: 28px; }
 
-  .list { flex: 1; }
-  .item { display: flex; gap: 10px; padding: 9px 0; font-size: 14px; align-items: flex-start; }
+  .list { flex: 1; display: grid; gap: 10px; margin-bottom: 24px; }
+  .item { display: flex; gap: 10px; font-size: 14px; align-items: flex-start; line-height: 1.4; }
   .check {
     width: 18px; height: 18px; border-radius: 50%; color: #fff; flex-shrink: 0;
     display: inline-flex; align-items: center; justify-content: center;
-    font-size: 11px; margin-top: 1px;
+    font-size: 10px; font-weight: 700; margin-top: 1px;
     background: var(--ink);
   }
   .card.popular .check { background: var(--accent); }
 
   .cta {
-    margin-top: 24px; padding: 16px 20px; border-radius: 999px;
+    padding: 16px 20px; border-radius: 999px;
     background: var(--ink); color: #fff;
-    font-weight: 600; font-size: 15px;
+    font-weight: 600; font-size: 14px;
     display: flex; justify-content: space-between; align-items: center;
   }
   .card.popular .cta { background: var(--accent); }
 
-  .delivery { margin-top: 12px; font-family: var(--mono); font-size: 11px; opacity: .5; text-align: center; }
-
-  .footnote { text-align: center; margin-top: 40px; font-size: 14px; color: var(--mute); font-family: var(--mono); }
+  .footnote { text-align: center; margin-top: 36px; font-size: 13px; color: var(--mute); font-family: var(--mono); line-height: 1.6; }
 
   @media (max-width: 1024px) {
     .grid { grid-template-columns: 1fr; max-width: 500px; margin: 0 auto; }

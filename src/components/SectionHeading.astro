@@ -1,0 +1,37 @@
+---
+interface Props {
+  label?: string;
+  heading: string;
+  headingEm?: string;
+  align?: 'left' | 'center';
+  size?: 'lg' | 'md' | 'sm';
+  mb?: number;
+}
+
+const { label, heading, headingEm, align = 'center', size = 'md', mb = 56 } = Astro.props;
+---
+<div class:list={['sh reveal', `sh-${align}`, `sh-${size}`]} style={`margin-bottom:${mb}px`}>
+  {label && <div class="sh-label">{label}</div>}
+  <h2 class="sh-heading">
+    {heading}
+    {headingEm && <><br /><em>{headingEm}</em></>}
+  </h2>
+</div>
+
+<style>
+  .sh-label {
+    font-family: var(--mono); font-size: 12px; color: var(--mute);
+    text-transform: uppercase; letter-spacing: .08em; margin-bottom: 20px;
+  }
+  .sh-heading {
+    font-size: clamp(48px, 7vw, 96px); font-weight: 800;
+    line-height: 0.95; letter-spacing: -0.055em; color: var(--ink); margin: 0;
+  }
+  .sh-heading em { font-style: italic; color: var(--accent); }
+
+  .sh-sm .sh-heading { font-size: clamp(40px, 5vw, 72px); }
+  .sh-lg .sh-heading { font-size: clamp(56px, 7vw, 96px); }
+
+  .sh-center { text-align: center; }
+  .sh-left   { text-align: left; }
+</style>
