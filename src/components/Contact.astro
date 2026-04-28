@@ -42,6 +42,7 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
 
       <form id="contactForm" class="form">
         <input class="hp" type="text" name="_hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
+        <input type="hidden" name="_source" value="Hauptseite" />
         <input class="field" type="text"  name="name"    placeholder="Wie heisst du?"    required />
         <input class="field" type="email" name="email"   placeholder="Deine Email"       required />
         <input class="field" type="text"  name="firm"    placeholder="Firma (optional)"          />

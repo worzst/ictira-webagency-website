@@ -60,6 +60,7 @@ const stefan = await getImage({ src: stefanPhoto, width: 360, format: 'webp' });
 
           <form id="lpForm" class="lp-form">
             <input class="hp" type="text" name="_hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
+            <input type="hidden" name="_source" value="LP Basel · Hero" />
             <input class="lp-field" type="text"  name="name"    placeholder="Ihr Name"                    required />
             <input class="lp-field" type="text"  name="firm"    placeholder="Firma (optional)"                     />
             <input class="lp-field" type="email" name="email"   placeholder="Ihre E-Mail-Adresse"          required />
@@ -403,10 +404,11 @@ const stefan = await getImage({ src: stefanPhoto, width: 360, format: 'webp' });
 
         <form id="lpForm2" class="lp-form dark">
           <input class="hp" type="text" name="_hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
-          <input class="lp-field dark" type="text"  name="name"    placeholder="Ihr Name"            required />
-          <input class="lp-field dark" type="tel"   name="phone"   placeholder="Ihre Telefonnummer"   required />
-          <input class="lp-field dark" type="email" name="email"   placeholder="Ihre E-Mail-Adresse"  required />
+          <input type="hidden" name="_source" value="LP Basel · Abschluss" />
+          <input class="lp-field dark" type="text"  name="name"    placeholder="Ihr Name"                     required />
           <input class="lp-field dark" type="text"  name="firm"    placeholder="Firma (optional)"                      />
+          <input class="lp-field dark" type="email" name="email"   placeholder="Ihre E-Mail-Adresse"          required />
+          <input class="lp-field dark" type="tel"   name="phone"   placeholder="Ihre Telefonnummer"           required />
           <input class="lp-field dark" type="text"  name="message" placeholder="Wann passt es Ihnen? (optional)"           />
 
           <div class="cf-turnstile" data-sitekey={turnstileSiteKey} data-theme="dark"></div>

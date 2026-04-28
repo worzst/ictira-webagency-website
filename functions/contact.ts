@@ -38,19 +38,23 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
     return Response.json({ ok: false }, { status: 400 });
   }
 
-  const { name, email, firm, phone, pack, message } = data;
+  const { name, email, firm, phone, pack, message, _source } = data;
 
-  if (!name?.trim() || !email?.trim() || !message?.trim()) {
+  if (!name?.trim() || !email?.trim()) {
     return Response.json({ ok: false }, { status: 400 });
   }
 
+  const source = _source?.trim() || 'Unbekannt';
+
   const html = `
+    <p><strong>Quelle:</strong> ${escape(source)}</p>
+    <hr>
     <p><strong>Name:</strong> ${escape(name)}</p>
     <p><strong>Email:</strong> <a href="mailto:${escape(email)}">${escape(email)}</a></p>
     ${firm ? `<p><strong>Firma:</strong> ${escape(firm)}</p>` : ''}
     ${phone ? `<p><strong>Telefon:</strong> ${escape(phone)}</p>` : ''}
     ${pack ? `<p><strong>Paket:</strong> ${escape(pack)}</p>` : ''}
-    <p><strong>Nachricht:</strong><br>${escape(message).replace(/\n/g, '<br>')}</p>
+    ${message ? `<p><strong>Nachricht:</strong><br>${escape(message).replace(/\n/g, '<br>')}</p>` : ''}
   `;
 
   const res = await fetch('https://api.resend.com/emails', {
@@ -63,7 +67,7 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
       from: env.CONTACT_FROM,
       to: env.CONTACT_TO,
       reply_to: email,
-      subject: `Neue Anfrage von ${name}${firm ? ` · ${firm}` : ''}`,
+      subject: `[${source}] Neue Anfrage von ${name}${firm ? ` · ${firm}` : ''}`,
       html,
     }),
   });
