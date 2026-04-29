@@ -6,7 +6,7 @@ import Faq from '../../components/Faq.astro';
 import Pricing from '../../components/Pricing.astro';
 import SectionHeading from '../../components/SectionHeading.astro';
 import stefanPhoto from '../../assets/picture/StefanWorzallaSquareSmall.jpg';
-const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
+import Turnstile from '../../components/Turnstile.astro';
 const stefan = await getImage({ src: stefanPhoto, width: 360, format: 'webp' });
 
 const lpFaqs = [
@@ -101,7 +101,7 @@ const lpFaqs = [
             <input class="lp-field" type="tel"   name="phone"   placeholder="Ihre Telefonnummer"           required />
             <input class="lp-field" type="text"  name="message" placeholder="Wann passt es Ihnen? (optional)"      />
 
-            <div class="cf-turnstile" data-sitekey={turnstileSiteKey} data-theme="light"></div>
+            <Turnstile theme="light" />
 
             <button type="submit" class="lp-submit">
               <span id="lpSubmitLabel">Kostenloses Gesräch buchen</span>
@@ -331,7 +331,7 @@ const lpFaqs = [
           <input class="lp-field dark" type="tel"   name="phone"   placeholder="Ihre Telefonnummer"           required />
           <input class="lp-field dark" type="text"  name="message" placeholder="Wann passt es Ihnen? (optional)"           />
 
-          <div class="cf-turnstile" data-sitekey={turnstileSiteKey} data-theme="dark"></div>
+          <Turnstile theme="dark" />
 
           <button type="submit" class="lp-submit accent">
             <span id="lpSubmitLabel2">Kostenloses Gesräch buchen</span>
@@ -741,4 +741,3 @@ const lpFaqs = [
   wireForm('lpForm2', 'lpSuccess2', 'lpError2', 'lpSubmitLabel2', 'Gespräch sichern');
 </script>
 
-<script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>

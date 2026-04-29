@@ -1,6 +1,9 @@
 ---
+import Turnstile from './Turnstile.astro';
+
+interface Props {}
+
 const packages = ['Onepager', 'Standard', 'Grösser', 'Unsicher'];
-const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
 ---
 <section id="kontakt" class="contact">
   <div class="card section-inner">
@@ -58,7 +61,7 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
 
         <textarea class="field textarea" name="message" placeholder="Erzähl uns kurz, was du vorhast…" rows="4"></textarea>
 
-        <div class="cf-turnstile" data-sitekey={turnstileSiteKey} data-theme="dark"></div>
+        <Turnstile theme="dark" />
 
         <button type="submit" class="submit">
           <span id="submitLabel">Anfrage abschicken</span><span>→</span>
@@ -168,4 +171,3 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
   wireForm('contactForm', 'contactSuccess', 'contactError', 'submitLabel', 'Anfrage abschicken');
 </script>
 
-<script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>

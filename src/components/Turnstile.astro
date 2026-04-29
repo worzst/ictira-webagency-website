@@ -1,0 +1,8 @@
+---
+interface Props {
+  theme?: 'light' | 'dark';
+}
+const { theme = 'light' } = Astro.props;
+const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
+---
+<div class="cf-turnstile" data-sitekey={siteKey} data-theme={theme}></div>
