@@ -15,6 +15,7 @@ const {
   noindex = false,
 } = Astro.props;
 
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site).href;
 const gtmId = import.meta.env.PUBLIC_GTM_ID ?? '';
 ---
 <!doctype html>
@@ -24,7 +25,14 @@ const gtmId = import.meta.env.PUBLIC_GTM_ID ?? '';
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>{title}</title>
   <meta name="description" content={description} />
-  <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site).href} />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content={canonicalUrl} />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:locale" content="de_CH" />
+  <meta property="og:site_name" content="ictira GmbH" />
+  <meta name="twitter:card" content="summary" />
+  <link rel="canonical" href={canonicalUrl} />
   <link rel="sitemap" href="/sitemap-index.xml" />
   {noindex && <meta name="robots" content="noindex" />}
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
