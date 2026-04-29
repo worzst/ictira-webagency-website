@@ -1,0 +1,70 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+---
+<Layout title="Seite nicht gefunden — ictira GmbH" noindex={true}>
+  <Nav />
+  <section class="not-found">
+    <div class="inner">
+      <span class="label">404</span>
+      <h1>Diese Seite gibt's nicht.</h1>
+      <p>Die URL existiert nicht – aber wir schon. Zurück zur Startseite.</p>
+      <a href="/">Zur Startseite →</a>
+    </div>
+  </section>
+  <Footer />
+</Layout>
+
+<style>
+  .not-found {
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg);
+    color: var(--ink);
+    padding: 96px 32px;
+  }
+
+  .inner {
+    max-width: 560px;
+    text-align: center;
+  }
+
+  .label {
+    display: block;
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    margin-bottom: 24px;
+  }
+
+  h1 {
+    font-size: clamp(36px, 6vw, 64px);
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    margin: 0 0 20px;
+  }
+
+  p {
+    font-size: 17px;
+    color: var(--mute);
+    line-height: 1.6;
+    margin: 0 0 40px;
+  }
+
+  a {
+    background: var(--accent);
+    color: #fff;
+    padding: 14px 28px;
+    border-radius: 100px;
+    font-size: 15px;
+    font-weight: 600;
+    display: inline-block;
+    text-decoration: none;
+  }
+</style>
