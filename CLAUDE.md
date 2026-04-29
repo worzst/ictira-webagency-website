@@ -150,9 +150,40 @@ interface Props {
 
 `src/components/Faq.astro` — prop-driven accordion. Accepts `questions`, `label`, `heading`, `headingEm`, `align`. Defaults to main-site questions if none passed.
 
+### LeadForm
+
+`src/components/LeadForm.astro` — generic, prop-driven lead capture form. Used by Contact.astro and both LP forms. Handles honeypot, `_source` tracking, Turnstile, success/error states, and wireForm wiring internally via data attributes (safe for multiple instances on one page).
+
+```typescript
+type Field =
+  | { type: 'text'|'email'|'tel'|'url'|'number'|'password'; name: string; placeholder?: string; required?: boolean }
+  | { type: 'textarea'; name: string; placeholder?: string; rows?: number; required?: boolean }
+  | { type: 'radios'; name: string; options: string[] };
+
+interface Props {
+  id: string;              // element ID prefix: {id}Form, {id}Success, {id}Error, {id}Label
+  source: string;          // value for hidden _source field (appears in email subject)
+  fields: Field[];         // ordered field list
+  action?: string;         // POST URL, default '/contact'
+  submitLabel?: string;    // button text, default 'Absenden'
+  submitVariant?: 'accent' | 'ink';  // button color, default 'accent'
+  successTitle?: string;
+  successBody?: string;
+  errorHtml?: string;      // supports HTML (e.g. mailto links)
+  turnstileTheme?: 'light' | 'dark';
+  theme?: 'light' | 'dark';  // field color scheme, default 'light'
+}
+```
+
+Named slot `after-submit` — rendered after the submit button (used for trust indicators on LP hero form).
+
+### Turnstile
+
+`src/components/Turnstile.astro` — renders the Cloudflare Turnstile widget div. Props: `theme?: 'light' | 'dark'`. The API script (`challenges.cloudflare.com`) is loaded once in `Layout.astro`.
+
 ### formSubmit
 
-`src/scripts/formSubmit.ts` — exports `wireForm(formId, successId, errorId, labelId, defaultLabel)`. Used in Contact.astro and both LP forms. Handles fetch, success state, turnstile reset on error, and `dataLayer.push({ event: 'form_submit_success' })`.
+`src/scripts/formSubmit.ts` — exports `wireForm(formId, successId, errorId, labelId, defaultLabel)`. Called by LeadForm's internal script. Handles fetch, success state, turnstile reset on error, and `dataLayer.push({ event: 'form_submit_success' })`.
 
 ---
 

@@ -1,0 +1,230 @@
+---
+import Turnstile from './Turnstile.astro';
+
+type InputType = 'text' | 'email' | 'tel' | 'url' | 'number' | 'password';
+
+type Field =
+  | { type: InputType; name: string; placeholder?: string; required?: boolean }
+  | { type: 'textarea'; name: string; placeholder?: string; rows?: number; required?: boolean }
+  | { type: 'radios'; name: string; options: string[] };
+
+interface Props {
+  id: string;
+  source: string;
+  fields: Field[];
+  action?: string;
+  submitLabel?: string;
+  submitVariant?: 'accent' | 'ink';
+  successTitle?: string;
+  successBody?: string;
+  errorHtml?: string;
+  turnstileTheme?: 'light' | 'dark';
+  theme?: 'light' | 'dark';
+}
+
+const {
+  id,
+  source,
+  fields,
+  action = '/contact',
+  submitLabel = 'Absenden',
+  submitVariant = 'accent',
+  successTitle = 'Danke!',
+  successBody = 'Wir melden uns bald.',
+  errorHtml = 'Etwas ist schiefgelaufen. Bitte versuche es erneut.',
+  turnstileTheme = 'light',
+  theme = 'light',
+} = Astro.props;
+
+const formId    = `${id}Form`;
+const successId = `${id}Success`;
+const errorId   = `${id}Error`;
+const labelId   = `${id}Label`;
+---
+
+<div
+  class:list={['lf', `lf--${theme}`]}
+  data-form-id={formId}
+  data-success-id={successId}
+  data-error-id={errorId}
+  data-label-id={labelId}
+  data-submit-label={submitLabel}
+>
+  <div id={successId} class="lf-success">
+    <div class="lf-success-icon">✓</div>
+    <h3>{successTitle}</h3>
+    <p>{successBody}</p>
+  </div>
+
+  <form id={formId} class="lf-form" action={action} method="POST">
+    <input class="lf-hp" type="text" name="_hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
+    <input type="hidden" name="_source" value={source} />
+
+    {fields.map(field => {
+      if (field.type === 'textarea') {
+        return (
+          <textarea
+            class="lf-field lf-textarea"
+            name={field.name}
+            placeholder={field.placeholder}
+            rows={field.rows ?? 4}
+            required={field.required}
+          ></textarea>
+        );
+      }
+      if (field.type === 'radios') {
+        return (
+          <div class="lf-radios">
+            {field.options.map(opt => (
+              <label class="lf-radio-label">
+                <input type="radio" name={field.name} value={opt} />&nbsp;{opt}
+              </label>
+            ))}
+          </div>
+        );
+      }
+      return (
+        <input
+          class="lf-field"
+          type={field.type}
+          name={field.name}
+          placeholder={field.placeholder}
+          required={field.required}
+        />
+      );
+    })}
+
+    <Turnstile theme={turnstileTheme} />
+
+    <button type="submit" class:list={['lf-submit', `lf-submit--${submitVariant}`]}>
+      <span id={labelId}>{submitLabel}</span><span aria-hidden="true">→</span>
+    </button>
+    <slot name="after-submit" />
+    <p id={errorId} class="lf-error" style="display:none" set:html={errorHtml} />
+  </form>
+</div>
+
+<style>
+  /* ── Light theme ── */
+  .lf--light {
+    --lf-field-bg:             transparent;
+    --lf-field-border:         rgba(14,15,18,0.15);
+    --lf-field-color:          var(--ink);
+    --lf-field-placeholder:    var(--mute);
+    --lf-field-focus-border:   var(--accent);
+    --lf-radio-border:         rgba(14,15,18,0.18);
+    --lf-radio-color:          var(--ink);
+    --lf-radio-checked-bg:     rgba(14,15,18,0.08);
+    --lf-radio-checked-border: var(--ink);
+    --lf-success-color:        var(--ink);
+    --lf-error-color:          var(--hot);
+  }
+
+  /* ── Dark theme ── */
+  .lf--dark {
+    --lf-field-bg:             rgba(255,255,255,0.05);
+    --lf-field-border:         rgba(255,255,255,0.15);
+    --lf-field-color:          var(--paper);
+    --lf-field-placeholder:    rgba(244,242,236,0.4);
+    --lf-field-focus-border:   rgba(255,255,255,0.5);
+    --lf-radio-border:         rgba(255,255,255,0.18);
+    --lf-radio-color:          var(--paper);
+    --lf-radio-checked-bg:     rgba(255,255,255,0.12);
+    --lf-radio-checked-border: rgba(255,255,255,0.6);
+    --lf-success-color:        var(--paper);
+    --lf-error-color:          #ff8f80;
+  }
+
+  .lf-form { display: grid; gap: 12px; }
+
+  .lf-field {
+    padding: 16px 20px;
+    border-radius: 999px;
+    border: 1.5px solid var(--lf-field-border);
+    background: var(--lf-field-bg);
+    color: var(--lf-field-color);
+    font-size: 15px;
+    font-family: inherit;
+    outline: none;
+    width: 100%;
+    transition: border-color .2s;
+  }
+  .lf-field:focus          { border-color: var(--lf-field-focus-border); }
+  .lf-field::placeholder   { color: var(--lf-field-placeholder); }
+  .lf-textarea             { border-radius: 20px; resize: none; }
+
+  .lf-radios { display: flex; gap: 8px; flex-wrap: wrap; }
+  .lf-radio-label {
+    padding: 10px 16px;
+    border-radius: 999px;
+    border: 1.5px solid var(--lf-radio-border);
+    font-size: 13px;
+    cursor: pointer;
+    color: var(--lf-radio-color);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    transition: border-color .2s, background .2s;
+  }
+  .lf-radio-label:has(input:checked) {
+    background: var(--lf-radio-checked-bg);
+    border-color: var(--lf-radio-checked-border);
+  }
+
+  .lf-submit {
+    padding: 18px 24px;
+    border-radius: 999px;
+    border: none;
+    font-size: 15px;
+    font-weight: 700;
+    font-family: inherit;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    transition: opacity .2s;
+  }
+  .lf-submit:disabled  { opacity: .6; cursor: default; }
+  .lf-submit--accent   { background: var(--accent); color: #fff; }
+  .lf-submit--ink      { background: var(--ink);    color: #fff; }
+
+  .lf-success {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    text-align: center;
+    padding: 32px 0;
+    color: var(--lf-success-color);
+  }
+  .lf-success.show { display: flex; }
+  .lf-success-icon {
+    width: 60px; height: 60px;
+    border-radius: 50%;
+    background: var(--success);
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    font-weight: 700;
+  }
+  .lf-success h3 { font-size: 28px; font-weight: 700; margin: 0; letter-spacing: -0.03em; }
+  .lf-success p  { margin: 0; opacity: .7; }
+
+  .lf-error        { font-size: 13px; color: var(--lf-error-color); margin: 0; line-height: 1.5; }
+  .lf-error :global(a) { color: var(--lf-error-color); text-decoration: underline; }
+
+  .lf-hp { position: absolute; left: -9999px; opacity: 0; pointer-events: none; }
+</style>
+
+<script>
+  import { wireForm } from '../scripts/formSubmit';
+  document.querySelectorAll<HTMLElement>('[data-form-id]').forEach(el => {
+    const { formId, successId, errorId, labelId, submitLabel } = el.dataset;
+    if (formId && successId && errorId && labelId && submitLabel) {
+      wireForm(formId, successId, errorId, labelId, submitLabel);
+    }
+  });
+</script>
