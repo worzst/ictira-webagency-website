@@ -6,7 +6,7 @@ import Faq from '../../components/Faq.astro';
 import Pricing from '../../components/Pricing.astro';
 import SectionHeading from '../../components/SectionHeading.astro';
 import stefanPhoto from '../../assets/picture/StefanWorzallaSquareSmall.jpg';
-import Turnstile from '../../components/Turnstile.astro';
+import LeadForm from '../../components/LeadForm.astro';
 const stefan = await getImage({ src: stefanPhoto, width: 360, format: 'webp' });
 
 const lpFaqs = [
@@ -86,36 +86,28 @@ const lpFaqs = [
           <div class="form-heading">Kostenloses 15-Minuten-Gespräch buchen</div>
           <div class="form-sub">Unverbindlich – per Telefon oder Video.</div>
 
-          <div id="lpSuccess" class="lp-success">
-            <div class="success-icon">✓</div>
-            <h3>Danke! Ich melde mich bald.</h3>
-            <p>Meist innerhalb von 24 Stunden.</p>
-          </div>
-
-          <form id="lpForm" class="lp-form">
-            <input class="hp" type="text" name="_hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
-            <input type="hidden" name="_source" value="LP Basel · Hero" />
-            <input class="lp-field" type="text"  name="name"    placeholder="Ihr Name"                    required />
-            <input class="lp-field" type="text"  name="firm"    placeholder="Firma (optional)"                     />
-            <input class="lp-field" type="email" name="email"   placeholder="Ihre E-Mail-Adresse"          required />
-            <input class="lp-field" type="tel"   name="phone"   placeholder="Ihre Telefonnummer"           required />
-            <input class="lp-field" type="text"  name="message" placeholder="Wann passt es Ihnen? (optional)"      />
-
-            <Turnstile theme="light" />
-
-            <button type="submit" class="lp-submit">
-              <span id="lpSubmitLabel">Kostenloses Gesräch buchen</span>
-              <span>→</span>
-            </button>
-            <div class="form-trust">
+          <LeadForm
+            id="lpHero"
+            source="LP Basel · Hero"
+            theme="light"
+            submitLabel="Kostenloses Gespräch buchen"
+            submitVariant="ink"
+            successTitle="Danke! Ich melde mich bald."
+            successBody="Meist innerhalb von 24 Stunden."
+            errorHtml={`Etwas ist schiefgelaufen. Bitte schreib uns direkt an <a href="mailto:hallo@ictira.com">hallo@ictira.com</a>.`}
+            fields={[
+              { type: 'text',  name: 'name',    placeholder: 'Ihr Name',                      required: true },
+              { type: 'text',  name: 'firm',    placeholder: 'Firma (optional)'                              },
+              { type: 'email', name: 'email',   placeholder: 'Ihre E-Mail-Adresse',            required: true },
+              { type: 'tel',   name: 'phone',   placeholder: 'Ihre Telefonnummer',             required: true },
+              { type: 'text',  name: 'message', placeholder: 'Wann passt es Ihnen? (optional)'               },
+            ]}
+          >
+            <div slot="after-submit" class="form-trust">
               <span>✓ Antwort innerhalb von 24 Stunden</span>
               <span>✓ 15+ Jahre IT-Erfahrung</span>
             </div>
-            <p id="lpError" class="lp-error" style="display:none">
-              Etwas ist schiefgelaufen. Bitte schreib uns direkt an
-              <a href="mailto:hallo@ictira.com">hallo@ictira.com</a>.
-            </p>
-          </form>
+          </LeadForm>
         </div>
       </div>
     </div>
@@ -316,32 +308,23 @@ const lpFaqs = [
         <div class="abschluss-form-head">Kostenloses 15-Minuten-Gespräch buchen</div>
         <div class="abschluss-form-sub">Unverbindlich – per Telefon oder Video.</div>
 
-        <div id="lpSuccess2" class="lp-success dark">
-          <div class="success-icon">✓</div>
-          <h3>Danke! Ich melde mich bald.</h3>
-          <p>Meist innerhalb von 24 Stunden.</p>
-        </div>
-
-        <form id="lpForm2" class="lp-form dark">
-          <input class="hp" type="text" name="_hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
-          <input type="hidden" name="_source" value="LP Basel · Abschluss" />
-          <input class="lp-field dark" type="text"  name="name"    placeholder="Ihr Name"                     required />
-          <input class="lp-field dark" type="text"  name="firm"    placeholder="Firma (optional)"                      />
-          <input class="lp-field dark" type="email" name="email"   placeholder="Ihre E-Mail-Adresse"          required />
-          <input class="lp-field dark" type="tel"   name="phone"   placeholder="Ihre Telefonnummer"           required />
-          <input class="lp-field dark" type="text"  name="message" placeholder="Wann passt es Ihnen? (optional)"           />
-
-          <Turnstile theme="dark" />
-
-          <button type="submit" class="lp-submit accent">
-            <span id="lpSubmitLabel2">Kostenloses Gesräch buchen</span>
-            <span>→</span>
-          </button>
-          <p id="lpError2" class="lp-error dark" style="display:none">
-            Etwas ist schiefgelaufen. Bitte schreib uns direkt an
-            <a href="mailto:hallo@ictira.com">hallo@ictira.com</a>.
-          </p>
-        </form>
+        <LeadForm
+          id="lpAbschluss"
+          source="LP Basel · Abschluss"
+          theme="dark"
+          turnstileTheme="dark"
+          submitLabel="Kostenloses Gespräch buchen"
+          successTitle="Danke! Ich melde mich bald."
+          successBody="Meist innerhalb von 24 Stunden."
+          errorHtml={`Etwas ist schiefgelaufen. Bitte schreib uns direkt an <a href="mailto:hallo@ictira.com">hallo@ictira.com</a>.`}
+          fields={[
+            { type: 'text',  name: 'name',    placeholder: 'Ihr Name',                      required: true },
+            { type: 'text',  name: 'firm',    placeholder: 'Firma (optional)'                              },
+            { type: 'email', name: 'email',   placeholder: 'Ihre E-Mail-Adresse',            required: true },
+            { type: 'tel',   name: 'phone',   placeholder: 'Ihre Telefonnummer',             required: true },
+            { type: 'text',  name: 'message', placeholder: 'Wann passt es Ihnen? (optional)'               },
+          ]}
+        />
       </div>
     </div>
   </section>
@@ -450,61 +433,6 @@ const lpFaqs = [
     .hero { padding-left: 16px; padding-right: 16px; }
     .hero-form-card { padding: 28px 20px; }
   }
-
-  /* ── Shared form styles ── */
-  .lp-form { display: grid; gap: 12px; }
-  .lp-field {
-    padding: 16px 20px; border-radius: 999px;
-    border: 1.5px solid var(--line);
-    background: transparent; color: var(--ink);
-    font-size: 15px; outline: none; width: 100%;
-    transition: border-color .2s;
-  }
-  .lp-field:focus { border-color: var(--accent); }
-  .lp-field::placeholder { color: var(--mute); }
-  .lp-field.dark {
-    border-color: rgba(255,255,255,0.15);
-    background: rgba(255,255,255,0.05);
-    color: var(--paper);
-  }
-  .lp-field.dark::placeholder { color: rgba(244,242,236,0.4); }
-  .lp-field.dark:focus { border-color: rgba(255,255,255,0.5); }
-  .lp-textarea { border-radius: 20px; resize: none; }
-
-  .lp-submit {
-    padding: 18px 24px; border-radius: 999px;
-    background: var(--ink); color: #fff;
-    border: none; font-size: 15px; font-weight: 700;
-    cursor: pointer; display: flex;
-    justify-content: space-between; align-items: center;
-    transition: opacity .2s;
-  }
-  .lp-submit:disabled { opacity: .6; cursor: default; }
-  .lp-submit.accent { background: var(--accent); }
-
-  .lp-success {
-    display: none; flex-direction: column;
-    align-items: center; gap: 16px;
-    text-align: center; padding: 32px 0;
-    color: var(--ink);
-  }
-  .lp-success.dark { color: var(--paper); }
-  .lp-success.show { display: flex; }
-  .success-icon {
-    width: 56px; height: 56px; border-radius: 50%;
-    background: var(--success); color: var(--ink);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 24px; font-weight: 700;
-  }
-  .lp-success h3 { font-size: 24px; font-weight: 700; margin: 0; letter-spacing: -0.03em; }
-  .lp-success p  { margin: 0; opacity: .7; }
-
-  .lp-error { font-size: 13px; color: var(--hot); margin: 0; line-height: 1.5; }
-  .lp-error a { color: var(--hot); text-decoration: underline; }
-  .lp-error.dark { color: #ff8f80; }
-  .lp-error.dark a { color: #ff8f80; }
-
-  .hp { position: absolute; left: -9999px; opacity: 0; pointer-events: none; }
 
   /* ── Für wen ── */
   .fuer-wen { padding: 96px 32px; }
@@ -735,9 +663,4 @@ const lpFaqs = [
   }
 </style>
 
-<script>
-  import { wireForm } from '../../scripts/formSubmit';
-  wireForm('lpForm',  'lpSuccess',  'lpError',  'lpSubmitLabel',  'Gespräch sichern');
-  wireForm('lpForm2', 'lpSuccess2', 'lpError2', 'lpSubmitLabel2', 'Gespräch sichern');
-</script>
 
