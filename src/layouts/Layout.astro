@@ -71,7 +71,7 @@ const gtmId = import.meta.env.PUBLIC_GTM_ID ?? '';
     })(window,document,'script','dataLayer',gtmId);
   </script>}
 
-  <Font cssVariable="--font-inter-tight" />
+  <Font cssVariable="--font-inter-tight" preload={[{ style: 'normal' }, { style: 'italic' }]} />
   <Font cssVariable="--font-jetbrains-mono" />
 </head>
 <body>
