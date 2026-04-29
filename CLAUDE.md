@@ -140,6 +140,8 @@ Local dev: `.env` for build vars, `.dev.vars` for runtime vars (both gitignored)
 - **`noindex` pages**: pass `noindex={true}` to `Layout.astro`.
 - **`/lp/` pages excluded from sitemap** via filter in `astro.config.mjs` — automatic for any new file under `src/pages/lp/`.
 - **Run `npm run build` after any layout/CSS/config change** — most regressions surface immediately.
+- **Swiss apostrophe `'` (U+2019) in JS string literals breaks parsing.** This project uses Swiss price formatting (CHF 1'490). Always use double quotes for any string containing Swiss-formatted numbers — e.g. `"CHF 1'490"` not `'CHF 1\'490'`. Store raw numbers in data, apply the separator at render time.
+- **`prettier-plugin-astro` cannot parse `define:vars` + complex inline scripts.** See `GTM.astro` for the fix: pass the value as a prop and inject via `set:html` with the snippet as a frontmatter string. Apply the same pattern for any other third-party inline script that needs a runtime variable.
 
 ---
 
