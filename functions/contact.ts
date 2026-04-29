@@ -33,7 +33,7 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ secret: env.TURNSTILE_SECRET, response: token }),
   });
-  const { success } = await verify.json() as { success: boolean };
+  const { success } = (await verify.json()) as { success: boolean };
   if (!success) {
     return Response.json({ ok: false }, { status: 400 });
   }

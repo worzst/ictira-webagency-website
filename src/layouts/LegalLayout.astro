@@ -9,6 +9,7 @@ interface Props {
 
 const { title } = Astro.props;
 ---
+
 <Layout title={`${title} — ictira GmbH`} noindex={true}>
   <Nav />
   <main class="legal-page">
@@ -38,11 +39,13 @@ const { title } = Astro.props;
     font-family: var(--mono);
     font-size: 12px;
     text-transform: uppercase;
-    letter-spacing: .06em;
+    letter-spacing: 0.06em;
     color: var(--mute);
     margin-bottom: 40px;
   }
-  .back:hover { color: var(--ink); }
+  .back:hover {
+    color: var(--ink);
+  }
 
   h1 {
     font-size: clamp(28px, 5vw, 48px);
@@ -77,9 +80,14 @@ const { title } = Astro.props;
     text-underline-offset: 3px;
   }
 
-  .legal-content :global(a:hover) { opacity: .6; }
+  .legal-content :global(a:hover) {
+    opacity: 0.6;
+  }
 
   @media (max-width: 480px) {
-    .legal-page { padding-left: 16px; padding-right: 16px; }
+    .legal-page {
+      padding-left: 16px;
+      padding-right: 16px;
+    }
   }
 </style>

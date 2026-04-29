@@ -32,45 +32,45 @@ const {
 
 const fmtPrice = (p: string) => p.replace(/\B(?=(\d{3})+(?!\d))/g, "'");
 ---
+
 <section id="preise" class:list={['pricing', { 'no-pad-top': !padTop }]}>
   <div class="section-inner">
     <SectionHeading label={label} heading={heading} headingEm={headingEm} align={align} />
 
     <div class="grid">
-      {packages.map((pkg, i) => (
-        <div
-          class:list={['reveal card', { popular: pkg.popular }]}
-          data-delay={String(i * 80)}
-        >
-          {pkg.popular && <div class="badge">Meistgewählt</div>}
+      {
+        packages.map((pkg, i) => (
+          <div class:list={['reveal card', { popular: pkg.popular }]} data-delay={String(i * 80)}>
+            {pkg.popular && <div class="badge">Meistgewählt</div>}
 
-          <div class="card-head">
-            <div class="name">{pkg.name}</div>
-            {showNumbers && <div class="num">0{i + 1}/03</div>}
+            <div class="card-head">
+              <div class="name">{pkg.name}</div>
+              {showNumbers && <div class="num">0{i + 1}/03</div>}
+            </div>
+            <div class="tag">{tagField === 'sub' ? pkg.sub : pkg.tag}</div>
+
+            <div class="price-row">
+              <span class="chf">CHF</span>
+              <span class="amount">{fmtPrice(pkg.price)}</span>
+              <span class="suffix">.–</span>
+            </div>
+            <div class="sub">Fertig in {pkg.turnaround} Tagen</div>
+
+            <ul class="list">
+              {(bulletSet === 'lpItems' ? pkg.lpItems : pkg.includes).map((item) => (
+                <li class="item">
+                  <span class="check">{'✓'}</span>
+                  {item}
+                </li>
+              ))}
+            </ul>
+
+            <a href={ctaHref} class="cta" data-pack={pkg.name}>
+              {ctaLabel ?? `${pkg.name} wählen`} <span>→</span>
+            </a>
           </div>
-          <div class="tag">{tagField === 'sub' ? pkg.sub : pkg.tag}</div>
-
-          <div class="price-row">
-            <span class="chf">CHF</span>
-            <span class="amount">{fmtPrice(pkg.price)}</span>
-            <span class="suffix">.–</span>
-          </div>
-          <div class="sub">Fertig in {pkg.turnaround} Tagen</div>
-
-          <ul class="list">
-            {(bulletSet === 'lpItems' ? pkg.lpItems : pkg.includes).map(item => (
-              <li class="item">
-                <span class="check">{'✓'}</span>
-                {item}
-              </li>
-            ))}
-          </ul>
-
-          <a href={ctaHref} class="cta" data-pack={pkg.name}>
-            {ctaLabel ?? `${pkg.name} wählen`} <span>→</span>
-          </a>
-        </div>
-      ))}
+        ))
+      }
     </div>
 
     <div class="reveal footnote" data-delay="100">
@@ -80,73 +80,176 @@ const fmtPrice = (p: string) => p.replace(/\B(?=(\d{3})+(?!\d))/g, "'");
 </section>
 
 <style>
-  .pricing { padding: 96px 32px; }
-  .pricing.no-pad-top { padding-top: 0; }
+  .pricing {
+    padding: 96px 32px;
+  }
+  .pricing.no-pad-top {
+    padding-top: 0;
+  }
 
-  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; align-items: start; }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    align-items: start;
+  }
 
   .card {
-    padding: 32px 28px; border-radius: 32px;
-    background: var(--paper); color: var(--ink);
+    padding: 32px 28px;
+    border-radius: 32px;
+    background: var(--paper);
+    color: var(--ink);
     border: 1px solid var(--line);
-    display: flex; flex-direction: column; position: relative;
+    display: flex;
+    flex-direction: column;
+    position: relative;
   }
   .card.popular {
-    background: var(--ink); color: var(--paper);
+    background: var(--ink);
+    color: var(--paper);
     border: none;
     transform: scale(1.04);
-    box-shadow: 0 30px 80px rgba(58,43,255,0.2);
+    box-shadow: 0 30px 80px rgba(58, 43, 255, 0.2);
   }
 
   .badge {
-    position: absolute; top: -14px; left: 50%;
+    position: absolute;
+    top: -14px;
+    left: 50%;
     transform: translateX(-50%) rotate(-2deg);
-    background: var(--hot); color: #fff; padding: 6px 16px;
-    border-radius: 999px; font-size: 11px; font-weight: 700;
-    text-transform: uppercase; letter-spacing: .06em; white-space: nowrap;
+    background: var(--hot);
+    color: #fff;
+    padding: 6px 16px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    white-space: nowrap;
   }
 
-  .card-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 4px; }
-  .name { font-size: 26px; font-weight: 700; letter-spacing: -0.03em; }
-  .num { font-family: var(--mono); font-size: 12px; opacity: .5; }
-  .tag { font-size: 13px; opacity: .65; margin-bottom: 28px; line-height: 1.4; }
+  .card-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 4px;
+  }
+  .name {
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+  }
+  .num {
+    font-family: var(--mono);
+    font-size: 12px;
+    opacity: 0.5;
+  }
+  .tag {
+    font-size: 13px;
+    opacity: 0.65;
+    margin-bottom: 28px;
+    line-height: 1.4;
+  }
 
-  .price-row { display: flex; align-items: baseline; gap: 4px; margin-bottom: 6px; }
-  .chf, .suffix { font-size: 16px; opacity: .6; }
-  .amount { font-size: 72px; font-weight: 800; letter-spacing: -0.06em; line-height: 0.9; }
-  .sub { font-family: var(--mono); font-size: 11px; opacity: .5; margin-bottom: 28px; }
+  .price-row {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+    margin-bottom: 6px;
+  }
+  .chf,
+  .suffix {
+    font-size: 16px;
+    opacity: 0.6;
+  }
+  .amount {
+    font-size: 72px;
+    font-weight: 800;
+    letter-spacing: -0.06em;
+    line-height: 0.9;
+  }
+  .sub {
+    font-family: var(--mono);
+    font-size: 11px;
+    opacity: 0.5;
+    margin-bottom: 28px;
+  }
 
-  .list { flex: 1; display: grid; gap: 10px; margin-bottom: 24px; }
-  .item { display: flex; gap: 10px; font-size: 14px; align-items: flex-start; line-height: 1.4; }
+  .list {
+    flex: 1;
+    display: grid;
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+  .item {
+    display: flex;
+    gap: 10px;
+    font-size: 14px;
+    align-items: flex-start;
+    line-height: 1.4;
+  }
   .check {
-    width: 18px; height: 18px; border-radius: 50%; color: #fff; flex-shrink: 0;
-    display: inline-flex; align-items: center; justify-content: center;
-    font-size: 10px; font-weight: 700; margin-top: 1px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    color: #fff;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 700;
+    margin-top: 1px;
     background: var(--ink);
   }
-  .card.popular .check { background: var(--accent); }
+  .card.popular .check {
+    background: var(--accent);
+  }
 
   .cta {
-    padding: 16px 20px; border-radius: 999px;
-    background: var(--ink); color: #fff;
-    font-weight: 600; font-size: 14px;
-    display: flex; justify-content: space-between; align-items: center;
+    padding: 16px 20px;
+    border-radius: 999px;
+    background: var(--ink);
+    color: #fff;
+    font-weight: 600;
+    font-size: 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
-  .card.popular .cta { background: var(--accent); }
+  .card.popular .cta {
+    background: var(--accent);
+  }
 
-  .footnote { text-align: center; margin-top: 36px; font-size: 13px; color: var(--mute); font-family: var(--mono); line-height: 1.6; }
+  .footnote {
+    text-align: center;
+    margin-top: 36px;
+    font-size: 13px;
+    color: var(--mute);
+    font-family: var(--mono);
+    line-height: 1.6;
+  }
 
   @media (max-width: 1024px) {
-    .grid { grid-template-columns: 1fr; max-width: 500px; margin: 0 auto; }
-    .card.popular { transform: none; }
+    .grid {
+      grid-template-columns: 1fr;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+    .card.popular {
+      transform: none;
+    }
   }
   @media (max-width: 480px) {
-    .pricing { padding-left: 16px; padding-right: 16px; }
+    .pricing {
+      padding-left: 16px;
+      padding-right: 16px;
+    }
   }
 </style>
 
 <script>
-  document.querySelectorAll('a[data-pack]').forEach(link => {
+  document.querySelectorAll('a[data-pack]').forEach((link) => {
     link.addEventListener('click', () => {
       const pack = link.getAttribute('data-pack');
       const radio = document.querySelector<HTMLInputElement>(`input[name="pack"][value="${pack}"]`);
