@@ -1,5 +1,6 @@
 ---
 import CookieBanner from '../components/CookieBanner.astro';
+import { Font } from 'astro:assets';
 import '../styles/global.css';
 
 interface Props {
@@ -24,6 +25,7 @@ const gtmId = import.meta.env.PUBLIC_GTM_ID ?? '';
   <title>{title}</title>
   <meta name="description" content={description} />
   <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site).href} />
+  <link rel="sitemap" href="/sitemap-index.xml" />
   {noindex && <meta name="robots" content="noindex" />}
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
@@ -61,9 +63,8 @@ const gtmId = import.meta.env.PUBLIC_GTM_ID ?? '';
     })(window,document,'script','dataLayer',gtmId);
   </script>}
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,500;1,700;1,800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <Font cssVariable="--font-inter-tight" />
+  <Font cssVariable="--font-jetbrains-mono" />
 </head>
 <body>
   <!-- GTM noscript fallback -->

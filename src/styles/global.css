@@ -4,7 +4,7 @@ html { scroll-behavior: smooth; }
 body {
   margin: 0;
   background: #ECEAE4;
-  font-family: 'Inter Tight', system-ui, sans-serif;
+  font-family: var(--font-inter-tight), system-ui, sans-serif;
   color: #0E0F12;
   overflow-x: hidden;
 }
@@ -23,8 +23,8 @@ input, textarea, button { font-family: inherit; }
   --hot:    #FF4D2E;
   --success:#8DFE4C;
   --yellow: #FEF08A;
-  --font:   'Inter Tight', system-ui, sans-serif;
-  --mono:   'JetBrains Mono', monospace;
+  --font:   var(--font-inter-tight);
+  --mono:   var(--font-jetbrains-mono);
 }
 
 /* ── Shared layout ── */
