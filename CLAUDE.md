@@ -65,17 +65,11 @@ public/
 ## Design tokens
 
 ```css
---bg:      #ECEAE4   /* warm off-white canvas */
---paper:   #F4F2EC   /* card backgrounds */
---ink:     #0E0F12   /* near-black — text + dark cards */
---mute:    #6A6D73   /* secondary text */
---line:    rgba(14,15,18,0.12)
---accent:  #3A2BFF   /* electric indigo — CTAs, highlights */
---hot:     #FF4D2E   /* orange-red — decorative */
---success: #8DFE4C   /* form success state */
---yellow:  #FEF08A   /* process section accent */
---font:    'Inter Tight'
---mono:    'JetBrains Mono'
+--bg: #eceae4 /* warm off-white canvas */ --paper: #f4f2ec /* card backgrounds */ --ink: #0e0f12
+  /* near-black — text + dark cards */ --mute: #6a6d73 /* secondary text */ --line: rgba(14, 15, 18, 0.12)
+  --accent: #3a2bff /* electric indigo — CTAs, highlights */ --hot: #ff4d2e /* orange-red — decorative */
+  --success: #8dfe4c /* form success state */ --yellow: #fef08a /* process section accent */ --font: 'Inter Tight'
+  --mono: 'JetBrains Mono';
 ```
 
 Max content width: 1360px via `.section-inner`
@@ -110,12 +104,12 @@ Stagger: `data-delay="60|80|100|120|160|180|200|240|300"` (ms).
 
 ```typescript
 interface Props {
-  label?: string;       // mono uppercase label above heading
-  heading: string;      // h2 first line
-  headingEm?: string;   // italic em second line (adds <br> automatically)
-  align?: 'left' | 'center';  // default 'center'
+  label?: string; // mono uppercase label above heading
+  heading: string; // h2 first line
+  headingEm?: string; // italic em second line (adds <br> automatically)
+  align?: 'left' | 'center'; // default 'center'
   size?: 'lg' | 'md' | 'sm'; // default 'md' = clamp(48px,7vw,96px)
-  mb?: number;          // margin-bottom in px, default 56
+  mb?: number; // margin-bottom in px, default 56
 }
 ```
 
@@ -129,14 +123,16 @@ Sizes: `sm` = `clamp(40px,5vw,72px)` · `md` = `clamp(48px,7vw,96px)` · `lg` = 
 
 ```typescript
 interface Props {
-  label?: string; heading?: string; headingEm?: string;
+  label?: string;
+  heading?: string;
+  headingEm?: string;
   footnote?: string;
-  ctaHref?: string;          // default '#kontakt'
-  ctaLabel?: string;         // default '{pkg.name} wählen'
-  bulletSet?: 'includes' | 'lpItems';  // default 'includes'
-  showNumbers?: boolean;     // 01/03 numbering, default true
-  tagField?: 'tag' | 'sub';  // which pkg field to show as subtitle, default 'tag'
-  padTop?: boolean;          // section top padding, default true
+  ctaHref?: string; // default '#kontakt'
+  ctaLabel?: string; // default '{pkg.name} wählen'
+  bulletSet?: 'includes' | 'lpItems'; // default 'includes'
+  showNumbers?: boolean; // 01/03 numbering, default true
+  tagField?: 'tag' | 'sub'; // which pkg field to show as subtitle, default 'tag'
+  padTop?: boolean; // section top padding, default true
   align?: 'left' | 'center'; // heading alignment, default 'center'
 }
 ```
@@ -156,22 +152,33 @@ interface Props {
 
 ```typescript
 type Field =
-  | { type: 'text'|'email'|'tel'|'url'|'number'|'password'; name: string; placeholder?: string; required?: boolean }
-  | { type: 'textarea'; name: string; placeholder?: string; rows?: number; required?: boolean }
+  | {
+      type: 'text' | 'email' | 'tel' | 'url' | 'number' | 'password';
+      name: string;
+      placeholder?: string;
+      required?: boolean;
+    }
+  | {
+      type: 'textarea';
+      name: string;
+      placeholder?: string;
+      rows?: number;
+      required?: boolean;
+    }
   | { type: 'radios'; name: string; options: string[] };
 
 interface Props {
-  id: string;              // element ID prefix: {id}Form, {id}Success, {id}Error, {id}Label
-  source: string;          // value for hidden _source field (appears in email subject)
-  fields: Field[];         // ordered field list
-  action?: string;         // POST URL, default '/contact'
-  submitLabel?: string;    // button text, default 'Absenden'
-  submitVariant?: 'accent' | 'ink';  // button color, default 'accent'
+  id: string; // element ID prefix: {id}Form, {id}Success, {id}Error, {id}Label
+  source: string; // value for hidden _source field (appears in email subject)
+  fields: Field[]; // ordered field list
+  action?: string; // POST URL, default '/contact'
+  submitLabel?: string; // button text, default 'Absenden'
+  submitVariant?: 'accent' | 'ink'; // button color, default 'accent'
   successTitle?: string;
   successBody?: string;
-  errorHtml?: string;      // supports HTML (e.g. mailto links)
+  errorHtml?: string; // supports HTML (e.g. mailto links)
   turnstileTheme?: 'light' | 'dark';
-  theme?: 'light' | 'dark';  // field color scheme, default 'light'
+  theme?: 'light' | 'dark'; // field color scheme, default 'light'
 }
 ```
 
@@ -190,6 +197,7 @@ Named slot `after-submit` — rendered after the submit button (used for trust i
 ## Package data (`src/data/packages.ts`)
 
 Single source of truth. Each package has:
+
 - `name`, `price` (string, no separator — formatted in component), `tag`, `sub`, `turnaround` (days as string: `'7'`, `'7–10'`, `'14'`), `popular`
 - `includes[]` — main site bullet list (7 items)
 - `lpItems[]` — LP conversion bullet list (4–5 items, benefit-focused)

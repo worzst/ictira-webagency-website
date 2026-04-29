@@ -2,13 +2,34 @@
 interface Props {}
 
 const steps = [
-  { n: '01', title: 'Gespräch',  desc: '30 Minuten kostenlos. Wir hören zu und finden raus, was du wirklich brauchst.' },
-  { n: '02', title: 'Angebot',   desc: 'Fixpreis auf Papier. Du weisst vor dem Start, was es kostet. Keine Überraschungen.' },
-  { n: '03', title: 'Design',    desc: 'Zwei Entwürfe, ein Gewinner. Wir iterieren gemeinsam bis es sitzt.' },
-  { n: '04', title: 'Build',     desc: 'Wir bauen, testen, optimieren. Du bekommst Zwischenstände zum Feedback.' },
-  { n: '05', title: 'Launch',    desc: 'Golive, Einschulung und Übergabe. Dann bist du selbständig oder wir bleiben dran.' },
+  {
+    n: '01',
+    title: 'Gespräch',
+    desc: '30 Minuten kostenlos. Wir hören zu und finden raus, was du wirklich brauchst.',
+  },
+  {
+    n: '02',
+    title: 'Angebot',
+    desc: 'Fixpreis auf Papier. Du weisst vor dem Start, was es kostet. Keine Überraschungen.',
+  },
+  {
+    n: '03',
+    title: 'Design',
+    desc: 'Zwei Entwürfe, ein Gewinner. Wir iterieren gemeinsam bis es sitzt.',
+  },
+  {
+    n: '04',
+    title: 'Build',
+    desc: 'Wir bauen, testen, optimieren. Du bekommst Zwischenstände zum Feedback.',
+  },
+  {
+    n: '05',
+    title: 'Launch',
+    desc: 'Golive, Einschulung und Übergabe. Dann bist du selbständig oder wir bleiben dran.',
+  },
 ];
 ---
+
 <section id="prozess" class="process">
   <div class="card section-inner">
     <div class="deco"></div>
@@ -22,72 +43,140 @@ const steps = [
 
       <div class="steps">
         <div class="connector"></div>
-        {steps.map((s, i) => (
-          <div class="reveal step" data-delay={String(i * 60)}>
-            <div class="num">{s.n}</div>
-            <div class="title">{s.title}</div>
-            <div class="desc">{s.desc}</div>
-          </div>
-        ))}
+        {
+          steps.map((s, i) => (
+            <div class="reveal step" data-delay={String(i * 60)}>
+              <div class="num">{s.n}</div>
+              <div class="title">{s.title}</div>
+              <div class="desc">{s.desc}</div>
+            </div>
+          ))
+        }
       </div>
     </div>
   </div>
 </section>
 
 <style>
-  .process { padding: 0 32px 96px; }
+  .process {
+    padding: 0 32px 96px;
+  }
 
   .card {
-    padding: 72px 56px; background: var(--accent); color: #fff;
-    border-radius: 48px; position: relative; overflow: hidden;
+    padding: 72px 56px;
+    background: var(--accent);
+    color: #fff;
+    border-radius: 48px;
+    position: relative;
+    overflow: hidden;
   }
 
   .deco {
-    position: absolute; top: -80px; right: -80px; width: 320px; height: 320px;
-    border-radius: 50%; background: var(--hot); opacity: .85; pointer-events: none;
+    position: absolute;
+    top: -80px;
+    right: -80px;
+    width: 320px;
+    height: 320px;
+    border-radius: 50%;
+    background: var(--hot);
+    opacity: 0.85;
+    pointer-events: none;
   }
 
-  .inner { position: relative; z-index: 2; }
+  .inner {
+    position: relative;
+    z-index: 2;
+  }
 
   .label {
-    font-family: var(--mono); font-size: 12px; opacity: .8;
-    text-transform: uppercase; letter-spacing: .08em; margin-bottom: 20px;
+    font-family: var(--mono);
+    font-size: 12px;
+    opacity: 0.8;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 20px;
   }
   .heading {
-    font-size: clamp(52px, 7vw, 100px); line-height: 0.95;
-    margin: 0; font-weight: 800; letter-spacing: -0.05em; max-width: 860px;
+    font-size: clamp(52px, 7vw, 100px);
+    line-height: 0.95;
+    margin: 0;
+    font-weight: 800;
+    letter-spacing: -0.05em;
+    max-width: 860px;
   }
-  .heading em { font-style: italic; color: var(--yellow); }
+  .heading em {
+    font-style: italic;
+    color: var(--yellow);
+  }
 
   .steps {
-    margin-top: 80px; display: grid; grid-template-columns: repeat(5, 1fr);
-    gap: 20px; position: relative;
+    margin-top: 80px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 20px;
+    position: relative;
   }
   .connector {
-    position: absolute; top: 14px; left: 5%; right: 5%;
-    height: 2px; background: rgba(255,255,255,0.25); pointer-events: none;
+    position: absolute;
+    top: 14px;
+    left: 5%;
+    right: 5%;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.25);
+    pointer-events: none;
   }
 
-  .step { position: relative; z-index: 2; }
+  .step {
+    position: relative;
+    z-index: 2;
+  }
   .num {
-    width: 30px; height: 30px; border-radius: 50%;
-    background: #fff; color: var(--accent);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 12px; font-weight: 700; margin-bottom: 24px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: #fff;
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    margin-bottom: 24px;
     font-family: var(--mono);
   }
-  .title { font-size: 26px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 10px; }
-  .desc { font-size: 14px; line-height: 1.5; opacity: .85; }
+  .title {
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 10px;
+  }
+  .desc {
+    font-size: 14px;
+    line-height: 1.5;
+    opacity: 0.85;
+  }
 
   @media (max-width: 1024px) {
-    .steps { grid-template-columns: repeat(3, 1fr); }
+    .steps {
+      grid-template-columns: repeat(3, 1fr);
+    }
   }
   @media (max-width: 768px) {
-    .card { padding: 48px 32px; }
-    .steps { grid-template-columns: 1fr 1fr; gap: 32px; }
-    .connector { display: none; }
+    .card {
+      padding: 48px 32px;
+    }
+    .steps {
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+    }
+    .connector {
+      display: none;
+    }
   }
   @media (max-width: 480px) {
-    .process { padding-left: 16px; padding-right: 16px; }
+    .process {
+      padding-left: 16px;
+      padding-right: 16px;
+    }
   }
 </style>

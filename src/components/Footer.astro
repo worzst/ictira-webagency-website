@@ -3,10 +3,10 @@ interface Props {}
 
 const navLinks = [
   { href: '#leistungen', label: 'Leistungen' },
-  { href: '#preise',     label: 'Preise' },
-  { href: '#prozess',    label: 'Prozess' },
-  { href: '#faq',        label: 'FAQ' },
-  { href: '#kontakt',    label: 'Kontakt' },
+  { href: '#preise', label: 'Preise' },
+  { href: '#prozess', label: 'Prozess' },
+  { href: '#faq', label: 'FAQ' },
+  { href: '#kontakt', label: 'Kontakt' },
 ];
 
 const utilLinks = [
@@ -14,6 +14,7 @@ const utilLinks = [
   { href: '/datenschutz', label: 'Datenschutz' },
 ];
 ---
+
 <footer class="footer">
   <div class="inner section-inner">
     <div class="top">
@@ -35,34 +36,78 @@ const utilLinks = [
 </footer>
 
 <style>
-  .footer { padding: 48px 32px 32px; border-top: 1px solid var(--line); }
+  .footer {
+    padding: 48px 32px 32px;
+    border-top: 1px solid var(--line);
+  }
 
   .top {
-    display: flex; justify-content: space-between; align-items: center;
-    flex-wrap: wrap; gap: 24px; padding-bottom: 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 24px;
+    padding-bottom: 32px;
     border-bottom: 1px solid var(--line);
   }
-  .logo { display: flex; align-items: center; gap: 12px; }
-  .logo-wordmark { font-weight: 800; font-size: 20px; letter-spacing: -0.04em; color: var(--ink); }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .logo-wordmark {
+    font-weight: 800;
+    font-size: 20px;
+    letter-spacing: -0.04em;
+    color: var(--ink);
+  }
 
-  .nav { display: flex; gap: 24px; flex-wrap: wrap; }
-  .nav a { color: var(--ink); font-size: 14px; }
-  .nav a:hover { opacity: .6; }
+  .nav {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .nav a {
+    color: var(--ink);
+    font-size: 14px;
+  }
+  .nav a:hover {
+    opacity: 0.6;
+  }
 
   .bottom {
-    margin-top: 24px; display: flex; justify-content: space-between;
-    flex-wrap: wrap; gap: 12px; color: var(--mute);
-    font-size: 12px; font-family: var(--mono);
-    text-transform: uppercase; letter-spacing: .06em;
+    margin-top: 24px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    color: var(--mute);
+    font-size: 12px;
+    font-family: var(--mono);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
   }
-  .utils { display: flex; gap: 16px; flex-wrap: wrap; }
-  .utils a { color: var(--ink); }
-  .utils a:hover { opacity: .6; }
+  .utils {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .utils a {
+    color: var(--ink);
+  }
+  .utils a:hover {
+    opacity: 0.6;
+  }
 
   @media (max-width: 768px) {
-    .nav { display: none; }
+    .nav {
+      display: none;
+    }
   }
   @media (max-width: 480px) {
-    .footer { padding-left: 16px; padding-right: 16px; }
+    .footer {
+      padding-left: 16px;
+      padding-right: 16px;
+    }
   }
 </style>

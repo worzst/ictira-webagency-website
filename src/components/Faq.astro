@@ -1,7 +1,10 @@
 ---
 import SectionHeading from './SectionHeading.astro';
 
-interface Question { q: string; a: string; }
+interface Question {
+  q: string;
+  a: string;
+}
 interface Props {
   questions?: Question[];
   label?: string;
@@ -45,65 +48,134 @@ const {
   align = 'center',
 } = Astro.props;
 ---
+
 <section id="faq" class="faq">
   <div class="inner">
     <SectionHeading label={label} heading={heading} headingEm={headingEm} size="lg" mb={64} align={align} />
 
     <div id="faqList">
-      {questions.map((f, i) => (
-        <div class={`item ${i === 0 ? 'open' : 'closed'}`}>
-          <div class="row">
-            <div class="question">{f.q}</div>
-            <button class="toggle" aria-label="Antwort ein-/ausblenden">+</button>
+      {
+        questions.map((f, i) => (
+          <div class={`item ${i === 0 ? 'open' : 'closed'}`}>
+            <div class="row">
+              <div class="question">{f.q}</div>
+              <button class="toggle" aria-label="Antwort ein-/ausblenden">
+                +
+              </button>
+            </div>
+            <div class="answer">{f.a}</div>
           </div>
-          <div class="answer">{f.a}</div>
-        </div>
-      ))}
+        ))
+      }
     </div>
   </div>
 </section>
 
 <style>
-  .faq { padding: 96px 32px; }
-  .inner { max-width: 1040px; margin: 0 auto; }
+  .faq {
+    padding: 96px 32px;
+  }
+  .inner {
+    max-width: 1040px;
+    margin: 0 auto;
+  }
 
   .item {
-    margin-bottom: 12px; padding: 24px 28px; border-radius: 24px; cursor: pointer;
-    transition: background .25s, color .25s;
+    margin-bottom: 12px;
+    padding: 24px 28px;
+    border-radius: 24px;
+    cursor: pointer;
+    transition:
+      background 0.25s,
+      color 0.25s;
   }
-  .item.closed { background: var(--paper); color: var(--ink); border: 1px solid var(--line); }
-  .item.open   { background: var(--ink);   color: var(--paper); border: 1px solid transparent; }
+  .item.closed {
+    background: var(--paper);
+    color: var(--ink);
+    border: 1px solid var(--line);
+  }
+  .item.open {
+    background: var(--ink);
+    color: var(--paper);
+    border: 1px solid transparent;
+  }
 
-  .row { display: flex; justify-content: space-between; align-items: center; gap: 24px; }
-  .question { font-size: clamp(17px, 1.4vw, 22px); font-weight: 600; letter-spacing: -0.02em; }
+  .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+  }
+  .question {
+    font-size: clamp(17px, 1.4vw, 22px);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
 
   .toggle {
-    width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 18px; color: #fff; transition: all .25s; border: none; cursor: pointer;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    color: #fff;
+    transition: all 0.25s;
+    border: none;
+    cursor: pointer;
   }
-  .item.closed .toggle { background: var(--ink);   transform: rotate(0deg); }
-  .item.open   .toggle { background: var(--accent); transform: rotate(45deg); }
+  .item.closed .toggle {
+    background: var(--ink);
+    transform: rotate(0deg);
+  }
+  .item.open .toggle {
+    background: var(--accent);
+    transform: rotate(45deg);
+  }
 
   .answer {
-    overflow: hidden; font-size: 16px; line-height: 1.55;
-    transition: max-height .35s, opacity .3s, margin-top .25s;
+    overflow: hidden;
+    font-size: 16px;
+    line-height: 1.55;
+    transition:
+      max-height 0.35s,
+      opacity 0.3s,
+      margin-top 0.25s;
   }
-  .item.closed .answer { max-height: 0; opacity: 0; margin-top: 0; }
-  .item.open   .answer { max-height: 200px; opacity: .85; margin-top: 14px; }
+  .item.closed .answer {
+    max-height: 0;
+    opacity: 0;
+    margin-top: 0;
+  }
+  .item.open .answer {
+    max-height: 200px;
+    opacity: 0.85;
+    margin-top: 14px;
+  }
 
   @media (max-width: 480px) {
-    .faq { padding-left: 16px; padding-right: 16px; }
+    .faq {
+      padding-left: 16px;
+      padding-right: 16px;
+    }
   }
 </style>
 
 <script>
   const items = document.querySelectorAll('#faqList .item');
-  items.forEach(item => {
+  items.forEach((item) => {
     item.addEventListener('click', () => {
       const wasOpen = item.classList.contains('open');
-      items.forEach(i => { i.classList.remove('open'); i.classList.add('closed'); });
-      if (!wasOpen) { item.classList.add('open'); item.classList.remove('closed'); }
+      items.forEach((i) => {
+        i.classList.remove('open');
+        i.classList.add('closed');
+      });
+      if (!wasOpen) {
+        item.classList.add('open');
+        item.classList.remove('closed');
+      }
     });
   });
 </script>

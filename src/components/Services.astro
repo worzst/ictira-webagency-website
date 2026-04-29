@@ -2,16 +2,59 @@
 interface Props {}
 
 const services = [
-  { n: '01', title: 'Strategie',   desc: 'Wir klären Zielgruppe, Botschaft und Struktur bevor eine einzige Zeile Code geschrieben wird.',       bg: '#0E0F12', fg: '#F4F2EC', border: false },
-  { n: '02', title: 'Design',      desc: 'Individuelles Design, kein Template-Kit. Typografie, Farbe und Bild im Einklang.',              bg: '#3A2BFF', fg: '#fff',    border: false },
-  { n: '03', title: 'Entwicklung', desc: 'Sauberer Code, schnelle Ladezeiten, zugängliche Strukturen.',                                    bg: '#F4F2EC', fg: '#0E0F12', border: true  },
-  { n: '04', title: 'Content',     desc: 'Texte, Bildauswahl und Struktur - wir begleiten dich vom Briefing bis zum Golive.',             bg: '#FF4D2E', fg: '#fff',    border: false },
-  { n: '05', title: 'SEO',         desc: 'Technisches SEO, saubere Metadaten und Core Web Vitals im grünen Bereich.',                    bg: '#F4F2EC', fg: '#0E0F12', border: true  },
-  { n: '06', title: 'Betrieb',     desc: 'Hosting und Updates mit tiefen Kosten. Transparent abgerechnet.',              bg: '#0E0F12', fg: '#F4F2EC', border: false },
+  {
+    n: '01',
+    title: 'Strategie',
+    desc: 'Wir klären Zielgruppe, Botschaft und Struktur bevor eine einzige Zeile Code geschrieben wird.',
+    bg: '#0E0F12',
+    fg: '#F4F2EC',
+    border: false,
+  },
+  {
+    n: '02',
+    title: 'Design',
+    desc: 'Individuelles Design, kein Template-Kit. Typografie, Farbe und Bild im Einklang.',
+    bg: '#3A2BFF',
+    fg: '#fff',
+    border: false,
+  },
+  {
+    n: '03',
+    title: 'Entwicklung',
+    desc: 'Sauberer Code, schnelle Ladezeiten, zugängliche Strukturen.',
+    bg: '#F4F2EC',
+    fg: '#0E0F12',
+    border: true,
+  },
+  {
+    n: '04',
+    title: 'Content',
+    desc: 'Texte, Bildauswahl und Struktur - wir begleiten dich vom Briefing bis zum Golive.',
+    bg: '#FF4D2E',
+    fg: '#fff',
+    border: false,
+  },
+  {
+    n: '05',
+    title: 'SEO',
+    desc: 'Technisches SEO, saubere Metadaten und Core Web Vitals im grünen Bereich.',
+    bg: '#F4F2EC',
+    fg: '#0E0F12',
+    border: true,
+  },
+  {
+    n: '06',
+    title: 'Betrieb',
+    desc: 'Hosting und Updates mit tiefen Kosten. Transparent abgerechnet.',
+    bg: '#0E0F12',
+    fg: '#F4F2EC',
+    border: false,
+  },
 ];
 
 const delays = [0, 60, 120, 80, 160, 240];
 ---
+
 <section id="leistungen" class="services">
   <div class="section-inner">
     <div class="head">
@@ -25,64 +68,126 @@ const delays = [0, 60, 120, 80, 160, 240];
         </div>
       </div>
       <p class="tagline">
-        Ein kleines Team mit grossem Anspruch. Von der Strategie bis zum
-        Betrieb bekommst du alles aus einer Hand, kein Jonglieren mit Freelancern.
+        Ein kleines Team mit grossem Anspruch. Von der Strategie bis zum Betrieb bekommst du alles aus einer Hand, kein
+        Jonglieren mit Freelancern.
       </p>
     </div>
 
     <div class="grid-3">
-      {services.map((s, i) => (
-        <div
-          class="reveal card"
-          data-delay={String(delays[i])}
-          style={`background:${s.bg};color:${s.fg};${s.border ? 'border:1px solid rgba(14,15,18,0.12);' : ''}`}
-        >
-          <div class="idx">{s.n} / 06</div>
-          <div>
-            <div class="title">{s.title}</div>
-            <div class="desc">{s.desc}</div>
+      {
+        services.map((s, i) => (
+          <div
+            class="reveal card"
+            data-delay={String(delays[i])}
+            style={`background:${s.bg};color:${s.fg};${s.border ? 'border:1px solid rgba(14,15,18,0.12);' : ''}`}
+          >
+            <div class="idx">{s.n} / 06</div>
+            <div>
+              <div class="title">{s.title}</div>
+              <div class="desc">{s.desc}</div>
+            </div>
           </div>
-        </div>
-      ))}
+        ))
+      }
     </div>
   </div>
 </section>
 
 <style>
-  .services { padding: 96px 32px; }
+  .services {
+    padding: 96px 32px;
+  }
 
   .head {
-    display: flex; justify-content: space-between; align-items: flex-end;
-    margin-bottom: 56px; flex-wrap: wrap; gap: 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 56px;
+    flex-wrap: wrap;
+    gap: 32px;
   }
   .label {
-    display: inline-flex; align-items: center; gap: 8px;
-    font-family: var(--mono); font-size: 12px; color: var(--mute);
-    text-transform: uppercase; letter-spacing: .08em; margin-bottom: 16px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--mute);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 16px;
   }
-  .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex-shrink: 0;
+  }
   .heading {
-    font-size: clamp(56px, 7vw, 96px); line-height: 0.95;
-    margin: 0; font-weight: 700; letter-spacing: -0.05em; color: var(--ink);
+    font-size: clamp(56px, 7vw, 96px);
+    line-height: 0.95;
+    margin: 0;
+    font-weight: 700;
+    letter-spacing: -0.05em;
+    color: var(--ink);
   }
-  .tagline { max-width: 380px; font-size: 18px; line-height: 1.45; color: var(--mute); margin: 0; }
+  .tagline {
+    max-width: 380px;
+    font-size: 18px;
+    line-height: 1.45;
+    color: var(--mute);
+    margin: 0;
+  }
 
   .card {
-    padding: 32px 28px; border-radius: 28px; min-height: 280px;
-    display: flex; flex-direction: column; justify-content: space-between;
-    transition: transform .25s;
+    padding: 32px 28px;
+    border-radius: 28px;
+    min-height: 280px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.25s;
   }
-  .card:hover { transform: translateY(-4px); }
-  .idx { font-family: var(--mono); font-size: 14px; opacity: .7; }
-  .title { font-size: 36px; font-weight: 700; letter-spacing: -0.03em; margin-bottom: 12px; }
-  .desc { font-size: 15px; line-height: 1.5; opacity: .85; }
+  .card:hover {
+    transform: translateY(-4px);
+  }
+  .idx {
+    font-family: var(--mono);
+    font-size: 14px;
+    opacity: 0.7;
+  }
+  .title {
+    font-size: 36px;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    margin-bottom: 12px;
+  }
+  .desc {
+    font-size: 15px;
+    line-height: 1.5;
+    opacity: 0.85;
+  }
 
   @media (max-width: 768px) {
-    .head { flex-direction: column; align-items: flex-start; }
-    .card { min-height: 0; padding: 24px 22px; }
-    .title { font-size: 28px; margin-top: 4px; margin-bottom: 16px; }
+    .head {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .card {
+      min-height: 0;
+      padding: 24px 22px;
+    }
+    .title {
+      font-size: 28px;
+      margin-top: 4px;
+      margin-bottom: 16px;
+    }
   }
   @media (max-width: 480px) {
-    .services { padding-left: 16px; padding-right: 16px; }
+    .services {
+      padding-left: 16px;
+      padding-right: 16px;
+    }
   }
 </style>

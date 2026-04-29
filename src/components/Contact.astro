@@ -3,6 +3,7 @@ import LeadForm from './LeadForm.astro';
 
 interface Props {}
 ---
+
 <section id="kontakt" class="contact">
   <div class="card section-inner">
     <div class="glow"></div>
@@ -22,11 +23,13 @@ interface Props {}
             <a href="mailto:hallo@ictira.com">hallo@ictira.com</a>
           </div>
         </div>
-        {/* <div class="detail">
+        {
+          /* <div class="detail">
           <div class="detail-label">Telefon</div>
           <div class="detail-val">+41 61 000 00 00</div>
-        </div> */}
-<div class="detail">
+        </div> */
+        }
+        <div class="detail">
           <div class="detail-label">Sitz</div>
           <div class="detail-val small">ictira GmbH · 4455 Zunzgen</div>
         </div>
@@ -45,12 +48,31 @@ interface Props {}
         successBody="Meist innerhalb von 24 Stunden."
         errorHtml={`Etwas ist schiefgelaufen. Bitte versuche es erneut oder schreib uns direkt an <a href="mailto:hallo@ictira.com">hallo@ictira.com</a>.`}
         fields={[
-          { type: 'text',     name: 'name',    placeholder: 'Wie heisst du?',              required: true },
-          { type: 'email',    name: 'email',   placeholder: 'Deine Email',                 required: true },
-          { type: 'text',     name: 'firm',    placeholder: 'Firma (optional)'                            },
-          { type: 'tel',      name: 'phone',   placeholder: 'Telefon (optional)'                          },
-          { type: 'radios',   name: 'pack',    options: ['Onepager', 'Standard', 'Grösser', 'Unsicher']   },
-          { type: 'textarea', name: 'message', placeholder: 'Erzähl uns kurz, was du vorhast…', rows: 4 },
+          {
+            type: 'text',
+            name: 'name',
+            placeholder: 'Wie heisst du?',
+            required: true,
+          },
+          {
+            type: 'email',
+            name: 'email',
+            placeholder: 'Deine Email',
+            required: true,
+          },
+          { type: 'text', name: 'firm', placeholder: 'Firma (optional)' },
+          { type: 'tel', name: 'phone', placeholder: 'Telefon (optional)' },
+          {
+            type: 'radios',
+            name: 'pack',
+            options: ['Onepager', 'Standard', 'Grösser', 'Unsicher'],
+          },
+          {
+            type: 'textarea',
+            name: 'message',
+            placeholder: 'Erzähl uns kurz, was du vorhast…',
+            rows: 4,
+          },
         ]}
       />
     </div>
@@ -58,48 +80,99 @@ interface Props {}
 </section>
 
 <style>
-  .contact { padding: 0 32px 96px; }
+  .contact {
+    padding: 0 32px 96px;
+  }
 
   .card {
-    padding: 72px 56px 64px; background: var(--ink); color: var(--paper);
-    border-radius: 48px; display: grid; grid-template-columns: 1.1fr 1fr;
-    gap: 64px; position: relative; overflow: hidden;
+    padding: 72px 56px 64px;
+    background: var(--ink);
+    color: var(--paper);
+    border-radius: 48px;
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 64px;
+    position: relative;
+    overflow: hidden;
   }
   .glow {
-    position: absolute; bottom: -140px; left: -80px; width: 380px; height: 380px;
-    border-radius: 50%; background: var(--accent); opacity: .2; filter: blur(50px); pointer-events: none;
+    position: absolute;
+    bottom: -140px;
+    left: -80px;
+    width: 380px;
+    height: 380px;
+    border-radius: 50%;
+    background: var(--accent);
+    opacity: 0.2;
+    filter: blur(50px);
+    pointer-events: none;
   }
 
-  .left, .right { position: relative; }
+  .left,
+  .right {
+    position: relative;
+  }
 
   .label {
-    font-family: var(--mono); font-size: 12px; opacity: .6;
-    text-transform: uppercase; letter-spacing: .08em; margin-bottom: 20px;
+    font-family: var(--mono);
+    font-size: 12px;
+    opacity: 0.6;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 20px;
   }
   .heading {
-    font-size: clamp(52px, 6vw, 100px); line-height: 0.9;
-    margin: 0; font-weight: 800; letter-spacing: -0.055em;
+    font-size: clamp(52px, 6vw, 100px);
+    line-height: 0.9;
+    margin: 0;
+    font-weight: 800;
+    letter-spacing: -0.055em;
   }
-  .heading em { color: var(--accent); font-style: italic; }
+  .heading em {
+    color: var(--accent);
+    font-style: italic;
+  }
 
-  .details { margin-top: 48px; display: grid; gap: 24px; }
-  .detail-label {
-    font-size: 11px; opacity: .5; margin-bottom: 4px;
-    font-family: var(--mono); text-transform: uppercase; letter-spacing: .08em;
+  .details {
+    margin-top: 48px;
+    display: grid;
+    gap: 24px;
   }
-  .detail-val { font-size: 20px; font-weight: 500; }
-  .detail-val a { color: var(--paper); }
-  .detail-val.small { font-size: 15px; opacity: .7; }
+  .detail-label {
+    font-size: 11px;
+    opacity: 0.5;
+    margin-bottom: 4px;
+    font-family: var(--mono);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .detail-val {
+    font-size: 20px;
+    font-weight: 500;
+  }
+  .detail-val a {
+    color: var(--paper);
+  }
+  .detail-val.small {
+    font-size: 15px;
+    opacity: 0.7;
+  }
 
   @media (max-width: 1024px) {
-    .card { grid-template-columns: 1fr; }
+    .card {
+      grid-template-columns: 1fr;
+    }
   }
   @media (max-width: 768px) {
-    .card { padding: 48px 28px; gap: 40px; }
+    .card {
+      padding: 48px 28px;
+      gap: 40px;
+    }
   }
   @media (max-width: 480px) {
-    .contact { padding-left: 16px; padding-right: 16px; }
+    .contact {
+      padding-left: 16px;
+      padding-right: 16px;
+    }
   }
 </style>
-
-

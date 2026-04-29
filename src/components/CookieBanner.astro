@@ -1,6 +1,7 @@
 ---
 interface Props {}
 ---
+
 <div id="cookieBanner" class="banner" style="display:none" role="dialog" aria-label="Cookie-Einstellungen">
   <p class="text">
     Wir nutzen Cookies und andere Technologien zur optimierung unserer Webseite.
@@ -14,39 +15,78 @@ interface Props {}
 
 <style>
   .banner {
-    position: fixed; bottom: 0; left: 0; right: 0; z-index: 200;
-    background: var(--paper); border-top: 1px solid var(--line);
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 200;
+    background: var(--paper);
+    border-top: 1px solid var(--line);
     padding: 16px 32px;
-    display: flex; align-items: center; justify-content: space-between;
-    gap: 24px; flex-wrap: wrap;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
   }
 
   .text {
-    margin: 0; font-size: 13px; color: var(--mute); line-height: 1.5;
+    margin: 0;
+    font-size: 13px;
+    color: var(--mute);
+    line-height: 1.5;
   }
   .text a {
-    color: var(--ink); text-decoration: underline; text-underline-offset: 3px;
+    color: var(--ink);
+    text-decoration: underline;
+    text-underline-offset: 3px;
   }
-  .text a:hover { opacity: .6; }
+  .text a:hover {
+    opacity: 0.6;
+  }
 
-  .actions { display: flex; gap: 10px; flex-shrink: 0; }
+  .actions {
+    display: flex;
+    gap: 10px;
+    flex-shrink: 0;
+  }
 
   .btn-decline {
-    padding: 10px 20px; border-radius: 999px; font-size: 13px; font-weight: 600;
-    background: transparent; color: var(--mute);
-    border: 1.5px solid var(--line); cursor: pointer;
+    padding: 10px 20px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 600;
+    background: transparent;
+    color: var(--mute);
+    border: 1.5px solid var(--line);
+    cursor: pointer;
   }
-  .btn-decline:hover { border-color: var(--ink); color: var(--ink); }
+  .btn-decline:hover {
+    border-color: var(--ink);
+    color: var(--ink);
+  }
 
   .btn-accept {
-    padding: 10px 20px; border-radius: 999px; font-size: 13px; font-weight: 600;
-    background: var(--accent); color: #fff; border: none; cursor: pointer;
+    padding: 10px 20px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 600;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    cursor: pointer;
   }
-  .btn-accept:hover { opacity: .85; }
+  .btn-accept:hover {
+    opacity: 0.85;
+  }
 
   @media (max-width: 480px) {
-    .banner { padding: 16px; }
-    .text { font-size: 12px; }
+    .banner {
+      padding: 16px;
+    }
+    .text {
+      font-size: 12px;
+    }
   }
 </style>
 

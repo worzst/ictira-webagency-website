@@ -1,5 +1,6 @@
 ---
 import CookieBanner from '../components/CookieBanner.astro';
+import GTM from '../components/GTM.astro';
 import { Font } from 'astro:assets';
 import '../styles/global.css';
 
@@ -18,82 +19,122 @@ const {
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site).href;
 const gtmId = import.meta.env.PUBLIC_GTM_ID ?? '';
 ---
+
 <!doctype html>
 <html lang="de">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>{title}</title>
-  <meta name="description" content={description} />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content={canonicalUrl} />
-  <meta property="og:title" content={title} />
-  <meta property="og:description" content={description} />
-  <meta property="og:locale" content="de_CH" />
-  <meta property="og:site_name" content="ictira GmbH" />
-  <meta name="twitter:card" content="summary" />
-  <link rel="canonical" href={canonicalUrl} />
-  <link rel="sitemap" href="/sitemap-index.xml" />
-  {noindex && <meta name="robots" content="noindex" />}
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:locale" content="de_CH" />
+    <meta property="og:site_name" content="ictira GmbH" />
+    <meta name="twitter:card" content="summary" />
+    <link rel="canonical" href={canonicalUrl} />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    {noindex && <meta name="robots" content="noindex" />}
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
-  <!-- Consent Mode v2 defaults — must run before GTM -->
-  <script is:inline>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    // EEA + UK + CH: consent required by law
-    gtag('consent', 'default', {
-      ad_storage:         'denied',
-      ad_user_data:       'denied',
-      ad_personalization: 'denied',
-      analytics_storage:  'denied',
-      wait_for_update:    500,
-      region: ['AT','BE','BG','CH','CY','CZ','DE','DK','EE','ES',
-               'FI','FR','GB','GR','HR','HU','IE','IS','IT','LI',
-               'LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'],
-    });
-    // All other regions: grant by default
-    gtag('consent', 'default', {
-      ad_storage:         'granted',
-      ad_user_data:       'granted',
-      ad_personalization: 'granted',
-      analytics_storage:  'granted',
-    });
-  </script>
+    <!-- Consent Mode v2 defaults — must run before GTM -->
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      // EEA + UK + CH: consent required by law
+      gtag('consent', 'default', {
+        ad_storage: 'denied',
+        ad_user_data: 'denied',
+        ad_personalization: 'denied',
+        analytics_storage: 'denied',
+        wait_for_update: 500,
+        region: [
+          'AT',
+          'BE',
+          'BG',
+          'CH',
+          'CY',
+          'CZ',
+          'DE',
+          'DK',
+          'EE',
+          'ES',
+          'FI',
+          'FR',
+          'GB',
+          'GR',
+          'HR',
+          'HU',
+          'IE',
+          'IS',
+          'IT',
+          'LI',
+          'LT',
+          'LU',
+          'LV',
+          'MT',
+          'NL',
+          'NO',
+          'PL',
+          'PT',
+          'RO',
+          'SE',
+          'SI',
+          'SK',
+        ],
+      });
+      // All other regions: grant by default
+      gtag('consent', 'default', {
+        ad_storage: 'granted',
+        ad_user_data: 'granted',
+        ad_personalization: 'granted',
+        analytics_storage: 'granted',
+      });
+    </script>
 
-  <!-- Google Tag Manager -->
-  {gtmId && <script is:inline define:vars={{ gtmId }}>
-    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;
-    f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer',gtmId);
-  </script>}
+    <!-- Google Tag Manager -->
+    {gtmId && <GTM id={gtmId} />}
 
-  <Font cssVariable="--font-inter-tight" preload={[{ style: 'normal' }, { style: 'italic' }]} />
-  <Font cssVariable="--font-jetbrains-mono" />
-</head>
-<body>
-  <!-- GTM noscript fallback -->
-  {gtmId && <noscript><iframe src={`https://www.googletagmanager.com/ns.html?id=${gtmId}`}
-    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>}
+    <Font cssVariable="--font-inter-tight" preload={[{ style: 'normal' }, { style: 'italic' }]} />
+    <Font cssVariable="--font-jetbrains-mono" />
+  </head>
+  <body>
+    <!-- GTM noscript fallback -->
+    {
+      gtmId && (
+        <noscript>
+          <iframe
+            src={`https://www.googletagmanager.com/ns.html?id=${gtmId}`}
+            height="0"
+            width="0"
+            style="display:none;visibility:hidden"
+          />
+        </noscript>
+      )
+    }
 
-  <slot />
-  <CookieBanner />
-  <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
-</body>
+    <slot />
+    <CookieBanner />
+    <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+  </body>
 </html>
 
 <script>
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.classList.add('in');
-        observer.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.12 });
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          e.target.classList.add('in');
+          observer.unobserve(e.target);
+        }
+      });
+    },
+    { threshold: 0.12 },
+  );
 
-  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
 </script>
