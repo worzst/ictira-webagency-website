@@ -7,9 +7,13 @@ Marketing site for **ictira GmbH**, fixed-price web design agency, Zunzgen BL, S
 **Stack:** Astro 6 (static), TypeScript, scoped CSS per component. No UI frameworks.
 
 ```
-npm run dev      # dev server (localhost:4321)
-npm run build    # production build → dist/
-npm run preview  # preview build locally
+npm run dev           # dev server (localhost:4321)
+npm run build         # env check → astro check → astro build → dist/
+npm run preview       # preview build locally
+npm run lint          # ESLint
+npm run lint:fix      # ESLint --fix
+npm run format        # Prettier --write
+npm run format:check  # Prettier --check
 ```
 
 **Deployed:** Cloudflare Pages — `https://www.ictira.com`
@@ -22,42 +26,48 @@ Apex `ictira.com` → redirect to `www` via Cloudflare Redirect Rule.
 ```
 src/
   layouts/
-    Layout.astro        # HTML shell: fonts, canonical, GTM + Consent Mode v2, CookieBanner
-    LegalLayout.astro   # legal pages: back nav + footer, noindex meta
+    Layout.astro        # HTML shell: fonts, canonical, GTM + Consent Mode v2, CookieBanner, Turnstile script
+    LegalLayout.astro   # wraps Layout.astro — back nav + footer, noindex meta
   pages/
     index.astro         # single-page site, all sections composed here
     impressum.astro
     datenschutz.astro
+    lp/
+      professionelle-website-basel.astro  # Google Ads LP — no Nav/Footer, noindex, excluded from sitemap
   components/
-    Nav.astro           # sticky, CSS Grid 1fr/auto/1fr centering, mobile hamburger
+    Nav.astro           # sticky, CSS Grid 1fr/auto/1fr, mobile hamburger
     Hero.astro          # dark card, animated orbs, two marquee strips (RAF loop)
     Services.astro      # 6 cards, 3-col grid
-    SectionHeading.astro # shared label + h2 component — used by Pricing, Faq, LP sections
-    Pricing.astro       # prop-driven, 3 packages from data/packages.ts, CTA pre-selects radio
+    SectionHeading.astro
+    Pricing.astro       # prop-driven, data from packages.ts, CTA pre-selects Contact radio
     Process.astro       # accent blue card, 5-step horizontal grid
-    Portfolio.astro     # HIDDEN — waiting for real project screenshots
+    Portfolio.astro     # HIDDEN — waiting for real screenshots
     Faq.astro           # accordion, single-open, prop-driven
-    Contact.astro       # dark card, left details + right form + Turnstile
+    Contact.astro       # dark card, left details + right LeadForm
+    LeadForm.astro      # generic reusable form — used by Contact + LP
+    Turnstile.astro     # CF Turnstile widget div (API script loaded once in Layout.astro)
+    GTM.astro           # GTM loader via set:html — avoids Prettier/define:vars conflict
     CookieBanner.astro  # fixed bottom bar, localStorage consent, gtag update
     Footer.astro        # logo + nav + legal links
   data/
     packages.ts         # single source of truth for all 3 package definitions
   scripts/
-    formSubmit.ts       # shared wireForm() utility used by Contact and LP forms
+    formSubmit.ts       # wireForm() — used by LeadForm internally
   assets/
     picture/
-      StefanWorzallaSquareSmall.jpg  # Stefan's photo, processed to WebP via getImage()
+      StefanWorzallaSquareSmall.jpg  # processed to WebP via getImage()
   styles/
     global.css          # reset, design tokens, .section-inner, .reveal, .grid-3
-  pages/lp/
-    professionelle-website-basel.astro  # Google Ads LP — self-contained, no Nav/Footer
+  env.d.ts              # TypeScript global declarations (Window, dataLayer, gtag, turnstile)
+scripts/
+  check-env.js          # pre-build guard — fails CF Pages deploy if runtime vars missing
 functions/
   contact.ts            # Cloudflare Pages Function — POST /contact → Resend API
 public/
   favicon.svg           # logomark only (100×100, blue circle + red inner)
-  logo-mark.svg         # same as favicon.svg, standalone asset
+  logo-mark.svg
   logo.svg              # mark + "ictira" wordmark as SVG text
-  robots.txt            # Allow all, Sitemap pointer
+  robots.txt
 ```
 
 ---
@@ -65,11 +75,19 @@ public/
 ## Design tokens
 
 ```css
---bg: #eceae4 /* warm off-white canvas */ --paper: #f4f2ec /* card backgrounds */ --ink: #0e0f12
-  /* near-black — text + dark cards */ --mute: #6a6d73 /* secondary text */ --line: rgba(14, 15, 18, 0.12)
-  --accent: #3a2bff /* electric indigo — CTAs, highlights */ --hot: #ff4d2e /* orange-red — decorative */
-  --success: #8dfe4c /* form success state */ --yellow: #fef08a /* process section accent */ --font: 'Inter Tight'
+:root {
+  --bg: #eceae4; /* warm off-white canvas */
+  --paper: #f4f2ec; /* card backgrounds */
+  --ink: #0e0f12; /* near-black — text + dark cards */
+  --mute: #6a6d73; /* secondary text */
+  --line: rgba(14, 15, 18, 0.12);
+  --accent: #3a2bff; /* electric indigo — CTAs, highlights */
+  --hot: #ff4d2e; /* orange-red — decorative */
+  --success: #8dfe4c; /* form success state */
+  --yellow: #fef08a; /* process section accent */
+  --font: 'Inter Tight';
   --mono: 'JetBrains Mono';
+}
 ```
 
 Max content width: 1360px via `.section-inner`
@@ -78,20 +96,56 @@ Card radii: 28px (services), 32px (pricing), 48px (hero/process/contact), 24px (
 
 ---
 
-## Astro conventions — hard-won rules
+## Tooling
 
-- **`global.css` lives in `Layout.astro`**, not in page files. Moving it elsewhere breaks styles on any page that doesn't import it separately. Learned when `LegalLayout` was refactored to extend `Layout`.
-- **`LegalLayout.astro` wraps `Layout.astro`** — never give it its own `<html>` shell. All head content (GTM, fonts, consent, canonical) flows through `Layout`. Adding a new legal-style page: use `LegalLayout`, everything else is automatic.
-- **TypeScript global declarations live in `src/env.d.ts`**. Extend `Window` there for any third-party globals (`dataLayer`, `turnstile`, `gtag`, etc.). No `(window as any)`, no `@ts-ignore`.
-- **Run `npm run build` after any layout, CSS, or config change** before considering the task done. Most regressions (broken imports, type errors, missing styles) surface immediately at build time.
-- **noindex pages**: pass `noindex={true}` to `Layout.astro` — it injects the meta tag. Used on LP and legal pages.
-- **`/lp/` pages are excluded from sitemap** via `filter: (page) => !page.includes('/lp/')` in `astro.config.mjs`. Any new LP added under `src/pages/lp/` is automatically excluded.
+### ESLint (`eslint.config.mjs`)
+
+Flat config: `typescript-eslint` + `eslint-plugin-astro`. Two overrides for `.astro` files:
+
+- `@typescript-eslint/no-empty-object-type: off` — `interface Props {}` is idiomatic Astro
+- `no-unused-vars` ignores `Props` — framework uses it implicitly
+- `src/layouts/Layout.astro` excluded from linting (Consent Mode `is:inline` script)
+
+### Prettier (`.prettierrc`)
+
+`printWidth: 120`, `singleQuote: true`, `prettier-plugin-astro`. `.prettierignore` excludes `dist/`, `node_modules/`, `.astro/`, `public/`. No other file exclusions — `GTM.astro` uses `set:html` to keep the snippet out of the template parser.
+
+### Build-time env guard (`scripts/check-env.js`)
+
+Runs only on Cloudflare Pages (`CF_PAGES === '1'`). Exits 1 if any of `RESEND_API_KEY`, `CONTACT_TO`, `CONTACT_FROM`, `TURNSTILE_SECRET` are unset — fails the deploy before Astro runs. Local builds skip this check.
+
+---
+
+## Env vars
+
+| Variable                    | Scope   | Value                                       |
+| --------------------------- | ------- | ------------------------------------------- |
+| `PUBLIC_GTM_ID`             | Build   | `GTM-XXXXXXX`                               |
+| `PUBLIC_TURNSTILE_SITE_KEY` | Build   | CF Turnstile dashboard                      |
+| `RESEND_API_KEY`            | Runtime | `re_...` from resend.com                    |
+| `CONTACT_TO`                | Runtime | `hallo@ictira.com`                          |
+| `CONTACT_FROM`              | Runtime | `forms@ictira.com` (verified Resend domain) |
+| `TURNSTILE_SECRET`          | Runtime | CF Turnstile dashboard                      |
+
+`PUBLIC_*` validated by Astro `env.schema` at build time. Runtime vars validated by `scripts/check-env.js` on CF Pages.
+Local dev: `.env` for build vars, `.dev.vars` for runtime vars (both gitignored).
+
+---
+
+## Astro conventions
+
+- **`global.css` lives in `Layout.astro`** — any page not using Layout loses all styles.
+- **`LegalLayout.astro` wraps `Layout.astro`** — never give it its own `<html>` shell. New legal-style page: use `LegalLayout`.
+- **TypeScript globals in `src/env.d.ts`** — extend `Window` there for `dataLayer`, `turnstile`, `gtag`. No `as any`, no `@ts-ignore`.
+- **`noindex` pages**: pass `noindex={true}` to `Layout.astro`.
+- **`/lp/` pages excluded from sitemap** via filter in `astro.config.mjs` — automatic for any new file under `src/pages/lp/`.
+- **Run `npm run build` after any layout/CSS/config change** — most regressions surface immediately.
 
 ---
 
 ## Scroll reveal
 
-`.reveal` → fade in + slide up 40px, IntersectionObserver threshold 0.12, wired in `Layout.astro`.
+`.reveal` → fade in + slide up 40px, `IntersectionObserver` threshold 0.12, wired in `Layout.astro`.
 Stagger: `data-delay="60|80|100|120|160|180|200|240|300"` (ms).
 
 ---
@@ -99,8 +153,6 @@ Stagger: `data-delay="60|80|100|120|160|180|200|240|300"` (ms).
 ## Shared components
 
 ### SectionHeading
-
-`src/components/SectionHeading.astro` — renders a monospace label + bold h2 with optional italic em line. Used wherever a section has a standard label+heading block.
 
 ```typescript
 interface Props {
@@ -115,11 +167,11 @@ interface Props {
 
 Sizes: `sm` = `clamp(40px,5vw,72px)` · `md` = `clamp(48px,7vw,96px)` · `lg` = `clamp(56px,7vw,96px)`
 
-**Do NOT use** for headings inside colored cards (Process blue card, Contact/abschluss dark card) — those inherit text color from the card and use opacity, not `var(--mute)`.
+**Do NOT use** inside colored cards (Process blue, Contact dark) — those inherit text color from the card.
 
 ### Pricing
 
-`src/components/Pricing.astro` — prop-driven pricing grid. Data from `src/data/packages.ts`.
+Data from `src/data/packages.ts`.
 
 ```typescript
 interface Props {
@@ -131,24 +183,21 @@ interface Props {
   ctaLabel?: string; // default '{pkg.name} wählen'
   bulletSet?: 'includes' | 'lpItems'; // default 'includes'
   showNumbers?: boolean; // 01/03 numbering, default true
-  tagField?: 'tag' | 'sub'; // which pkg field to show as subtitle, default 'tag'
-  padTop?: boolean; // section top padding, default true
-  align?: 'left' | 'center'; // heading alignment, default 'center'
+  tagField?: 'tag' | 'sub'; // subtitle field, default 'tag'
+  padTop?: boolean; // default true
+  align?: 'left' | 'center'; // default 'center'
 }
 ```
 
-- Popular badge is hardcoded "Meistgewählt"
-- Price formatted with Swiss apostrophe thousands separator (1'490)
-- Sub line always shows "Fertig in {pkg.turnaround} Tagen"
-- CTA click pre-selects matching radio in Contact form (safe no-op if no radio found)
+Price formatted with Swiss apostrophe thousands separator (1'490). Sub line: "Fertig in {turnaround} Tagen". CTA pre-selects matching radio in Contact form.
 
 ### Faq
 
-`src/components/Faq.astro` — prop-driven accordion. Accepts `questions`, `label`, `heading`, `headingEm`, `align`. Defaults to main-site questions if none passed.
+Accepts `questions`, `label`, `heading`, `headingEm`, `align`. Defaults to main-site Q&A if no `questions` passed.
 
 ### LeadForm
 
-`src/components/LeadForm.astro` — generic, prop-driven lead capture form. Used by Contact.astro and both LP forms. Handles honeypot, `_source` tracking, Turnstile, success/error states, and wireForm wiring internally via data attributes (safe for multiple instances on one page).
+Generic lead capture form. Used by `Contact.astro` and both LP forms.
 
 ```typescript
 type Field =
@@ -158,22 +207,16 @@ type Field =
       placeholder?: string;
       required?: boolean;
     }
-  | {
-      type: 'textarea';
-      name: string;
-      placeholder?: string;
-      rows?: number;
-      required?: boolean;
-    }
+  | { type: 'textarea'; name: string; placeholder?: string; rows?: number; required?: boolean }
   | { type: 'radios'; name: string; options: string[] };
 
 interface Props {
-  id: string; // element ID prefix: {id}Form, {id}Success, {id}Error, {id}Label
-  source: string; // value for hidden _source field (appears in email subject)
-  fields: Field[]; // ordered field list
-  action?: string; // POST URL, default '/contact'
-  submitLabel?: string; // button text, default 'Absenden'
-  submitVariant?: 'accent' | 'ink'; // button color, default 'accent'
+  id: string; // ID prefix: {id}Form, {id}Success, {id}Error, {id}Label
+  source: string; // hidden _source field value (appears in email subject)
+  fields: Field[];
+  action?: string; // default '/contact'
+  submitLabel?: string; // default 'Absenden'
+  submitVariant?: 'accent' | 'ink'; // default 'accent'
   successTitle?: string;
   successBody?: string;
   errorHtml?: string; // supports HTML (e.g. mailto links)
@@ -182,130 +225,78 @@ interface Props {
 }
 ```
 
-Named slot `after-submit` — rendered after the submit button (used for trust indicators on LP hero form).
+Named slot `after-submit` — rendered after submit button (LP hero trust indicators).
+Wiring uses data attributes so multiple instances on one page work (Astro deduplicates `<script>` blocks).
 
 ### Turnstile
 
-`src/components/Turnstile.astro` — renders the Cloudflare Turnstile widget div. Props: `theme?: 'light' | 'dark'`. The API script (`challenges.cloudflare.com`) is loaded once in `Layout.astro`.
+`theme?: 'light' | 'dark'`. API script loaded once in `Layout.astro` — do not add it elsewhere.
 
-### formSubmit
+### GTM
 
-`src/scripts/formSubmit.ts` — exports `wireForm(formId, successId, errorId, labelId, defaultLabel)`. Called by LeadForm's internal script. Handles fetch, success state, turnstile reset on error, and `dataLayer.push({ event: 'form_submit_success' })`.
+`id: string` (required). Injects the GTM loader script via `set:html` to avoid `prettier-plugin-astro`'s inability to parse `define:vars` + IIFE content. Used as `{gtmId && <GTM id={gtmId} />}` in `Layout.astro`.
 
 ---
 
 ## Package data (`src/data/packages.ts`)
 
-Single source of truth. Each package has:
+Each package: `name`, `price` (raw string, formatted in component), `tag`, `sub`, `turnaround` (string: `'7'`/`'7–10'`/`'14'`), `popular`, `includes[]` (main site bullets), `lpItems[]` (LP conversion bullets).
 
-- `name`, `price` (string, no separator — formatted in component), `tag`, `sub`, `turnaround` (days as string: `'7'`, `'7–10'`, `'14'`), `popular`
-- `includes[]` — main site bullet list (7 items)
-- `lpItems[]` — LP conversion bullet list (4–5 items, benefit-focused)
-
-Packages: **Onepager** CHF 1'490 · **Standard** CHF 1'990 (popular) · **Grösser** CHF 2'990
+**Onepager** CHF 1'490 · **Standard** CHF 1'990 (popular) · **Grösser** CHF 2'990
 
 ---
 
-## Components
+## Key component notes
 
 ### Nav
 
-CSS Grid `1fr auto 1fr` — logo `justify-self:start`, CTA `justify-self:end`. Mobile: hamburger `grid-column:3; justify-self:end`. Adds `.scrolled` (blur bg) at scroll > 20px. CTA copy: "3 Plätze frei · Q2/26".
-
-**Link behaviour — always verify when adding pages:**
-
-- Logo: `href="/"` always. JS intercepts on homepage to smooth-scroll to top instead of reloading.
-- Nav section links + CTA: prefix is computed from `Astro.url.pathname` — empty string on `/`, leading `/` on all subpages. This means `#leistungen` on the homepage, `/#leistungen` on legal pages. Any new page using `Nav.astro` gets this automatically.
-- Mobile menu links follow the same prefix logic.
+CSS Grid `1fr auto 1fr`. CTA copy: "3 Plätze frei · Q2/26". Link prefix computed from `Astro.url.pathname` — empty on `/`, `/#` on subpages. Works automatically for any new page — no changes needed to Nav.
 
 ### Hero
 
-Marquee prices: `CHF 1490 · Onepager`, `CHF 1990 · Bis 5 Seiten`, `CHF 2990 · Grössere Sites`. RAF loop at 0.8px/frame (strip 1) and 0.45px/frame (strip 2, reversed).
+Marquee: `CHF 1490 · Onepager`, `CHF 1990 · Bis 5 Seiten`, `CHF 2990 · Grössere Sites`. RAF loop: 0.8px/frame strip 1, 0.45px/frame strip 2 (reversed).
 
 ### Contact
 
-Fields: name (required), email (required), firm (optional), phone (optional, type=tel), package radios, message textarea.
-Hidden field `_source` = `"Hauptseite"` — included in email subject for tracking.
-Left column shows email + address. **Company phone hidden** (waiting for number — uncomment `.detail` block in `Contact.astro`).
-On success: `dataLayer.push({ event: 'form_submit_success' })` for GTM conversion tracking.
+`LeadForm` fields: name*, email*, firm, phone (tel), package radios, message textarea. `source="Hauptseite"`. Theme dark. **Phone hidden** — uncomment `.detail` block once number is active.
 
 ### CookieBanner
 
-Key: `ictira_consent` in localStorage. On load: if `granted` → call `gtag consent update`; if no value → show banner. Buttons write to localStorage and call `gtag consent update` immediately.
+localStorage key: `ictira_consent`. On load: `granted` → `gtag consent update`; no value → show banner.
 
 ### Landing page (`/lp/professionelle-website-basel`)
 
-Dedicated Google Ads conversion page. Self-contained — no `Nav.astro` or `Footer.astro`, uses `Layout.astro` (with `noindex={true}`) for GTM/fonts/consent. Excluded from sitemap.
-
-**Sections (in order):** sticky LP header → hero (H1 + bullets + form) → Für wen → Was inklusive → Pakete (`<Pricing>`) → Prozess → Über Stefan → FAQ (`<Faq>`) → Abschluss-CTA → minimal footer.
-
-**Two forms:** hero (`_source: "LP Basel · Hero"`) and abschluss (`_source: "LP Basel · Abschluss"`). Both use `wireForm()` and push `form_submit_success` to `dataLayer`.
-
-**Icons:** uses `astro-icon` + `@iconify-json/tabler`. Import `{ Icon }` from `'astro-icon/components'`.
-
-**Stefan's photo:** `src/assets/picture/StefanWorzallaSquareSmall.jpg` processed to WebP via `getImage()`. Float-right on mobile ≤768px with clearfix.
-
-**Referenzen section:** currently commented out — waiting for real project screenshots.
+No Nav/Footer. Uses `Layout.astro` with `noindex={true}`. Two `LeadForm` instances: `source="LP Basel · Hero"` (hero, `submitVariant="ink"`, trust indicators in `after-submit` slot) and `source="LP Basel · Abschluss"` (dark theme). Uses `astro-icon` + `@iconify-json/tabler`. Stefan's photo via `getImage()` to WebP. Referenzen section commented out — waiting for screenshots.
 
 ### Legal pages
 
-- `/impressum` — Aufgendsweg 3, 4455 Zunzgen, CHE-476.809.964
-- `/datenschutz` — covers Cloudflare, Google Fonts, Resend, Turnstile, GA4/GTM (consent-gated), localStorage
-- Both use `LegalLayout.astro` (noindex)
+`/impressum`, `/datenschutz` — both use `LegalLayout.astro` (noindex). Address: Aufgendsweg 3, 4455 Zunzgen. UID: CHE-476.809.964.
 
 ---
 
 ## Tracking (GTM + GA4 + Consent Mode v2)
 
-### Consent defaults (Layout.astro, runs before GTM)
+Consent defaults run before GTM in `Layout.astro`:
 
 - EEA + UK + CH: all denied, `wait_for_update: 500`
-- All other regions: all granted (second default call, no region filter)
+- All other regions: all granted
 
-### GTM setup
-
-Container ID stored in `PUBLIC_GTM_ID` (build env var). GTM not loaded if var is empty.
-Tags to configure in GTM dashboard:
+GTM container ID: `PUBLIC_GTM_ID`. Not loaded if empty. GTM tags to configure:
 
 1. **GA4 Configuration** — trigger: Consent Initialization - All Pages
 2. **GA4 Event: generate_lead** — trigger: Custom Event `form_submit_success`
-3. **Google Ads Conversion** — trigger: Custom Event `form_submit_success` (needs Conversion ID + Label from Google Ads)
+3. **Google Ads Conversion** — trigger: Custom Event `form_submit_success` (needs Conversion ID + Label)
 
-### Verifying events
+⚠️ Do NOT use "Google tag found on your website" in Google Ads campaign setup — fails with permission denied (tag belongs to GA4 property, not Ads account). Create a new Conversion Action manually.
 
-Use **GA4 → Admin → DebugView** (real-time). Standard reports have up to 24h delay.
-GTM Preview mode shows tags as "Fired" even when consent is denied — always test with cookie banner accepted.
+Verify events: GA4 → Admin → DebugView. GTM Preview shows tags "Fired" even with consent denied — always test with cookie banner accepted.
 
 ---
 
 ## Form backend (`functions/contact.ts`)
 
-Cloudflare Pages Function. POST to `/contact`.
-
-Spam protection: honeypot `_hp` field + Cloudflare Turnstile (managed mode — intentionally visible so users can self-resolve challenges).
-
-Flow: check honeypot → verify Turnstile token → send via Resend API → return 200/500.
-Email subject includes `_source` field: `[LP Basel · Hero] Neue Anfrage von …`
-Email includes reply-to set to submitter's address. `message` field is optional.
-
-**Env vars** (Cloudflare Pages → Settings → Environment variables):
-| Variable | Scope | Value |
-|---|---|---|
-| `PUBLIC_GTM_ID` | Build | `GTM-XXXXXXX` |
-| `PUBLIC_TURNSTILE_SITE_KEY` | Build | from CF Turnstile dashboard |
-| `RESEND_API_KEY` | Runtime | `re_...` from resend.com |
-| `CONTACT_TO` | Runtime | `hallo@ictira.com` |
-| `CONTACT_FROM` | Runtime | `forms@ictira.com` (verified Resend domain) |
-| `TURNSTILE_SECRET` | Runtime | from CF Turnstile dashboard |
-
-Local dev: `.env` for build vars, `.dev.vars` for runtime vars (both gitignored).
-
----
-
-## Sitemap + robots
-
-- `/sitemap-index.xml` — auto-generated by `@astrojs/sitemap`, covers `/`, `/impressum`, `/datenschutz`. All `/lp/` pages filtered out.
-- `/robots.txt` — Allow all, points to sitemap
+POST `/contact`. Flow: honeypot check → Turnstile verify → Resend API → 200/500.
+Email subject: `[{_source}] Neue Anfrage von {name}`. Reply-to set to submitter's email. `message` optional.
 
 ---
 
@@ -315,15 +306,15 @@ Local dev: `.env` for build vars, `.dev.vars` for runtime vars (both gitignored)
 - **Address:** Aufgendsweg 3, 4455 Zunzgen, Schweiz
 - **UID/MWST:** CHE-476.809.964
 - **Email:** hallo@ictira.com
-- **Phone:** TBD — hidden in contact section left column
+- **Phone:** TBD — hidden in Contact left column
 
 ---
 
 ## TODO
 
-1. **Portfolio** — unhide `Portfolio.astro` in `index.astro` + restore nav link when real screenshots ready (6 planned: Metzgerei Brunner, Atelier Widmer, Praxis Dr. Meier, Flux Coffee Roasters, Alpin Consulting AG, Verein KunstRaum)
-2. **Company phone** — uncomment Telefon block in `Contact.astro` left column once number is active
+1. **Portfolio** — unhide `Portfolio.astro` in `index.astro` + restore nav link when screenshots ready (6 planned: Metzgerei Brunner, Atelier Widmer, Praxis Dr. Meier, Flux Coffee Roasters, Alpin Consulting AG, Verein KunstRaum)
+2. **Company phone** — uncomment Telefon block in `Contact.astro` left column
 3. **Resend domain** — verify sending domain in Resend dashboard
-4. **Google Ads conversion tag in GTM** — create conversion action in Google Ads (Goals → Conversions → New → Website → "Submit lead form") → get Conversion ID (`AW-XXXXXXXXX`) + Conversion Label → in GTM add a "Google Ads Conversion Tracking" tag triggered by Custom Event `form_submit_success`. Do NOT use "Google tag found on your website" in campaign setup — it fails with permission denied because the tag belongs to the GA4 property, not the Ads account.
-5. **Logo SVG** — convert wordmark text to paths in `logo.svg` for print/Figma use
-6. **LP referenzen** — replace commented-out section with real project screenshots once available
+4. **Google Ads conversion tag** — create in Google Ads (Goals → Conversions → New → Website) → get Conversion ID + Label → add "Google Ads Conversion Tracking" tag in GTM triggered by `form_submit_success`
+5. **Logo SVG** — convert wordmark text to paths in `logo.svg` for print/Figma
+6. **LP referenzen** — replace commented-out section with real screenshots
