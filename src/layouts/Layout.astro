@@ -17,7 +17,7 @@ const {
 } = Astro.props;
 
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site).href;
-const gtmId = import.meta.env.PUBLIC_GTM_ID ?? '';
+const gtmId = (import.meta.env.PUBLIC_GTM_ID ?? '').trim();
 ---
 
 <!doctype html>
